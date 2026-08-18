@@ -49,12 +49,12 @@ Chain strategy: pending
 
 ### Thesis edits (gate D3 — ask user: SDD-reversible edits default, user diff review pre-commit; anchors by CONTENT, never line numbers)
 
-- [ ] **T-11** — Resumen/L17–45: add separated campaign sentence (201,125 campaign vs 13-event control); fix "repo contiene el volcado" claim (dump = evidence artifact, not in git); latency reference uses 85.496. R: R-09/R-10. Deps: T-09. Est: 10. Gate: **D3**.
-- [ ] **T-12** — §5.3.6 note: reframe "reducción superior al 99 %" → "≈99 % (estimación conservadora: 297 ms medidos vs ~30 s estimados, NIST)"; remove ">99 %". R: R-09. Deps: T-11. Est: 8. Gate: **D3**.
-- [ ] **T-13** — §5.10 P1: replace "margen amplio (reducción > 99 %)" with ≈99 % estimado tied to reproducible base. R: R-09. Deps: T-12. Est: 8. Gate: **D3**.
-- [ ] **T-14** — §6.1.1 + §7.2.2: reframe "201.125 (volumen típico…)" → measured corpus 13/07–11/08; projection language only for manual-vs-auto extrapolation. R: R-09. Deps: T-13. Est: 12. Gate: **D3**.
-- [ ] **T-15** — §5.13.1: rewrite "secuencia de siete nodos" → 2+3+3 structure (2 entry / 3 processing / 3 persistence) matching §5.13 table; no standalone node count; "839.504" absent from thesis. R: R-09/R-10. Deps: T-14. Est: 10. Gate: **D3**.
-- [ ] **T-16** — Post-edit proof: greps — `839.504`→0, `>99`→0, `6 nodos|siete nodos`→0, `2+3+3`→≥1, every "13 eventos" in validation-labeled context; user diff review; stage commit. R: R-09/R-10/R-11. Deps: T-15. Est: 5. Gate: —. AC: `Select-String '839.504|>99|siete nodos' tesis-extendida.md` → 0 hits; `git diff` reviewed; `git status` clean.
+- [x] **T-11** — Resumen/L17–45: add separated campaign sentence (201,125 campaign vs 13-event control); fix "repo contiene el volcado" claim (dump = evidence artifact, not in git); latency reference uses 85.496. R: R-09/R-10. Deps: T-09. Est: 10. Gate: **D3**.
+- [x] **T-12** — §5.3.6 note: reframe "reducción superior al 99 %" → "≈99 % (estimación conservadora: 297 ms medidos vs ~30 s estimados, NIST)"; remove ">99 %". R: R-09. Deps: T-11. Est: 8. Gate: **D3**.
+- [x] **T-13** — §5.10 P1: replace "margen amplio (reducción > 99 %)" with ≈99 % estimado tied to reproducible base. R: R-09. Deps: T-12. Est: 8. Gate: **D3**.
+- [x] **T-14** — §6.1.1 + §7.2.2: reframe "201.125 (volumen típico…)" → measured corpus 13/07–11/08; projection language only for manual-vs-auto extrapolation. R: R-09. Deps: T-13. Est: 12. Gate: **D3**.
+- [x] **T-15** — §5.13.1: rewrite "secuencia de siete nodos" → 2+3+3 structure (2 entry / 3 processing / 3 persistence) matching §5.13 table; no standalone node count; "839.504" absent from thesis. R: R-09/R-10. Deps: T-14. Est: 10. Gate: **D3**.
+- [x] **T-16** — Post-edit proof: greps — `839.504`→0, `>99`→0, `6 nodos|siete nodos`→0, `2+3+3`→≥1, every "13 eventos" in validation-labeled context; user diff review; stage commit. R: R-09/R-10/R-11. Deps: T-15. Est: 5. Gate: —. AC: `Select-String '839.504|>99|siete nodos' tesis-extendida.md` → 0 hits; `git diff` reviewed; `git status` clean.
 
 ## Phase 4: Etapa 3 — Higiene y verificación final (R-12..R-14)
 
