@@ -139,6 +139,7 @@ No data migration; stack NOT restarted. Stages are independent commits; push def
 
 ## Open Questions
 
+- [ ] Post-cierre (usuario, 2026-08-18): reestructurar `tesis-extendida.md` para alineación total con la matriz de auditoría (C-01..C-28 / R-14) — a ejecutar DESPUÉS de completar Etapa 3 (T-17..T-24) + verify + archive; alcance a definir (trazabilidad vs. reorganización profunda); probablemente como cambio SDD nuevo.
 - [ ] D1 at apply: authorize push now or defer?
 - [ ] D3 at apply: SDD edits (default) or guidance-only?
 - [ ] Copyright holder string (default: "2026 Nocturne Society (Crespo, Norton, Santos)")
