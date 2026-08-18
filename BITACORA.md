@@ -218,6 +218,31 @@ Cada paso de la reestructuración queda registrado aquí con fecha, archivo afec
 
 ---
 
+## Etapa 0 — Publicación del repositorio
+
+### [2026-08-18] Estado canónico inicial del repositorio (commit b669726)
+- `git init -b main` con identidad `lucasnorton01` / `lucasnorton01@users.noreply.github.com`.
+- `.gitignore`: negación `!scripts/scan_secrets.ps1` (el patrón `*secret*` dejaba al propio escáner fuera del árbol — estado parcial de un apply anterior).
+- `scripts/scan_secrets.ps1`: allowlist ampliado con regla de contexto para la constante benigna `4294967296` (2^32 del xorshift de `generar_dataset.js`, documentada en el propio scanner y en tasks.md). Gate: árbol completo sin coincidencias; control positivo (token dummy) → exit 1.
+- Commit `chore: estado canónico inicial (Etapa 0)` — 55 archivos, 12.447 líneas insertadas.
+- `git remote add origin https://github.com/lucasnorton01/Honeypot_Final_Nocturne_Society.git` — **sin push** (diferido; D1, ver T-24).
+
+## Etapa 1 — Evidencia de ejecuciones n8n
+
+### [2026-08-18] scripts/exportar_ejecuciones_n8n.py + export real a evidencia/
+- Probe: `$DB_TYPE` vacío en el contenedor n8n → SQLite `/home/node/.n8n/database.sqlite`; Postgres documentado como fallback (`DB_TYPE=postgres` o URL `postgres://`).
+- Snapshot consistente: `docker cp` de `database.sqlite` + `-wal` + `-shm`; `PRAGMA integrity_check` = ok.
+- **Corrección de zona horaria en la ventana declarada:** n8n almacena timestamps como instantes UTC. La ventana real es `2026-08-11T13:58:13Z` (primera ejecución, id 3) → `2026-08-12T20:00:00.143Z` (última de la campaña, id 138); el sufijo "-03:00" usado en iteraciones previas era una mala lectura del almacenamiento UTC (equivalente local −03:00: 10:58 → 17:00).
+- Export: **151 ejecuciones** (ids 3–153): **136 dentro de la ventana**, **0 anteriores** (no hay registros previos a 13:58Z — R-06), **15 posteriores** (2026-08-18, schedule de `ioc-extractor` con el stack nuevamente arriba; reales, incluidas). Íntegras, sin fabricación.
+- Artefacto: `evidencia/n8n-executions-20260818.json` + manifest `.sha256` — cabecera con source, snapshot, count, ventana, declaraciones. `evidencia/` gitignored → no versionado.
+
+### [2026-08-18] Cron de report-generator — declaración honesta (path b)
+- `"0 8 * * *"` verificado en `n8n/workflows/report-generator.json` (sin edición).
+- **El cron nunca se disparó:** el export no contiene ejecuciones de `report-generator` con modo `trigger`/schedule; sus únicas ejecuciones son 3 corridas manuales CLI del 2026-08-11 (ids 32, 66, 119, todas `success`).
+- Declaración honesta en `README.md` (ventana, cron nunca disparado, sin registros simulados) — path b de T-07. No se creó ningún registro simulado.
+
+---
+
 ## Pendientes (coordinados con el equipo)
 
 - **Fase D — Reencuadre del documento:** reescribir los Capítulos V–VII de la tesis con los

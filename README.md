@@ -142,6 +142,52 @@ curl http://localhost:9000/report
 └─ evidencia/            ← logs y dumps generados (no versionados)
 ```
 
+## Evidencia
+
+Los artefactos de evidencia del pipeline se generan en `evidencia/` (no versionados por diseño;
+ver `.gitignore`).
+
+### Registro de ejecuciones n8n — ventana declarada
+
+`evidencia/n8n-executions-20260818.json` (+ manifest `.sha256`) registra las ejecuciones reales de
+los workflows de n8n (`event-ingest`, `ioc-extractor`, `report-generator`), extraídas del
+`execution_entity ⋈ workflow_entity` de la base interna de n8n (snapshot del 2026-08-18;
+`PRAGMA integrity_check` = ok).
+
+- **Ventana de validación declarada:** `2026-08-11T13:58Z` → `2026-08-12T20:00:00.143Z`. n8n
+  almacena los timestamps como instantes UTC (equivalente local −03:00: 10:58 → 17:00). La ventana
+  coincide con el primer (13:58:13Z) y el último arranque (20:00:00Z) de la campaña de validación
+  documentada en BITACORA.md.
+- **Ningún registro anterior a la ventana:** 0 ejecuciones antes de `2026-08-11T13:58Z`; todos los
+  registros fueron copiados verbatim — sin fabricaciones ni relleno (136 ejecuciones dentro de la
+  ventana, ids 3–138).
+- **15 ejecuciones posteriores a la ventana** (2026-08-18; disparadores de schedule de
+  `ioc-extractor` con el stack nuevamente en ejecución) — reales e incluidas en el export.
+- **Cron de `report-generator` (`0 8 * * *`): nunca se disparó.** No hay ninguna ejecución
+  programada de `report-generator` en el registro; sus únicas 3 ejecuciones fueron corridas
+  manuales por CLI durante la verificación del 2026-08-11 (ids 32, 66, 119). No se creó ningún
+  registro simulado.
+
+## Evidencia
+
+`evidencia/` guarda los registros reales del pipeline (no versionados por diseño).
+
+### Registro de ejecuciones n8n — ventana declarada de validación
+
+`evidencia/n8n-executions-20260818.json` (+ manifest `.sha256`) es la copia íntegra de las
+ejecuciones de los tres workflows n8n (`execution_entity` ⋈ `workflow_entity`), extraída de
+`database.sqlite` del contenedor (snapshot 2026-08-18, `integrity_check` ok).
+
+- **Ventana declarada:** `2026-08-11T13:58Z` → `2026-08-12T20:00:00.143Z`. n8n almacena
+  timestamps como instantes UTC; equivalente local (−03:00): 10:58 → 17:00.
+- **136 ejecuciones dentro de la ventana** (ids 3–138) y **0 anteriores a su inicio**: no
+  existen ejecuciones previas a `2026-08-11T13:58Z`. Ningún registro fue fabricado ni rellenado.
+- **15 ejecuciones posteriores a la ventana** (2026-08-18, schedule de `ioc-extractor` con el
+  stack nuevamente en ejecución) — reales, incluidas en el export.
+- **Cron de `report-generator` (`0 8 * * *`): nunca se disparó.** El registro no contiene
+  ejecución programada de `report-generator`; sus únicas 3 ejecuciones fueron corridas manuales
+  CLI del 2026-08-11 (ids 32, 66, 119). No se creó ningún registro simulado.
+
 ## Seguridad
 
 - El entorno **no expone puertos a Internet**. Cowrie escucha solo en `localhost`
