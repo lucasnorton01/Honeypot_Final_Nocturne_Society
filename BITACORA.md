@@ -263,7 +263,23 @@ Cada paso de la reestructuración queda registrado aquí con fecha, archivo afec
 
 ---
 
-## Pendientes (coordinados con el equipo)
+## Etapa 3 — Higiene y verificación final (R-12..R-14)
+
+### [2026-08-18] Licencia, procedencia y estado del editor n8n (R-12/D4)
+- `LICENSE` — MIT verbatim, `Copyright (c) 2026 Nocturne Society (Crespo, Norton, Santos)` (holder confirmado).
+- `.github/SECURITY.md` — propósito del lab, postura de datos, ventana de validación, editor n8n sin auth con `N8N_BASIC_AUTH_*` como seguimiento (D4, doc-only).
+- `README.md` — mención MIT + URL canónica del repo + sección Monitoreo + nota del editor sin auth (resto intacto).
+- `.env.example` — bloque comentado `N8N_BASIC_AUTH_*` (D4). Commit `docs(repo): MIT license, SECURITY.md, README evidence section, env auth block` (8a0b20d).
+
+### [2026-08-18] Eliminación de archivos temporales (R-13)
+- Commit dedicado `chore: remove temp files` (08832a5) elimina `_tmp300.sql`, `_tmp_kpis.py`, `scripts/_test_parse.py` (369 líneas borradas). Recuperables: `git show 08832a5^:_tmp300.sql` conserva el contenido (rollback por git, sin `_trash/`).
+
+### [2026-08-18] Re-check final de auditoría (R-14)
+- `docs/verificacion-auditoria.md`: tabla completa C-01..C-28 + claúsulas (a)/(b)/(c); ítems en alcance **VERIFICADO** con comando rerunnable y salida real reproducida (T-22/T-23 ejecutados de punta a punta, incluido `docker compose config` → exit 0 y `scripts/scan_secrets.ps1` → 0 coincidencias).
+- **Resultado dentro del alcance: 0 NOT MET / 0 PARTIAL.** Fuera de alcance (C-07..C-10, C-18, C-19, C-24) con motivos.
+- **Push (D1): autorizado por el equipo — ejecutado en T-24** (etiqueta `Honeypot_Cowrie` sobre el commit final; resultado y `ls-remote` en tasks.md / reporte de apply).
+
+---
 
 - **Fase D — Reencuadre del documento:** reescribir los Capítulos V–VII de la tesis con los
   datos reales del lab aislado y aplicar las correcciones metodológicas/bibliográficas de la
