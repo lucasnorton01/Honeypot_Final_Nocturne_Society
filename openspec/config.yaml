@@ -1,0 +1,53 @@
+# openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Project: Honeypot Lab + n8n - Nocturne Society (Crespo, Norton, Santos), UTN FRM, 2026 (thesis).
+  Tech stack: Docker Compose lab - Cowrie SSH/Telnet honeypot, Python forwarder (requests, env-var config, spooling/retry), Python log-reader HTTP :9000, PostgreSQL 16 (events/iocs/reports/error_log), n8n workflows (event-ingest, ioc-extractor, report-generator).
+  Architecture: Isolated local lab (NOT exposed to Internet); attack_simulator.py drives the full pipeline cowrie.json -> forwarder POST -> n8n webhook -> PostgreSQL. Evidence-driven: dated reports in evidencia/ are the canonical proof source.
+  Testing: No test runner detected (no pytest/pyproject.toml/package.json/Makefile/tests); strict_tdd: false. Verification is manual + docker compose based.
+  Style: Python 3.11+ module-level functions (no classes), config via env vars, no hardcoded secrets; docs in Spanish (BITACORA.md dated change log, ESPECIFICACIONES.md plan, tesis-extendida.md, audit report); Node.js helper scripts; .bat helpers on Windows.
+  Delivery: review_budget_lines: 800; ask-on-risk strategy.
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    guidelines:
+      - Follow existing code patterns (module-level functions, env-var config, no secrets)
+      - Do not expose honeypot ports beyond localhost
+      - Keep evidence artifacts dated and reproducible
+    tdd: false
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: "docker compose config"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
+
+testing:
+  strict_tdd: false
+  runner: none
+  layers:
+    unit: false
+    integration: false
+    e2e: false
+  coverage: false
+  quality:
+    linter: false
+    type_checker: false
+    formatter: false
+  notes: >-
+    No test framework, requirements manifest at repo root, CI config, or test
+    directory detected. Verification is limited to manual runs and docker compose
+    config/up checks plus psql queries against the pipeline.

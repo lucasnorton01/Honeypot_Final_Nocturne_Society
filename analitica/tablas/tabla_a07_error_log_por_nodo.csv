@@ -1,0 +1,4 @@
+﻿workflow,node,errores
+event-ingest,Enriquecimiento,6436
+event-ingest,Parseo de evento,3620
+event-ingest,Validacion de esquema,604

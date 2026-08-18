@@ -1,0 +1,47 @@
+{
+  "eventos": 201125,
+  "estructurados": 190465,
+  "no_estructurados": 10660,
+  "tasa_estructuracion_pct": 94.7,
+  "errores": {
+    "parsing": 3620,
+    "enriquecimiento": 6436,
+    "schema": 604,
+    "total": 10660
+  },
+  "iocs": {
+    "total": 4234,
+    "por_tipo": {
+      "command": 89,
+      "credential": 124,
+      "domain": 462,
+      "hash": 147,
+      "ip": 3128,
+      "url": 284
+    },
+    "por_confianza": {
+      "ALTO": 1482,
+      "BAJO": 754,
+      "MEDIO": 1998
+    }
+  },
+  "ips_publicas": 3128,
+  "sesiones_totales": 6730,
+  "sesiones_confirmadas": 4310,
+  "sesiones_con_ioc": 3978,
+  "pct_sesiones_con_ioc": 92.3,
+  "latencia": {
+    "n": 201125.0,
+    "media": 297.02,
+    "desviacion": 221.049,
+    "min": -839.504,
+    "p50": 292.957,
+    "p95": 604.0,
+    "p99": 890.0,
+    "max": 961.607
+  },
+  "pico_horario_local_utc3": {
+    "hora": "04:00",
+    "eventos_hora": 28050
+  }
+}

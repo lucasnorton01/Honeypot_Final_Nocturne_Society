@@ -1,0 +1,104 @@
+[
+  {
+    "id": "wf-ioc-extractor-0002",
+    "name": "ioc-extractor",
+    "nodes": [
+      {
+        "id": "wf-ioc-schedule",
+        "name": "Schedule",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [0, 300],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "*/15 * * * *"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "wf-ioc-exec-trigger",
+        "name": "Manual (Execute Workflow)",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 2,
+        "position": [0, 100],
+        "parameters": {}
+      },
+      {
+        "id": "wf-ioc-query-unprocessed",
+        "name": "Postgres: Eventos sin procesar",
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2,
+        "position": [260, 300],
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT id, eventid, src_ip, username, password, input, message, timestamp FROM events WHERE processed = FALSE ORDER BY id ASC LIMIT 500"
+        },
+        "credentials": {
+          "postgres": {
+            "id": "cred-postgres-001",
+            "name": "Postgres"
+          }
+        }
+      },
+      {
+        "id": "wf-ioc-extract",
+        "name": "Extraer IoCs",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [520, 300],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "language": "javaScript",
+          "jsCode": "const out = [];\nfor (const item of items) {\n  const e = item.json;\n  const eventId = e.id;\n  if (e.src_ip) {\n    out.push({ json: { event_id: eventId, ioc_type: 'ip', ioc_value: String(e.src_ip), source: 'cowrie' } });\n  }\n  if (e.username && e.password) {\n    out.push({ json: { event_id: eventId, ioc_type: 'credential', ioc_value: `${e.username}:${e.password}`, source: 'cowrie' } });\n  }\n  if (e.input && e.input.match(/wget|curl|nc |python|\\/bin|sh |bash|chmod|tftp/i)) {\n    out.push({ json: { event_id: eventId, ioc_type: 'command', ioc_value: String(e.input).slice(0, 500), source: 'cowrie' } });\n  }\n  if (e.message && e.message.includes('sha256')) {\n    const m = e.message.match(/[a-f0-9]{64}/);\n    if (m) out.push({ json: { event_id: eventId, ioc_type: 'hash', ioc_value: m[0], source: 'cowrie' } });\n  }\n}\nreturn out;"
+        }
+      },
+      {
+        "id": "wf-ioc-upsert",
+        "name": "Postgres: Upsert IoCs",
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2,
+        "position": [780, 300],
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "WITH ins AS (INSERT INTO iocs (type, value, event_id, source) VALUES ($1, $2, $3, $4) ON CONFLICT (type, value) DO NOTHING) UPDATE events SET processed = TRUE WHERE id = $3",
+          "options": {
+            "queryReplacement": "{{ $json.ioc_type }},{{ $json.ioc_value }},{{ $json.event_id }},{{ $json.source }}",
+            "queryBatching": "independently"
+          }
+        },
+        "credentials": {
+          "postgres": {
+            "id": "cred-postgres-001",
+            "name": "Postgres"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Schedule": {
+        "main": [[{ "node": "Postgres: Eventos sin procesar", "type": "main", "index": 0 }]]
+      },
+      "Manual (Execute Workflow)": {
+        "main": [[{ "node": "Postgres: Eventos sin procesar", "type": "main", "index": 0 }]]
+      },
+      "Postgres: Eventos sin procesar": {
+        "main": [[{ "node": "Extraer IoCs", "type": "main", "index": 0 }]]
+      },
+      "Extraer IoCs": {
+        "main": [[{ "node": "Postgres: Upsert IoCs", "type": "main", "index": 0 }]]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "pinData": {},
+    "meta": {
+      "templateCredsSetupCompleted": false
+    }
+  }
+]

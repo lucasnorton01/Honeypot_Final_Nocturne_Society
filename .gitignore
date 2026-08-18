@@ -1,0 +1,39 @@
+# Secretos y configuración local
+.env
+
+# Secret-shaped paths (defensa ante subidas accidentales)
+*token*
+*secret*
+*chat*
+*.pem
+
+# El escáner de secretos debe trackearse (excepción explícita a *secret*)
+!scripts/scan_secrets.ps1
+
+# Bases de datos locales
+*.db
+*.sqlite
+*.sqlite3
+
+# Datos de volúmenes Docker
+n8n-data/
+pg-data/
+cowrie-var/
+
+# Evidencia generada localmente (logs del simulador, dumps)
+evidencia/
+
+# Artefactos analíticos derivados (regenerables por scripts)
+analitica/parquet/
+analitica/databricks/
+
+# Python
+__pycache__/
+*.pyc
+
+# Copias de respaldo del checkpoint de la tesis (D3)
+tesis-extendida.md.bak-*
+
+# Sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,11 @@
+﻿comando,ejecuciones
+netstat -an,613
+cat /etc/shadow,588
+cd /tmp,585
+ls -la /home,584
+mkdir /tmp/.X11-unix,579
+chmod 777 /tmp,568
+busybox iwconfig,564
+rm -rf /,563
+w,559
+ls -la /tmp,559

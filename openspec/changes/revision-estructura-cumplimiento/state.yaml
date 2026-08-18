@@ -1,0 +1,19 @@
+name: "Revision of structure and audit compliance (Etapas 0/1): reconcile evidence to a single number base and publish the canonical repository"
+status: tasks
+artifacts:
+  - type: explore
+    path: openspec/changes/revision-estructura-cumplimiento/exploration.md
+  - type: proposal
+    path: openspec/changes/revision-estructura-cumplimiento/proposal.md
+  - type: spec
+    path: openspec/changes/revision-estructura-cumplimiento/specs/repository-publication/spec.md
+  - type: spec
+    path: openspec/changes/revision-estructura-cumplimiento/specs/evidence-export/spec.md
+  - type: spec
+    path: openspec/changes/revision-estructura-cumplimiento/specs/narrative-reconciliation/spec.md
+  - type: spec
+    path: openspec/changes/revision-estructura-cumplimiento/specs/repository-hygiene/spec.md
+  - type: design
+    path: openspec/changes/revision-estructura-cumplimiento/design.md
+  - type: tasks
+    path: openspec/changes/revision-estructura-cumplimiento/tasks.md

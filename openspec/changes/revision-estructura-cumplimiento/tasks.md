@@ -1,0 +1,72 @@
+# Tasks: Revision of structure and audit compliance (Etapas 0–3)
+
+## Review Workload Forecast
+
+| Field | Value |
+|-------|-------|
+| Estimated changed lines | ~750–950 |
+| Review budget (config) | 800 lines |
+| 400-line budget risk | Medium–High (junk deletions counted; sizes assumed 150–300) |
+| Chained PRs recommended | Yes |
+| Suggested split | PR 1 (Etapa 0) → PR 2 (Etapa 1) → PR 3 (Etapa 2) → PR 4 (Etapa 3) |
+| Delivery strategy | ask-on-risk |
+| Chain strategy | pending |
+
+Decision needed before apply: Yes
+Chained PRs recommended: Yes
+Chain strategy: pending
+400-line budget risk: Medium
+
+**Decision reason (orchestrator must ask before apply):** (1) GIT PUSH (D1) authorization + GitHub credentials; (2) THESIS EDITS (D3) mode (reversible SDD edits vs guidance-only) with user diff review; (3) LICENSE copyright holder confirmation; (4) chain-strategy choice (stacked-to-main vs feature-branch-chain) since >400 lines and strategy not cached. `ask-on-risk` ⇒ stop-and-ask.
+
+### Suggested Work Units
+
+| Unit | Goal | Likely PR | Focused test command | Runtime harness | Rollback boundary |
+|------|------|-----------|----------------------|-----------------|-------------------|
+| 1 | Etapa 0 publish (T-01..T-04) | PR 1 | `powershell -File scripts/scan_secrets.ps1` exit 0; `git status` clean | Real repo-root git commands | Delete `.git` + revert `.gitignore`; nothing remote pre-D1 |
+| 2 | Etapa 1 evidence (T-05..T-07) | PR 2 | `python -c "import json;d=json.load(open('evidencia/n8n-executions-20260818.json'));print(len(d['executions']))"` → 136 | `docker compose ps` (n8n up) | Remove `evidencia/` (gitignored); revert README/BITACORA lines |
+| 3 | Etapa 2 reconciliation (T-08..T-15) | PR 3 | `python scripts/verificar_reconciliacion.py` exit 0 | `analitica/honeypot.db` present | `git checkout` pre-edit commit / restore `tesis-extendida.md.bak-20260818` |
+| 4 | Etapa 3 hygiene+verify (T-16..T-23) | PR 4 | Re-run every command in `docs/verificacion-auditoria.md` | Local repo + `docker compose config` | Revert hygiene commit; junk recoverable from initial commit |
+
+## Phase 1: Etapa 0 — Publicación del repositorio (R-01..R-04)
+
+- [x] **T-01** — `git init -b main`; verify/confirm `git config user.name/email`. R: R-01. Deps: —. Est: 1. Gate: —. AC: `git rev-parse --is-inside-work-tree` → true.
+- [x] **T-02** — `.gitignore`: add `*.db`, `analitica/parquet/`, `analitica/databricks/`, `*token*`, `*secret*`, `*chat*`, `*.pem`; keep `.env`/`evidencia/`/`n8n-data/`/`pg-data/`/`cowrie-var/`; ensure `.env.example` + `analitica/tablas/*.csv` tracked. R: R-02. Deps: T-01. Est: 15. Gate: —. AC: `git check-ignore .env evidencia/` exit 0; `git ls-files` has `.env.example`, no `.env`.
+- [x] **T-03** — Create `scripts/scan_secrets.ps1`: scan every `git ls-files` entry for bot token `\d{8,10}:[A-Za-z0-9_-]{35}`, `api.telegram.org/bot`, `-----BEGIN.*PRIVATE KEY-----`, `sk-[A-Za-z0-9]{20,}`, `AKIA[0-9A-Z]{16}`, chat-id `-?\d{9,12}`; allowlist decoy `admin:test123` (cowrie/userdb.txt); exit ≠0 on any hit. R: R-03. Deps: T-02. Est: 70. Gate: —. AC: scan exit 0 on tree; temp dummy-token file → exit 1 (positive control). _Apply note: patrones afinados para eliminar falsos positivos sobre contenido legitimo (URL de bot exige token tras `/bot`; private-key solo headers PEM reales; chat-id 10-14 digitos con limites no-alfanuméricos; allowlist extra `4294967296` = 2^32 en generar_dataset.js; BITACORA L186 IDs de chat redactados). Positivo y negativo verificados._ — Create `scripts/scan_secrets.ps1`: scan every `git ls-files` entry for bot token `\d{8,10}:[A-Za-z0-9_-]{35}`, `api.telegram.org/bot`, `-----BEGIN.*PRIVATE KEY-----`, `sk-[A-Za-z0-9]{20,}`, `AKIA[0-9A-Z]{16}`, chat-id `-?\d{9,12}`; allowlist decoy `admin:test123` (cowrie/userdb.txt); exit ≠0 on any hit. R: R-03. Deps: T-02. Est: 70. Gate: —. AC: scan exit 0 on tree; temp dummy-token file → exit 1 (positive control).
+- [ ] **T-04** — Stage commit: `git add -A`, run scan gate, `git commit -m "chore: estado canónico inicial (Etapa 0)"`, `git remote add origin https://github.com/lucasnorton01/Honeypot_Final_Nocturne_Society.git`. R: R-01/R-02/R-03/R-04. Deps: T-03. Est: 5. Gate: — (push itself gated in T-23). AC: `git log --oneline` single chain; `git status` clean; `git rev-list --count --all` == `git rev-list --count HEAD`.
+
+## Phase 2: Etapa 1 — Exportación de evidencia (R-05..R-07)
+
+- [ ] **T-05** — Create `scripts/exportar_ejecuciones_n8n.py`: probe `$DB_TYPE` (default SQLite `/home/node/.n8n/database.sqlite` via `docker cp`; Postgres fallback), SELECT `execution_entity` ⋈ `workflow_entity` (id, workflowId, mode, startedAt, stoppedAt, status); write `evidencia/n8n-executions-YYYYMMDD.json` (header: source, snapshot ts, count, window 2026-08-11T13:58→2026-08-12T20:00 -03:00, no-records-before + no-fabrication declarations) + `.sha256` manifest. R: R-05/R-06. Deps: —. Est: 100. Gate: —. AC: header JSON parseable; id/status/timestamps non-empty per record.
+- [ ] **T-06** — Run export: `docker compose exec n8n sh -lc 'echo $DB_TYPE; ls /home/node/.n8n'`; `docker cp n8n:/home/node/.n8n/database.sqlite <tmp>`; `python scripts/exportar_ejecuciones_n8n.py <tmp> --out evidencia/n8n-executions-20260818.json`; assert count 136 and every startedAt ≥ window start (R-06 no-fabrication check). R: R-05/R-06. Deps: T-05. Est: 2. Gate: —. AC: python one-liner prints 136; min(startedAt) ≥ "2026-08-11T13:58:00-03:00".
+- [ ] **T-07** — Cron repair-or-declare: keep `"0 8 * * *"` in `n8n/workflows/report-generator.json` (grep-verify, no edit); if a real cron execution appears before export include it (path a), else write honest declaration in `README.md` + `BITACORA.md`: cron never fired (3 cli runs only), window declared, no simulated record (path b). R: R-07. Deps: T-06. Est: 25. Gate: —. AC: `Select-String '"0 8 \* \* \*"' n8n/workflows/report-generator.json` hits; README contains the never-fired declaration.
+
+## Phase 3: Etapa 2 — Reconciliación narrativa (R-08..R-11)
+
+- [ ] **T-08** — Create `scripts/verificar_reconciliacion.py` (+`.bat` wrapper): stdlib sqlite3; canonical dict — events 201125, iocs 4234, reports 30, error_log 10660, proto_session 6730, pais_temp 3128, tasa ≈94.70%±0.05, kpis `latencia.min` 85.496, `ips_publicas` 3128; per-check PASS/FAIL; exit 0 iff all match. R: R-08/R-10. Deps: —. Est: 70. Gate: —. AC: script exit 0; negative control (temporarily alter one expectation) → exit ≠0.
+- [ ] **T-09** — Mandatory checkpoint: `Copy-Item tesis-extendida.md tesis-extendida.md.bak-20260818` AND pre-edit git commit (no thesis edit without it). R: R-11. Deps: T-04. Est: 3. Gate: —. AC: `Test-Path tesis-extendida.md.bak-*` → true; `git log --oneline -- tesis-extendida.md` shows pre-edit commit.
+- [ ] **T-10** — `analitica/kpis.json`: `latencia.min` −839.504 → 85.496; dated `BITACORA.md` note (clock-skew artifact; resumen-dataset.json canonical). R: R-10. Deps: T-08. Est: 10. Gate: —. AC: `python -c "import json;print(json.load(open('analitica/kpis.json'))['latencia']['min'])"` → 85.496; grep BITACORA "85.496".
+
+### Thesis edits (gate D3 — ask user: SDD-reversible edits default, user diff review pre-commit; anchors by CONTENT, never line numbers)
+
+- [ ] **T-11** — Resumen/L17–45: add separated campaign sentence (201,125 campaign vs 13-event control); fix "repo contiene el volcado" claim (dump = evidence artifact, not in git); latency reference uses 85.496. R: R-09/R-10. Deps: T-09. Est: 10. Gate: **D3**.
+- [ ] **T-12** — §5.3.6 note: reframe "reducción superior al 99 %" → "≈99 % (estimación conservadora: 297 ms medidos vs ~30 s estimados, NIST)"; remove ">99 %". R: R-09. Deps: T-11. Est: 8. Gate: **D3**.
+- [ ] **T-13** — §5.10 P1: replace "margen amplio (reducción > 99 %)" with ≈99 % estimado tied to reproducible base. R: R-09. Deps: T-12. Est: 8. Gate: **D3**.
+- [ ] **T-14** — §6.1.1 + §7.2.2: reframe "201.125 (volumen típico…)" → measured corpus 13/07–11/08; projection language only for manual-vs-auto extrapolation. R: R-09. Deps: T-13. Est: 12. Gate: **D3**.
+- [ ] **T-15** — §5.13.1: rewrite "secuencia de siete nodos" → 2+3+3 structure (2 entry / 3 processing / 3 persistence) matching §5.13 table; no standalone node count; "839.504" absent from thesis. R: R-09/R-10. Deps: T-14. Est: 10. Gate: **D3**.
+- [ ] **T-16** — Post-edit proof: greps — `839.504`→0, `>99`→0, `6 nodos|siete nodos`→0, `2+3+3`→≥1, every "13 eventos" in validation-labeled context; user diff review; stage commit. R: R-09/R-10/R-11. Deps: T-15. Est: 5. Gate: —. AC: `Select-String '839.504|>99|siete nodos' tesis-extendida.md` → 0 hits; `git diff` reviewed; `git status` clean.
+
+## Phase 4: Etapa 3 — Higiene y verificación final (R-12..R-14)
+
+- [ ] **T-17** — Root `LICENSE`: verbatim MIT text, `Copyright (c) 2026 Nocturne Society (Crespo, Norton, Santos)` — apply confirms holder string. R: R-12. Deps: T-16. Est: 21. Gate: **LICENSE holder confirm**. AC: `Select-String 'MIT License|2026' LICENSE` hits.
+- [ ] **T-18** — `.github/SECURITY.md`: lab purpose, data-protection posture, validation window, no-auth editor note + `N8N_BASIC_AUTH_*` follow-up (D4). R: R-12 (D4 doc-only). Deps: T-17. Est: 40. Gate: —. AC: `Test-Path .github/SECURITY.md`; directory non-empty.
+- [ ] **T-19** — `README.md`: MIT mention + canonical repo URL + Evidence section (window, no-fabrication — merges T-07 declaration) + monitoring note; keep changes minimal. R: R-12/R-06/R-07. Deps: T-07, T-18. Est: 40. Gate: —. AC: grep README for "MIT" + repo URL + declared window.
+- [ ] **T-20** — `.env.example`: add commented `N8N_BASIC_AUTH` block. R: R-12 (D4). Deps: T-19. Est: 8. Gate: —. AC: `Select-String 'N8N_BASIC_AUTH' .env.example` hits.
+- [ ] **T-21** — Dedicated deletion commit (after initial commit): remove `_tmp300.sql`, `_tmp_kpis.py`, `scripts/_test_parse.py`; commit `chore: remove temp files`. R: R-13. Deps: T-16. Est: 150–300 (deletions). Gate: —. AC: Test-Path false ×3; `git log --diff-filter=D --name-only` lists exactly those 3; `git show <del>^:_tmp300.sql` outputs content.
+- [ ] **T-22** — Create `docs/verificacion-auditoria.md`: full audit table; in-scope C-01..C-04, C-11, C-15, C-17, C-20, C-25, C-28, clause b → VERIFIED + rerunnable command + output; C-07..C-10, C-18, C-19, C-24 → OUT-OF-SCOPE with reasons; BITACORA pointer. R: R-14. Deps: T-21. Est: 120. Gate: —. AC: every in-scope ID has VERIFIED + command + output.
+- [ ] **T-23** — Final re-check: execute every command in `docs/verificacion-auditoria.md` top-to-bottom (incl. `docker compose config`); fix gaps until 0 NOT MET in scope. R: R-14/R-08. Deps: T-22. Est: 10. Gate: —. AC: all commands exit 0; artifact states 0 PARTIAL / 0 NOT MET in scope.
+- [ ] **T-24** — Tag + D1 gate: `git tag -a Honeypot_Cowrie -m "Estado canónico post-Etapas 0–3 (2026-08-18)"` on final commit; D1 authorized → `git push -u origin main --tags`; else BITACORA "push diferido" with exact future command. R: R-04. Deps: T-23. Est: 5. Gate: **D1 push auth + GitHub credentials**. AC: `git tag -l` shows `Honeypot_Cowrie`; if pushed `git ls-remote origin` lists commit + tag; `git status` clean.
+
+## Estimates Summary
+
+Additions ≈ 570–620; deletions ≈ 180–330 (junk files, sizes assumed); total ≈ **750–950 changed lines** vs 800-line budget → **Medium risk** (High if junk files exceed 300 deleted lines).
