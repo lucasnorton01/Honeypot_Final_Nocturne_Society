@@ -29,7 +29,7 @@ se realizó mediante una prueba funcional controlada del pipeline completo, eje
 10 y el 11 de agosto de 2026 (hora local de Argentina, UTC‑3), durante la cual se lanzó un ata‑
 que controlado contra el servicio Telnet de Cowrie que generó 13 eventos: una conexión, tres
 intentos de autenticación (dos fallidos y uno exitoso) y seis comandos de reconocimiento
-post‑explotación. El pipeline automatizado en n8n estructuró el 100 % de los eventos (13/13),
+post‑explotación. Además, se operó una campaña de captura continua entre el 13 de julio y el 11 de agosto de 2026, que registró un corpus de 201.125 eventos con una latencia mínima de procesamiento de 85,496 ms, sobre el cual se validó la escalabilidad del pipeline. El pipeline automatizado en n8n estructuró el 100 % de los eventos (13/13),
 persistió los datos en PostgreSQL, extrajo 4 indicadores de compromiso (1 dirección IP y 3
 credenciales) de forma automática y generó el reporte diario sin intervención manual. Se con‑
 cluye que la integración de honeypots con automatización low‑code constituye una alternativa
@@ -37,7 +37,7 @@ viable y de bajo costo para la generación de inteligencia de amenazas local, r
 ga operativa en comparación con enfoques manuales. La reproducibilidad se garantiza me‑
 diante el repositorio público del proyecto (https://github.com/lucasnorton01/Honeypot_Final_
 Nocturne_Society, tag Honeypot_Cowrie), que contiene los tres workflows JSON, el docker‑
-compose, el DDL y el volcado de la base de datos.
+compose, el DDL y las tablas de análisis derivadas del volcado de la base de datos (Anexo III); la base de datos íntegra y los artefactos de evidencia se conservan fuera del repositorio por diseño.
 Nota: Las comparaciones con procesamiento manual presentadas en este trabajo
 se basan en una línea de base estimada a partir de literatura académica y reportes
 de la industria (NIST SP 800‑61 Rev. 2, 2012; SANS, 2023; ENISA, 2023), no en un
@@ -2216,7 +2216,7 @@ Tabla 5.8:Veriϔicación de criterios cuantitativos
 CriterioTargetValor obtenidoCumplimiento
 Eventos correctamente estructurados≥80 %13/13 (100 %)Sı́
 Credenciales solo como hashSin texto planoSolo hash SHA‑256Sı́
-Reducción vs. procesamiento manual≥50 % tiempo>99 % estimadoSı́
+Reducción vs. procesamiento manual≥50 % tiempo≈99 % estimadoSı́
 IoCs generados automáticamenteAutomática y accionable4/4 (100 %)Sı́
 Reportes sin intervención humanaSin intervención1/1 (100 %)Sı́
 Persistencia y consulta en PostgreSQLOperativaVeriβicadaSı́
@@ -2424,8 +2424,8 @@ contra los cuales se evalúa el desempeño del sistema. Los datos obtenidos du
 de observación permiten contrastar cada hipótesis:
 P1 — Reducción de tiempo (≥ 50 %):El tiempo de procesamiento promedio de 297 ms
 por evento (Anexo III, Tabla III‑1) representa el 1 % del procesamiento manual estimado
-(~30 s/evento según NIST SP 800‑61 Rev. 2). La hipótesis se cumple con margen amplio
-(reducción > 99 %).
+(~30 s/evento según NIST SP 800‑61 Rev. 2). La hipótesis se cumple con una reducción estimada
+de ≈99 %, calculada sobre la línea de base reproducible de §6.1.1.
 P2 — Estructuración de datos (≥ 80 %):El 100 % de los eventos se estructuraron correc‑
 tamente en formato JSON válido (Anexo III, Tabla III‑6), superando el umbral del 80 %.
 La hipótesis se cumple.
@@ -2459,7 +2459,7 @@ bla III‑2).
 caron las credenciales débiles utilizadas en los 3 intentos de autenticación (Anexo III,
 Tabla III‑3). Telnet concentró el 100 % de la actividad (Tabla 5.10).
 5.Evaluar el desempeño de la arquitectura:El tiempo de procesamiento promedio de
-297 ms (máximo: 962 ms) cumple con el target de < 1000 ms. La reducción > 99 %
+297 ms (máximo: 962 ms) cumple con el target de < 1000 ms. La reducción estimada de ≈99 %
 frente al procesamiento manual estimado supera ampliamente el criterio de ≥ 50 %.
 6.Generar lineamientos para la replicación de la arquitectura:Los datos y métricas
 presentados en este capı́tulo constituyen una lı́nea base reproducible que permite a
@@ -2487,10 +2487,7 @@ Patrón aplicado:Webhook Processing, de acuerdo a los patrones de diseño de wo
 n8n.Trigger:WebhookHTTPPOST.Propósito:RecibireventosJSONdesdeCowrieyDionaea,
 validar la estructura del payload, normalizar los campos al schema estándar, enriquecer con
 geolocalización y reputación IP, y persistir en PostgreSQL.
-El workβlow sigue una secuencia de siete nodos: validación del payload, normalización al sche‑
-ma estándar, consulta de geolocalización vı́a ip‑api.com, consulta condicional de reputación
-vı́a AbuseIPDB (siABUSEIPDB_API_KEYestá deβinida), fusión de datos enriquecidos e inser‑
-ción en PostgreSQL. Cada nodo crı́tico posee un error branch que deriva a la tablaerror_log.
+El workβlow se estructura en una secuencia 2+3+3: dos nodos de entrada (Webhook y validación del payload), tres de procesamiento (normalización al schema estándar, consulta de geolocalización vı́a ip‑api.com y consulta condicional de reputación vı́a AbuseIPDB cuando ABUSEIPDB_API_KEY está deβinida) y tres de persistencia (fusión de datos enriquecidos, inserción en PostgreSQL y rutas de error a error_log). Cada nodo crı́tico posee un error branch que deriva a la tablaerror_log.
 Para la descripción completa del diagrama de βlujo, las ejempliβicaciones de payload (Cowrie
 SSH, Dionaea SMB, normalizado y enriquecido), y las conβiguraciones de las APIs de geoloca‑
 lización y reputación, véase Anexo II, Conβig. 1 a Conβig. 7.
@@ -2661,8 +2658,7 @@ aproximadamente6,5 minutos‑hombre(13 × 30 s), una fracción mı́nima de una
 boral. La ventaja de la automatización no reside en este volumen puntual —viable de procesar
 manualmente— sino en su escalabilidad: el pipeline automatizado completa el mismo proce‑
 samiento en ~4 segundos (13 × 297 ms) con 100 % de estructuración y 0 % de errores. A
-modo de proyección, procesar 201.125 eventos (volumen tı́pico de 30 dı́as de exposición se‑
-gún la literatura) requerirı́a ~1.676 horas‑hombre manuales (~210 jornadas laborales de 8 ho‑
+modo de proyección, procesar el corpus medido de 201.125 eventos (13/07–11/08) requerirı́a ~1.676 horas‑hombre manuales (~210 jornadas laborales de 8 ho‑
 ras), mientras que el pipeline lo completarı́a en ~16,6 horas. Esta diferencia evidencia la in‑
 viabilidad del procesamiento manual a escala y constituye la justiβicación operativa central
 de la arquitectura propuesta.
@@ -2917,7 +2913,7 @@ reportado por la documentación de Cowrie (Oosterhof, 2023); la ausencia de err
 sistente con un entorno sin tráβico fragmentado ni alta concurrencia.
 Eβiciencia de procesamiento:El promedio de297 ms(P99: 890 ms) se encuentra muy por
 debajo de la línea de base manual estimada de ~30 s por evento (§6.1.1, Tabla 6.2), con una
-reducción superior al 99 %, lo que valida P1 con margen amplio; la comparación con pipelines
+reducción estimada de ≈99 %, lo que valida P1 con margen amplio; la comparación con pipelines
 artesanales alternativos queda fuera del alcance de este trabajo.
 Generación de IoCs:La generación automática del 100 % de los IoCs (4/4) valida el meca‑
 nismo propuesto; si bien el volumen no es comparable con el rendimiento de un SOC, la auto‑
@@ -3365,8 +3361,8 @@ estimado arrojan diferencias sustanciales: 99 % de reducción en el tiempo de p
 por evento individual (297 ms vs. ~30 s) y 400 % de incremento en la capacidad de proce‑
 samiento diaria estimada (Tabla 6.2).
 Escalabilidad del pipeline.Se proyecta que el diferencial entre el pipeline y el procesamien‑
-to manual crece linealmente con el volumen: para un corpus de 201.125 eventos (volumen
-tı́pico de 30 dı́as de exposición según la literatura), el procesamiento automatizado requeri‑
+to manual crece linealmente con el volumen: para el corpus medido de 201.125 eventos
+(13/07–11/08), el procesamiento automatizado requeri‑
 rı́a ~16,6 horas frente a ~1.676 horas‑hombre manuales (§6.1.1). Esta proyección no fue me‑
 dida en la ventana, por lo que se presenta como resultado sugerido.
 Uniformidad en comportamiento post‑explotación.Los comandos ejecutados tras la au‑
