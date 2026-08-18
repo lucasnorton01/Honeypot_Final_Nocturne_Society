@@ -8,6 +8,10 @@ localmente con el simulador incluido y se procesan por el pipeline completo.
 
 > Proyecto académico — Nocturne Society (Crespo, Norton, Santos) — UTN FRM, Tecnicatura en Programación, 2026.
 
+**Licencia:** MIT — ver [LICENSE](LICENSE).
+
+**Repositorio canónico:** https://github.com/lucasnorton01/Honeypot_Final_Nocturne_Society
+
 ---
 
 ## Arquitectura
@@ -188,9 +192,24 @@ ejecuciones de los tres workflows n8n (`execution_entity` ⋈ `workflow_entity`)
   ejecución programada de `report-generator`; sus únicas 3 ejecuciones fueron corridas manuales
   CLI del 2026-08-11 (ids 32, 66, 119). No se creó ningún registro simulado.
 
+## Monitoreo
+
+- El estado del pipeline se verifica con los comandos de la sección
+  «Verificación del pipeline» (conteos en PostgreSQL + `/report` del log-reader).
+- Las evidencias son artefactos fechados y reproducibles: cada export de n8n
+  incluye ventana declarada, fecha de snapshot y manifest SHA-256.
+- El cron de `report-generator` (`0 8 * * *`) no se disparó durante la
+  validación (declaración íntegra en «Evidencia»); se re-verifica de forma
+  oportunista cuando el stack está en ejecución y cualquier ejecución real
+  posterior al export se documenta en `BITACORA.md`.
+
 ## Seguridad
 
 - El entorno **no expone puertos a Internet**. Cowrie escucha solo en `localhost`
   (puertos 2222/2323) y el resto de servicios se comunican por la red interna de Docker.
 - **No subir al repositorio**: `.env`, tokens, `evidencia/`, ni bases de datos locales.
   Ver `.gitignore`.
+- **Editor de n8n (`http://localhost:5678`): actualmente SIN autenticación** —
+  aceptable solo por ser un laboratorio local aislado. Habilitar
+  `N8N_BASIC_AUTH_*` es el seguimiento documentado (D4; ver `.env.example` y
+  `.github/SECURITY.md`). No exponer el puerto 5678 hasta completarlo.
