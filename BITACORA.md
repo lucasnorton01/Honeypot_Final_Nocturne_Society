@@ -243,6 +243,26 @@ Cada paso de la reestructuración queda registrado aquí con fecha, archivo afec
 
 ---
 
+## Etapa 2 — Reconciliación narrativa (R-08..R-11)
+
+### [2026-08-18] scripts/verificar_reconciliacion.py + .bat — prueba canónica (R-08/R-10)
+- Script stdlib (sqlite3, sin dependencias de terceros) que lee `analitica/honeypot.db` en modo read-only + `analitica/kpis.json` y verifica el diccionario canónico: events 201125, iocs 4234, reports 30, error_log 10660, proto_session 6730, pais_temp 3128, tasa ≈94,70 % ± 0,05, kpis `latencia.min` 85.496, `ips_publicas` 3128. PASS/FAIL por check; exit 0 solo si todos coinciden.
+- **Resultado contra la base real:** 7/7 conteos + tasa + `ips_publicas` coinciden (tasa real 94,6998 %); `latencia.min` reportado −839.504 vs canónico 85.496 → exit 1 (detecta el desvío R-10 — evidencia honesta del estado previo).
+- **Control negativo (R-08):** expectativa de `events` alterada temporalmente a 201126 → `[FAIL] events=201125 (canonical 201126)`, exit 1; restaurada a 201125.
+- Commit `feat(scripts): verificar_reconciliacion.py + wrapper .bat (R-08/R-10)` (15a0c85).
+
+### [2026-08-18] Checkpoint obligatorio de tesis (D3/R-11)
+- `Copy-Item tesis-extendida.md tesis-extendida.md.bak-20260818` — copia byte-idéntica (SHA-256 FDDC62… verificado). El archivo `.bak-*` está deliberadamente en `.gitignore` (diseño, líneas 34-35): es un respaldo local; el estado pristino versionado ya existe en el commit b669726.
+- Commit marcador pre-edición: `chore: checkpoint pre-edicion de tesis (D3)` (6617030) — vacío (`--allow-empty`) porque el `.bak` está ignorado por diseño y la tesis pristina ya está en b669726; el marcador deja constancia en la historia del punto de congelamiento D3. Ninguna edición de tesis puede ocurrir sin este checkpoint.
+
+### [2026-08-18] analitica/kpis.json — latencia.min corregida (R-10)
+- **Artefacto de clock-skew:** el valor −839.504 era un artefacto de desfase de reloj/medición (diff negativo entre `created_at` y `timestamp` en una ventana de microsegundos), no una latencia real. La fuente canónica es `resumen-dataset.json` (85.496 ms).
+- Cambio mínimo: `latencia.min` −839.504 → **85.496**; el resto del archivo intacto. La base no se edita (regla del director: la DB es canónica; se corrige el artefacto derivado).
+- Verificación: `python -c "import json;print(json.load(open('analitica/kpis.json'))['latencia']['min'])"` → 85.496; `scripts/verificar_reconciliacion.py` → exit 0 (todos los checks PASS).
+- Commit `fix(analitica): latencia.min 85.496 (clock-skew artifact)`.
+
+---
+
 ## Pendientes (coordinados con el equipo)
 
 - **Fase D — Reencuadre del documento:** reescribir los Capítulos V–VII de la tesis con los
