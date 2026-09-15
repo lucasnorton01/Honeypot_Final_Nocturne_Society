@@ -1,0 +1,1 @@
+node -e "console.log(require.resolve('sqlite3'))"

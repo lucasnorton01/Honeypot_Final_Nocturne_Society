@@ -1,0 +1,17 @@
+[
+  {
+    "id": "cred-postgres-001",
+    "name": "Postgres",
+    "type": "postgres",
+    "usageScope": "project",
+    "data": {
+      "host": "postgres",
+      "port": 5432,
+      "database": "honeypot",
+      "user": "honeypot",
+      "password": "honeypot_pass",
+      "ssl": "disable",
+      "maxRows": 100
+    }
+  }
+]

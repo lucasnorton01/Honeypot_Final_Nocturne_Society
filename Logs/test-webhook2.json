@@ -1,0 +1,1 @@
+{"eventid":"cowrie.login.success","timestamp":"2026-09-11T14:30:00.000Z","session":"abc123def456","src_ip":"192.168.1.100","src_port":45678,"username":"admin","password":"test123","message":"login attempt [user=admin] succeeded"}

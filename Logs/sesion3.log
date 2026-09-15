@@ -1,0 +1,29 @@
+﻿
+  +----------------------------------------------+
+  |       HONEYPOT LAB - ATTACK SIMULATOR        |
+  |  Simula un atacante real conect├índose al     |
+  |  honeypot Cowrie, ejecuta comandos, y        |
+  |  captura los logs de todo el pipeline.       |
+  +----------------------------------------------+
+
+
+------------------------------------------------------------
+  FASE 1: ATAQUE SIMULADO
+------------------------------------------------------------
+
+  Conectando a 127.0.0.1:2323...
+  Banner recibido: ´┐¢´┐¢login:...
+
+  -- Intentos de login --
+  - Login fallido:  root / root
+  - Login fallido:  test / test
+  - Login fallido:  user / password
+
+  + Login exitoso: admin / test123
+  Shell prompt detectado
+
+  -- Ejecutando comandos --
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$

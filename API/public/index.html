@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cowrie Web — Nocturne Society</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.css">
+</head>
+<body>
+
+  <!-- Skip link for keyboard users -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- ===== LOGIN SCREEN ===== -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">&#x1f6e1;</div>
+      <h2>Cowrie Web</h2>
+      <p class="login-subtitle">Nocturne Society — Honeypot Analysis Platform</p>
+      <form id="login-form" class="login-form">
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input type="text" id="username" name="username" placeholder="admin" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" placeholder="••••••" autocomplete="current-password" required>
+        </div>
+        <div id="login-error" class="login-error" role="alert" style="display: none;"></div>
+        <button type="submit" class="btn btn-login">Ingresar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== MAIN APP (oculta hasta login exitoso) ===== -->
+  <div id="app" class="app hidden">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <span class="logo">&#x1f6e1;</span>
+        <h1>Cowrie Web</h1>
+        <span class="badge">Nocturne Society</span>
+      </div>
+      <div class="header-right">
+        <span id="user-display" class="user-badge"></span>
+        <span id="connection-status" class="status status-disconnected">Desconectado</span>
+        <span id="event-counter" class="event-counter" aria-live="polite">0 eventos</span>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main id="main-content" class="main">
+      <!-- Left panel: Terminal -->
+      <section class="panel panel-terminal" aria-label="Terminal SSH">
+        <div class="panel-header">
+          <span class="panel-title">Terminal SSH — Cowrie</span>
+          <div class="panel-actions">
+            <button id="btn-reconnect" class="btn btn-sm" title="Reconectar" aria-label="Reconectar al honeypot">Reconectar</button>
+            <button id="btn-clear" class="btn btn-sm" title="Limpiar terminal" aria-label="Limpiar terminal">Clear</button>
+          </div>
+        </div>
+        <div id="terminal-container" class="terminal-container"></div>
+        <div class="terminal-hint">
+          Terminal conectada al honeypot Cowrie. Los comandos que escribas serán registrados.
+        </div>
+      </section>
+
+      <!-- Right panel: Events + Dashboard -->
+      <section class="panel panel-dashboard" aria-label="Panel de monitoreo">
+        <!-- Tabs -->
+        <div class="tabs" role="tablist" aria-label="Secciones del panel de monitoreo">
+          <button class="tab active" role="tab" id="tab-btn-events" aria-selected="true" aria-controls="tab-events" tabindex="0" data-tab="events">Eventos en vivo</button>
+          <button class="tab" role="tab" id="tab-btn-metrics" aria-selected="false" aria-controls="tab-metrics" tabindex="-1" data-tab="metrics">Métricas</button>
+          <button class="tab" role="tab" id="tab-btn-iocs" aria-selected="false" aria-controls="tab-iocs" tabindex="-1" data-tab="iocs">IoCs</button>
+          <button class="tab" role="tab" id="tab-btn-commands" aria-selected="false" aria-controls="tab-commands" tabindex="-1" data-tab="commands">Comandos</button>
+          <button class="tab" role="tab" id="tab-btn-dashboard" aria-selected="false" aria-controls="tab-dashboard" tabindex="-1" data-tab="dashboard">Dashboard</button>
+        </div>
+
+        <!-- Tab: Events -->
+        <div id="tab-events" class="tab-content active" role="tabpanel" aria-labelledby="tab-btn-events" tabindex="0">
+          <div id="events-feed" class="events-feed" aria-live="polite" aria-label="Eventos en tiempo real">
+            <div class="events-empty">Esperando eventos...</div>
+          </div>
+        </div>
+
+        <!-- Tab: Metrics -->
+        <div id="tab-metrics" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-metrics" aria-hidden="true" tabindex="-1">
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-value" id="stat-events">0</div>
+              <div class="metric-label">Eventos totales</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value" id="stat-iocs">0</div>
+              <div class="metric-label">IoCs extraídos</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value" id="stat-sessions">0</div>
+              <div class="metric-label">Sesiones</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value stat-highlight" id="stat-reduction">99%</div>
+              <div class="metric-label">Reducción P1</div>
+            </div>
+          </div>
+          <div class="metrics-section">
+            <h3>Top tipos de evento</h3>
+            <div id="top-events-list" class="top-list"></div>
+          </div>
+          <div class="metrics-section">
+            <h3>Top IPs origen</h3>
+            <div id="top-ips-list" class="top-list"></div>
+          </div>
+        </div>
+
+        <!-- Tab: IoCs -->
+        <div id="tab-iocs" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-iocs" aria-hidden="true" tabindex="-1">
+          <div id="iocs-table-container" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>Valor</th>
+                  <th>Contexto</th>
+                  <th>Confianza</th>
+                  <th>Creado</th>
+                </tr>
+              </thead>
+              <tbody id="iocs-tbody">
+                <tr><td colspan="5" class="table-empty">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Commands -->
+        <div id="tab-commands" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-commands" aria-hidden="true" tabindex="-1">
+          <div id="commands-feed" class="commands-feed" aria-live="polite" aria-label="Comandos ejecutados">
+            <div class="events-empty">Los comandos aparecerán aquí cuando se escriban en la terminal...</div>
+          </div>
+        </div>
+
+        <!-- Tab: Dashboard (Landing Page embebida) -->
+        <div id="tab-dashboard" class="tab-content tab-dashboard" role="tabpanel" aria-labelledby="tab-btn-dashboard" aria-hidden="true" tabindex="-1">
+          <iframe src="/landing/index.html" class="dashboard-iframe" title="Dashboard de análisis"></iframe>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>Tesis: Nocturne Society — Honeypot con análisis automatizado de tráfico malicioso</span>
+      <span>Cowrie + PostgreSQL + n8n</span>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.10.0/lib/addon-fit.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-web-links@0.11.0/lib/addon-web-links.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

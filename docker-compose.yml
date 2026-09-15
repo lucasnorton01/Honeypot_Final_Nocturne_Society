@@ -1,0 +1,120 @@
+services:
+
+  # ─────────────────────────────────────────
+  # Cowrie - SSH/Telnet Honeypot
+  # ─────────────────────────────────────────
+  cowrie:
+    image: cowrie/cowrie:latest
+    container_name: cowrie
+    restart: unless-stopped
+    ports:
+      - "2222:2222"
+      - "2323:2223"
+    environment:
+      COWRIE_TELNET_ENABLED: "yes"
+    volumes:
+      - cowrie-var:/cowrie/cowrie-git/var
+      - ./cowrie/cowrie.cfg:/cowrie/cowrie-git/etc/cowrie.cfg:ro
+      - ./cowrie/userdb.txt:/cowrie/cowrie-git/etc/userdb.txt:ro
+    networks:
+      - honeypot-net
+
+  # ─────────────────────────────────────────
+  # Forwarder - tails cowrie.json → POST to n8n
+  # ─────────────────────────────────────────
+  forwarder:
+    build: ./forwarder
+    container_name: forwarder
+    restart: unless-stopped
+    depends_on:
+      - cowrie
+      - n8n
+    volumes:
+      - cowrie-var:/cowrie/var:ro
+    environment:
+      N8N_URL: "http://n8n:5678/webhook/cowrie"
+      COWRIE_LOG: "/cowrie/var/log/cowrie/cowrie.json"
+      POLL_INTERVAL: "0.3"
+      RETRY_DELAY: "5"
+      SESSION_MAX_DURATION: "1800"
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+    networks:
+      - honeypot-net
+
+  # ─────────────────────────────────────────
+  # Log-reader - HTTP endpoint para leer cowrie.json
+  # ─────────────────────────────────────────
+  log-reader:
+    build: ./log-reader
+    container_name: log-reader
+    restart: unless-stopped
+    depends_on:
+      - cowrie
+    ports:
+      - "9000:9000"
+    volumes:
+      - cowrie-var:/cowrie/var:ro
+    environment:
+      COWRIE_LOG: "/cowrie/var/log/cowrie/cowrie.json"
+      PORT: "9000"
+    networks:
+      - honeypot-net
+
+  # ─────────────────────────────────────────
+  # PostgreSQL - Persistencia estructurada
+  # ─────────────────────────────────────────
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-honeypot}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-honeypot_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-honeypot}
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-honeypot} -d ${POSTGRES_DB:-honeypot}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - honeypot-net
+
+  # ─────────────────────────────────────────
+  # n8n - Workflow Automation Engine
+  # ─────────────────────────────────────────
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n-data:/home/node/.n8n
+    environment:
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:-}
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-America/Argentina/Mendoza}
+      ALERT_WEBHOOK_URL: ${ALERT_WEBHOOK_URL:-}
+      PGSSLMODE: disable
+      NODE_TLS_REJECT_UNAUTHORIZED: "0"
+      # DB_* removed: n8n uses SQLite for its own storage.
+      # Workflow PostgreSQL nodes connect via credential "Postgres" (host: postgres)
+    networks:
+      - honeypot-net
+
+volumes:
+  cowrie-var:
+  n8n-data:
+  pg-data:
+
+networks:
+  honeypot-net:
+    driver: bridge

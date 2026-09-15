@@ -1,0 +1,4 @@
+# Cowrie UserDB - valid honeypot credentials
+# Format: username:hashmethod:password (one per line)
+admin:x:test123
+guest:x:guest123

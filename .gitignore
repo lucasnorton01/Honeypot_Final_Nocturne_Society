@@ -1,0 +1,24 @@
+# Secretos y configuración local
+.env
+
+# Bases de datos locales
+*.sqlite
+*.sqlite3
+
+# Datos de volúmenes Docker
+n8n-data/
+pg-data/
+cowrie-var/
+
+# Evidencia generada localmente (logs del simulador, dumps)
+evidencia/
+
+# Python
+__pycache__/
+*.pyc
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+node_modules/

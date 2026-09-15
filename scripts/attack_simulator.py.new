@@ -1,0 +1,350 @@
+﻿#!/usr/bin/env python3
+"""
+Attack Simulator for Honeypot Lab
+---------------------------------
+Simula un atacante conectÃ¡ndose al honeypot Cowrie vÃ­a Telnet,
+captura automÃ¡ticamente los logs de todos los componentes y
+genera un reporte formateado en pantalla + archivo.
+
+Requiere: Python 3.12, Docker Desktop, docker compose
+"""
+
+import socket
+import time
+import subprocess
+import json
+import os
+from datetime import datetime
+from pathlib import Path
+
+# ConfiguraciÃ³n (puede sobrescribirse con variables de entorno)
+TELNET_HOST = os.getenv("TELNET_HOST", "127.0.0.1")
+TELNET_PORT = int(os.getenv("TELNET_PORT", "2323"))
+COMPOSE_DIR = Path(__file__).resolve().parent.parent
+TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
+LOG_FILE = COMPOSE_DIR / "evidencia" / f"ataque_{TIMESTAMP}.log"
+
+# Credenciales vÃ¡lidas del honeypot (deben coincidir con cowrie/userdb.txt)
+# Cada una se sobrescribe con variables de entorno para sesiones variadas.
+VALID_USER = os.getenv("VALID_USER", "admin")
+VALID_PASS = os.getenv("VALID_PASS", "test123")
+# Sesiones variadas:
+#  - FAILED_ATTEMPTS: lista "user:pass" separada por "|" -> intentos que deben fallar
+#  - SUCCESS_ATTEMPT: "user:pass" o vacÃ­o -> si estÃ¡ vacÃ­o, la sesiÃ³n falla en autenticarse del todo
+#  - COMMANDS: lista de comandos separada por "|" -> se ejecutan solo si hay login exitoso
+FAILED_ATTEMPTS = [
+    p for p in (os.getenv("FAILED_ATTEMPTS", "admin:123456|admin:admin").split("|"))
+    if ":" in p
+]
+SUCCESS_ATTEMPT = os.getenv("SUCCESS_ATTEMPT", f"{VALID_USER}:{VALID_PASS}").strip()
+COMMANDS = [c for c in os.getenv("COMMANDS", "whoami|uname -a|cat /etc/passwd|ls -la /home|w|exit").split("|") if c.strip()]
+
+
+def log(msg: str, end="\n"):
+    print(msg, end=end)
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(msg + end)
+
+
+def separator(title: str = ""):
+    line = "â”€" * 60
+    log(f"\n{line}")
+    if title:
+        log(f"  {title}")
+        log(line)
+
+
+def run(cmd: list) -> tuple:
+    result = subprocess.run(cmd, capture_output=True, text=True, cwd=COMPOSE_DIR)
+    return result.stdout.strip(), result.stderr.strip()
+
+
+def run_dc(*args: str) -> str:
+    out, _ = run(["docker", "compose", *args])
+    return out
+
+
+# â”€â”€ FASE 1: ATAQUE SIMULADO VÃA TELNET â”€â”€
+class TelnetSession:
+    """Cliente Telnet minimalista basado en sockets (sin dependencias)."""
+
+    def __init__(self, host: str, port: int, timeout: int = 10):
+        self.sock = socket.create_connection((host, port), timeout=timeout)
+        self.sock.settimeout(timeout)
+        self.buffer = b""
+
+    def read_until(self, marker: bytes, timeout: int = 5) -> bytes:
+        end = time.time() + timeout
+        while time.time() < end:
+            if marker in self.buffer:
+                idx = self.buffer.index(marker) + len(marker)
+                data = self.buffer[:idx]
+                self.buffer = self.buffer[idx:]
+                return data
+            try:
+                chunk = self.sock.recv(4096)
+            except socket.timeout:
+                break
+            if not chunk:
+                break
+            self.buffer += chunk
+        if marker in self.buffer:
+            idx = self.buffer.index(marker) + len(marker)
+            data = self.buffer[:idx]
+            self.buffer = self.buffer[idx:]
+            return data
+        data = self.buffer
+        self.buffer = b""
+        return data
+
+    def read_eager(self, timeout: float = 0.5) -> bytes:
+        end = time.time() + timeout
+        data = b""
+        while time.time() < end:
+            try:
+                chunk = self.sock.recv(4096)
+            except socket.timeout:
+                break
+            except OSError:
+                break
+            if not chunk:
+                break
+            data += chunk
+        if self.buffer:
+            data = self.buffer + data
+            self.buffer = b""
+        return data
+
+    def write(self, data: bytes):
+        self.sock.sendall(data)
+
+    def close(self):
+        try:
+            self.sock.close()
+        except OSError:
+            pass
+
+
+def fase_1_ataque() -> dict:
+    separator("FASE 1: ATAQUE SIMULADO")
+    log(f"\n  Conectando a {TELNET_HOST}:{TELNET_PORT}...")
+
+    tn = TelnetSession(TELNET_HOST, TELNET_PORT, timeout=10)
+
+    banner = tn.read_until(b"login:", timeout=5).decode("utf-8", errors="replace")
+    log(f"  Banner recibido: {banner.strip()[:80]}...")
+
+    attempts = []
+    commands = []
+
+    def try_login(user: str, pwd: str) -> bool:
+        tn.write(user.encode() + b"\r\n")
+        time.sleep(0.3)
+        resp = tn.read_until(b"Password:", timeout=5).decode("utf-8", errors="replace")
+        tn.write(pwd.encode() + b"\r\n")
+        time.sleep(0.8)
+        raw = tn.read_eager(0.8).decode("utf-8", errors="replace")
+        time.sleep(0.8)
+        raw2 = tn.read_eager(0.8).decode("utf-8", errors="replace")
+        full = raw + raw2
+
+        # ClasificaciÃ³n robusta:
+        #  - Fallido: "Login incorrect" o vuelve al prompt "login:"
+        #  - Exitoso: aparece prompt de shell (contiene "@" y "$")
+        failed_hint = "Login incorrect" in full or "login:" in full
+        shell_hint = ("$" in full and "@" in full) or "~$" in full or "# " in full
+        success = shell_hint and not failed_hint
+
+        attempts.append({
+            "username": user,
+            "password": pwd,
+            "success": success,
+            "raw": (resp + full).strip()[-200:]
+        })
+
+        if success:
+            log(f"  âœ“ Login exitoso: {user} / {pwd}")
+        else:
+            log(f"  âœ— Login fallido:  {user} / {pwd}")
+        return success
+
+    log(f"\n  â”€â”€ Intentos de login â”€â”€")
+    for attempt in FAILED_ATTEMPTS:
+        user, pwd = attempt.split(":", 1)
+        try_login(user, pwd)
+
+    log(f"")
+    success = False
+    if SUCCESS_ATTEMPT:
+        s_user, s_pwd = SUCCESS_ATTEMPT.split(":", 1)
+        success = try_login(s_user, s_pwd)
+    else:
+        log(f"  (sin credencial vÃ¡lida: la sesiÃ³n falla en autenticarse del todo)")
+
+    if not success:
+        log(f"\n  [!] No se pudo autenticar, abortando comandos")
+        tn.close()
+        return {"banner": banner.strip(), "attempts": attempts, "commands": []}
+
+    time.sleep(0.5)
+    try:
+        tn.read_eager(0.3).decode("utf-8", errors="replace")
+    except Exception:
+        pass
+    log(f"  Shell prompt detectado")
+
+    cmds_list = COMMANDS or ["whoami", "uname -a", "cat /etc/passwd", "ls -la /home", "w", "exit"]
+
+    log(f"\n  â”€â”€ Ejecutando comandos â”€â”€")
+    for cmd_str in cmds_list:
+        tn.write(cmd_str.encode() + b"\r\n")
+        time.sleep(0.8)
+        try:
+            output = tn.read_eager(0.8).decode("utf-8", errors="replace")
+        except Exception:
+            output = ""
+        lines = [l.strip() for l in output.split("\n") if l.strip()]
+        display = lines[-3:] if lines else []
+        log(f"  $ {cmd_str}")
+        for line in display:
+            log(f"    {line}")
+        commands.append({"command": cmd_str, "output": output.strip()})
+
+    tn.close()
+    log(f"\n  âœ“ ConexiÃ³n cerrada")
+
+    return {
+        "banner": banner.strip(),
+        "attempts": attempts,
+        "commands": commands,
+    }
+
+
+# â”€â”€ FASE 2: CAPTURA DE LOGS â”€â”€
+def fase_2_captura_logs() -> dict:
+    separator("FASE 2: CAPTURA DE LOGS")
+
+    # Cowrie JSON log vÃ­a log-reader HTTP
+    log(f"\n  [1/3] Leyendo cowrie.json vÃ­a log-reader :9000...")
+    cowrie_report = ""
+    try:
+        import urllib.request
+        with urllib.request.urlopen("http://127.0.0.1:9000/report", timeout=10) as r:
+            cowrie_report = r.read().decode("utf-8")
+        log(f"  OK ({len(cowrie_report)} bytes)")
+    except Exception as e:
+        log(f"  WARN: no se pudo leer log-reader ({e})")
+
+    # Forwarder logs
+    log(f"  [2/3] Leyendo forwarder logs...")
+    fwd_logs = run_dc("logs", "forwarder", "--tail", "25")
+    log(f"  OK ({len(fwd_logs)} lÃ­neas)")
+
+    # n8n: verificaciÃ³n de entrega
+    log(f"  [3/3] Verificando entrega en n8n...")
+    n8n_check = run_dc("logs", "n8n", "--tail", "10")
+    log(f"  OK")
+
+    return {
+        "cowrie_json": cowrie_report,
+        "forwarder_logs": fwd_logs,
+        "n8n_logs": n8n_check,
+    }
+
+
+# â”€â”€ FASE 3: REPORTE â”€â”€
+def fase_3_reporte(ataque: dict, logs: dict):
+    separator("FASE 3: REPORTE DE ATAQUE")
+
+    log(f"""
+  â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+  â•‘       HONEYPOT LAB - REPORTE DE ATAQUE       â•‘
+  â•‘       {TIMESTAMP.replace('_', ' ')}             â•‘
+  â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Atacante simulado:  {TELNET_HOST}:{TELNET_PORT} (Telnet)
+  Servicio honeypot:  Cowrie (SSH/Telnet)
+  Total intentos:     {len(ataque.get('attempts', []))}
+  Comandos ejec.:     {len(ataque.get('commands', []))}
+  Pipeline:           Cowrie -> Forwarder -> n8n -> PostgreSQL
+""")
+
+    separator("INTENTOS DE LOGIN")
+    for i, att in enumerate(ataque.get("attempts", []), 1):
+        icon = "âœ“" if att["success"] else "âœ—"
+        log(f"  #{i}  {icon}  {att['username']} / {att['password']}  "
+            f"{'(EXITOSO)' if att['success'] else '(fallido)'}")
+
+    if ataque.get("commands"):
+        separator("COMANDOS EJECUTADOS POR EL ATACANTE")
+        for cmd in ataque["commands"]:
+            log(f"\n  $ {cmd['command']}")
+            if cmd.get("output"):
+                lines = cmd["output"].split("\n")[:5]
+                for line in lines:
+                    log(f"    {line}")
+
+    separator("LOG CRUDO - COWRIE.JSON (reporte log-reader)")
+    if logs.get("cowrie_json"):
+        try:
+            rep = json.loads(logs["cowrie_json"])
+            resumen = rep.get("resumen", {})
+            log(f"  total_eventos:   {resumen.get('total_eventos', '?')}")
+            log(f"  conexiones:      {resumen.get('conexiones', '?')}")
+            log(f"  logins_fallidos: {resumen.get('logins_fallidos', '?')}")
+            log(f"  logins_exitosos: {resumen.get('logins_exitosos', '?')}")
+            log(f"  comandos:        {resumen.get('comandos_ejecutados', '?')}")
+            log(f"  sesiones_unicas: {resumen.get('sesiones_unicas', '?')}")
+            log(f"  ips_unicas:      {resumen.get('ips_unicas', '?')}")
+            ultimos = rep.get("ultimos_20_eventos", [])
+            for ev in ultimos[-8:]:
+                log(f"  [{ev.get('eventid', '?')}] {ev.get('src_ip', '?')} -> {ev.get('message', '')[:80]}")
+        except json.JSONDecodeError:
+            log(f"  (respuesta no JSON)")
+    else:
+        log(f"  (sin datos)")
+
+    separator("FORWARDER - EVENTOS ENVIADOS A N8N")
+    for line in logs.get("forwarder_logs", "").split("\n"):
+        if line.strip():
+            clean = line.split("forwarder  |")[-1] if "forwarder  |" in line else line
+            log(f"  {clean.strip()}")
+
+    separator("N8N - VERIFICACION")
+    log(f"  Revisar en la UI de n8n (http://localhost:5678) las ejecuciones")
+    log(f"  y en PostgreSQL las filas de la tabla events:")
+    log(f"  docker compose exec postgres psql -U honeypot -d honeypot -c 'SELECT count(*) FROM events;'")
+
+    separator()
+    log(f"\n  Reporte guardado en: {LOG_FILE}")
+    log(f"")
+
+
+def main():
+    print(f"""
+  â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+  â•‘       HONEYPOT LAB - ATTACK SIMULATOR        â•‘
+  â•‘  Simula un atacante real conectÃ¡ndose al     â•‘
+  â•‘  honeypot Cowrie, ejecuta comandos, y        â•‘
+  â•‘  captura los logs de todo el pipeline.       â•‘
+  â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+""")
+
+    t_start = time.time()
+
+    ataque = fase_1_ataque()
+
+    log(f"\n  Esperando 3s para que el forwarder procese...")
+    time.sleep(3)
+
+    logs = fase_2_captura_logs()
+
+    fase_3_reporte(ataque, logs)
+
+    elapsed = time.time() - t_start
+    log(f"\n  Tiempo total: {elapsed:.1f}s")
+    log(f"")
+
+
+if __name__ == "__main__":
+    main()

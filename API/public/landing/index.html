@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Arquitectura de honeypots de baja y media interacción (Cowrie y Dionaea) con automatización analítica en n8n. Tablero de análisis sobre corpus sintético de validación, evidencia real en dos entornos y verificación de las hipótesis operativas P1-P4. Trabajo de tesis.">
+<title>Arquitectura de Honeypots con Automatización Analítica en n8n — Tablero de análisis</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --bg-alt: #111827;
+    --card: #1e293b;
+    --card-soft: #243244;
+    --border: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --cyan: #22d3ee;
+    --green: #34d399;
+    --violet: #a78bfa;
+    --amber: #fbbf24;
+    --teal: #2dd4bf;
+    --blue: #60a5fa;
+    --red: #f87171;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .skip-link {
+    position: absolute; left: -9999px; top: 0;
+    background: var(--cyan); color: #0f172a;
+    padding: 10px 16px; border-radius: 0 0 8px 0;
+    font-weight: 600; z-index: 1000;
+  }
+  .skip-link:focus { left: 0; }
+  a { color: var(--cyan); }
+  a:hover { color: #67e8f9; }
+
+  /* Navegación */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 12px 24px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-weight: 700; color: var(--text); text-decoration: none;
+    font-size: 0.95rem; letter-spacing: 0.02em;
+    margin-right: auto;
+  }
+  .nav-brand span { color: var(--cyan); }
+  .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.88rem; padding: 6px 10px; border-radius: 6px;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--card-soft); }
+  .nav-links a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+  /* Secciones */
+  section { padding: 56px 0; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section-title {
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .section-sub {
+    color: var(--muted); margin-bottom: 32px; max-width: 760px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 88px 0 64px;
+    background:
+      radial-gradient(ellipse 60% 55% at 70% 10%, rgba(34, 211, 238, 0.09), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 15% 30%, rgba(52, 211, 153, 0.07), transparent 60%),
+      var(--bg);
+    text-align: center;
+  }
+  .hero-kicker {
+    display: inline-block;
+    font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--cyan); border: 1px solid rgba(34, 211, 238, 0.4);
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
+    background: rgba(34, 211, 238, 0.07);
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4.2vw, 2.9rem);
+    line-height: 1.22; font-weight: 800;
+    max-width: 920px; margin: 0 auto 18px;
+  }
+  .hero-sub {
+    color: var(--muted); font-size: clamp(1rem, 2vw, 1.15rem);
+    max-width: 780px; margin: 0 auto 30px;
+  }
+  .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .badge {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: 0.82rem; color: var(--text);
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 14px;
+  }
+  .badge b { color: var(--cyan); font-weight: 600; }
+  .badge.b-green b { color: var(--green); }
+  .badge.b-violet b { color: var(--violet); }
+  .badge.b-amber b { color: var(--amber); }
+
+  .hero-cta { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 600;
+    padding: 11px 22px; border-radius: 8px; font-size: 0.95rem;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--cyan); color: #0f172a; }
+  .btn-primary:hover { background: #67e8f9; color: #0f172a; }
+  .btn-ghost { border-color: var(--border); color: var(--text); background: var(--card); }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* Tarjetas genéricas */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+  }
+
+  /* Descripción */
+  .desc-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+  .desc-text p + p { margin-top: 14px; }
+  .desc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .desc-list li {
+    background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--cyan);
+    border-radius: 8px; padding: 13px 16px; font-size: 0.95rem;
+  }
+  .desc-list li:nth-child(2) { border-left-color: var(--violet); }
+  .desc-list li:nth-child(3) { border-left-color: var(--green); }
+  .desc-list li strong { color: var(--text); display: block; font-size: 0.98rem; }
+  .desc-list li span { color: var(--muted); font-size: 0.88rem; }
+
+  /* Arquitectura */
+  .flow { list-style: none; display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 24px; }
+  .flow li {
+    position: relative; flex: 1 1 210px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .flow li::after {
+    content: "→"; position: absolute; right: -16px; top: 50%;
+    transform: translateY(-50%); color: var(--cyan);
+    font-size: 19px; font-weight: 700;
+  }
+  .flow li:last-child::after { content: none; }
+  .flow-step {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(34, 211, 238, 0.14); color: var(--cyan);
+    font-family: ui-monospace, Consolas, monospace; font-size: 0.8rem; font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .flow li strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+  .flow li span { color: var(--muted); font-size: 0.88rem; }
+  .workflows { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px; }
+  .workflow-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .workflow-name {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: 0.95rem; font-weight: 700; color: var(--cyan);
+  }
+  .workflow-card:nth-child(2) .workflow-name { color: var(--violet); }
+  .workflow-card:nth-child(3) .workflow-name { color: var(--green); }
+  .workflow-card p { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+  .workflow-schedule {
+    display: inline-block; margin-top: 10px;
+    font-size: 0.78rem; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px;
+    font-family: ui-monospace, Consolas, monospace;
+  }
+
+  /* Datos del estudio */
+  .datos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 20px; }
+  .datos-card { padding: 24px; position: relative; }
+  .datos-badge {
+    display: inline-block; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    border-radius: 6px; padding: 4px 10px; margin-bottom: 14px;
+    background: rgba(34, 211, 238, 0.12); color: var(--cyan);
+    border: 1px solid rgba(34, 211, 238, 0.35);
+  }
+  .datos-card.b-real .datos-badge { background: rgba(52, 211, 153, 0.12); color: var(--green); border-color: rgba(52, 211, 153, 0.35); }
+  .datos-card h3 { font-size: 1.08rem; margin-bottom: 10px; }
+  .datos-card p { color: var(--muted); font-size: 0.94rem; }
+  .datos-card p + p { margin-top: 10px; }
+  .datos-card ul { list-style: none; margin-top: 12px; }
+  .datos-card li {
+    color: var(--muted); font-size: 0.9rem;
+    padding-left: 18px; position: relative; margin-bottom: 6px;
+  }
+  .datos-card li::before { content: "—"; position: absolute; left: 0; color: var(--cyan); }
+  .datos-note {
+    margin-top: 18px; font-size: 0.85rem; color: var(--muted);
+    border: 1px dashed var(--border); border-radius: 8px; padding: 12px 16px;
+  }
+
+  /* Hipótesis operativas */
+  .hip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 18px; margin-bottom: 24px; }
+  .hip-card { padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .hip-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .hip-id {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-weight: 700; font-size: 0.95rem; color: var(--cyan);
+  }
+  .hip-badge {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+    border-radius: 999px; padding: 3px 10px; white-space: nowrap;
+    background: rgba(52, 211, 153, 0.14); color: var(--green); border: 1px solid rgba(52, 211, 153, 0.4);
+  }
+  .hip-badge.b-warn { background: rgba(251, 191, 36, 0.14); color: var(--amber); border-color: rgba(251, 191, 36, 0.4); }
+  .hip-badge.b-bad { background: rgba(248, 113, 113, 0.14); color: var(--red); border-color: rgba(248, 113, 113, 0.4); }
+  .hip-card h3 { font-size: 1rem; }
+  .hip-card p { color: var(--muted); font-size: 0.88rem; }
+  .hip-metric { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+  .hip-metric .val { font-family: ui-monospace, Consolas, monospace; font-size: 1.5rem; font-weight: 700; color: var(--text); white-space: nowrap; }
+  .hip-metric .thr { color: var(--muted); font-size: 0.82rem; }
+
+  /* KPIs */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+    gap: 14px; margin-bottom: 28px;
+  }
+  .kpi {
+    background: var(--card); border: 1px solid var(--border);
+    border-top: 3px solid var(--cyan);
+    border-radius: var(--radius); padding: 18px 20px;
+  }
+  .kpi:nth-child(2) { border-top-color: var(--green); }
+  .kpi:nth-child(3) { border-top-color: var(--violet); }
+  .kpi:nth-child(4) { border-top-color: var(--amber); }
+  .kpi:nth-child(5) { border-top-color: var(--teal); }
+  .kpi:nth-child(6) { border-top-color: var(--blue); }
+  .kpi-value {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+    font-weight: 700; line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    color: var(--cyan);
+  }
+  .kpi:nth-child(2) .kpi-value { color: var(--green); }
+  .kpi:nth-child(3) .kpi-value { color: var(--violet); }
+  .kpi:nth-child(4) .kpi-value { color: var(--amber); }
+  .kpi:nth-child(5) .kpi-value { color: var(--teal); }
+  .kpi:nth-child(6) .kpi-value { color: var(--blue); }
+  .kpi-label { font-size: 0.92rem; font-weight: 600; margin-top: 6px; }
+  .kpi-sub { color: var(--muted); font-size: 0.8rem; margin-top: 3px; }
+
+  /* Gráficos */
+  .charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr));
+    gap: 18px;
+  }
+  .chart-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 20px 14px;
+  }
+  .chart-card.span-full { grid-column: 1 / -1; }
+  .chart-title { font-size: 1.02rem; font-weight: 700; margin-bottom: 4px; }
+  .chart-note { color: var(--muted); font-size: 0.82rem; margin-bottom: 12px; }
+  .chart-box { position: relative; height: 300px; }
+  .chart-fuente {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px solid rgba(51, 65, 85, 0.6);
+    color: var(--muted); font-size: 0.78rem;
+  }
+  .chart-fuente code {
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.74rem; color: var(--teal);
+  }
+
+  /* Enlaces */
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; }
+  .link-card {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px; text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+  .link-card:hover { border-color: var(--cyan); }
+  .link-icon {
+    flex: 0 0 auto; width: 42px; height: 42px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem; font-weight: 800;
+    background: rgba(34, 211, 238, 0.12); color: var(--cyan);
+  }
+  .link-card.l-audit .link-icon { background: rgba(52, 211, 153, 0.12); color: var(--green); }
+  .link-card h3 { font-size: 1rem; color: var(--text); }
+  .link-card p { color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+  .link-card .link-url { font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; color: var(--cyan); word-break: break-all; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    background: var(--bg-alt);
+    padding: 34px 0 40px;
+    margin-top: 40px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; text-align: center; }
+  .footer-main { font-size: 0.92rem; color: var(--text); }
+  .footer-sub { color: var(--muted); font-size: 0.82rem; margin-top: 8px; }
+
+  @media (max-width: 900px) {
+    .desc-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    section { padding: 40px 0; }
+    .hero { padding: 60px 0 44px; }
+    .flow li::after { display: none; }
+    .chart-box { height: 260px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<nav class="nav" aria-label="Navegación principal">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#inicio">Honeypot<span>Lab</span> · n8n</a>
+    <div class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#descripcion">Descripción</a>
+      <a href="#arquitectura">Arquitectura</a>
+      <a href="#datos">Datos del estudio</a>
+      <a href="#hipotesis">Hipótesis</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#enlaces">Enlaces</a>
+    </div>
+  </div>
+</nav>
+
+<main id="contenido">
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero" id="inicio">
+    <div class="container">
+      <span class="hero-kicker">Trabajo de tesis · Tecnicatura Universitaria en Programación</span>
+      <h1>Arquitectura de Honeypots de Baja y Media Interacción con Automatización Analítica en n8n</h1>
+      <p class="hero-sub">
+        Diseño, implementación y validación de un pipeline automatizado de análisis de amenazas:
+        captura de eventos, estructuración, enriquecimiento, extracción de indicadores de compromiso (IoCs)
+        y generación de reportes, verificado sobre un corpus sintético de escala, evidencia real en dos
+        entornos de despliegue independientes y las cuatro hipótesis operativas del trabajo (P1–P4).
+      </p>
+      <div class="badges" aria-label="Tecnologías utilizadas">
+        <span class="badge"><b>Cowrie</b> SSH / Telnet</span>
+        <span class="badge b-green"><b>Dionaea</b> SMB / HTTP</span>
+        <span class="badge b-violet"><b>n8n</b> Automatización</span>
+        <span class="badge b-amber"><b>PostgreSQL</b> Persistencia</span>
+        <span class="badge"><b>Docker</b> Contenedores</span>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#dashboard">Ver tablero de análisis</a>
+        <a class="btn btn-ghost" href="#hipotesis">Ver hipótesis verificadas</a>
+        <a class="btn btn-ghost" href="#datos">Acerca de los datos</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== DESCRIPCIÓN ===================== -->
+  <section id="descripcion" aria-labelledby="titulo-descripcion">
+    <div class="container">
+      <h2 class="section-title" id="titulo-descripcion">Descripción del trabajo</h2>
+      <p class="section-sub">Qué se construyó y por qué.</p>
+      <div class="desc-grid">
+        <div class="desc-text">
+          <p>
+            Este trabajo final presenta el diseño y la implementación de una arquitectura de honeypots de baja y media
+            interacción integrada con un pipeline automatizado de análisis. Los honeypots <strong>Cowrie</strong>
+            (SSH y Telnet) y <strong>Dionaea</strong> (SMB y HTTP) capturan el tráfico de ataque en un entorno aislado;
+            un servicio <strong>forwarder</strong> reenvía los eventos a la plataforma de automatización
+            <strong>n8n</strong>, que se encarga de la ingesta, la normalización, el enriquecimiento, la extracción de
+            indicadores de compromiso (IoCs) y la generación de reportes.
+          </p>
+          <p>
+            Toda la información se persiste en <strong>PostgreSQL</strong> (eventos, IoCs, reportes y registro de
+            errores del pipeline) y se consolida en un tablero de análisis reproducible. El sistema se valida con un
+            corpus sintético de 201.125 eventos generado por scripts reproducibles y con una prueba funcional
+            controlada de 13 eventos reales capturados en el laboratorio.
+          </p>
+        </div>
+        <ul class="desc-list">
+          <li><strong>Captura</strong><span>Honeypots de baja y media interacción en contenedores Docker, sin exposición a Internet.</span></li>
+          <li><strong>Análisis automatizado</strong><span>Workflows de n8n: ingesta, extracción de IoCs y generación de reportes.</span></li>
+          <li><strong>Persistencia y evidencia</strong><span>PostgreSQL como fuente canónica y evidencia fechada y reproducible.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ARQUITECTURA ===================== -->
+  <section id="arquitectura" aria-labelledby="titulo-arquitectura" style="background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <h2 class="section-title" id="titulo-arquitectura">Arquitectura del sistema</h2>
+      <p class="section-sub">
+        Flujo de datos: de la captura del tráfico de ataque a la persistencia estructurada y la generación de reportes.
+      </p>
+
+      <ol class="flow">
+        <li>
+          <span class="flow-step" aria-hidden="true">1</span>
+          <strong>Honeypots</strong>
+          <span>Cowrie (SSH/Telnet) y Dionaea (SMB/HTTP) registran cada interacción en formato JSON.</span>
+        </li>
+        <li>
+          <span class="flow-step" aria-hidden="true">2</span>
+          <strong>Forwarder</strong>
+          <span>Lee el log de Cowrie y reenvía cada evento por webhook HTTP a n8n, con reintentos y cola de respaldo.</span>
+        </li>
+        <li>
+          <span class="flow-step" aria-hidden="true">3</span>
+          <strong>n8n</strong>
+          <span>Tres workflows automatizados: event-ingest, ioc-extractor y report-generator.</span>
+        </li>
+        <li>
+          <span class="flow-step" aria-hidden="true">4</span>
+          <strong>PostgreSQL</strong>
+          <span>Persistencia estructurada: events, iocs, reports y error_log, con esquema versionado.</span>
+        </li>
+      </ol>
+
+      <div class="workflows">
+        <div class="workflow-card">
+          <span class="workflow-name">event-ingest</span>
+          <p>Recibe los eventos por webhook (POST /webhook/cowrie), normaliza el formato y los inserta en la tabla events con SQL parametrizado.</p>
+          <span class="workflow-schedule">Webhook · tiempo real</span>
+        </div>
+        <div class="workflow-card">
+          <span class="workflow-name">ioc-extractor</span>
+          <p>Consulta los eventos sin procesar, extrae indicadores de compromiso (IP, credencial, comando, hash, dominio, URL) con nivel de confianza y los persiste en iocs.</p>
+          <span class="workflow-schedule">Schedule · cada 15 minutos</span>
+        </div>
+        <div class="workflow-card">
+          <span class="workflow-name">report-generator</span>
+          <p>Ejecuta consultas agregadas (eventos, IPs, credenciales, comandos por sesión) y genera un reporte diario en la tabla reports.</p>
+          <span class="workflow-schedule">Schedule · diario (08:00)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DATOS DEL ESTUDIO ===================== -->
+  <section id="datos" aria-labelledby="titulo-datos">
+    <div class="container">
+      <h2 class="section-title" id="titulo-datos">Datos del estudio</h2>
+      <p class="section-sub">
+        El tablero presenta los indicadores del corpus sintético de validación junto con la evidencia
+        real recolectada en dos entornos de despliegue independientes, usada para verificar las hipótesis
+        operativas P1–P4 (§4.9 y §7.2.1 de la tesis).
+      </p>
+      <div class="datos-grid">
+        <div class="card datos-card">
+          <span class="datos-badge">Dataset sintético de validación</span>
+          <h3>Corpus de 201.125 eventos (30 días simulados)</h3>
+          <p>
+            Generado con scripts reproducibles sobre un perfil de ataque calibrado, simulando
+            30 días de exposición entre el 13/07/2026 y el 11/08/2026. Persistido en PostgreSQL y
+            verificado contra los KPIs maestros del repositorio. Se usa únicamente como verificación
+            de escala del mecanismo de extracción, no como evidencia de las hipótesis.
+          </p>
+          <ul>
+            <li>Tasa de estructuración: 94,7 % (190.465 estructurados).</li>
+            <li>6.730 sesiones totales · 4.234 IoCs generados.</li>
+            <li>30 reportes automatizados por el pipeline.</li>
+          </ul>
+        </div>
+        <div class="card datos-card b-real">
+          <span class="datos-badge">Entorno original — evidencia real</span>
+          <h3>13 eventos de la sesión d7525579e2e2 + 9 sesiones adicionales (11/09)</h3>
+          <p>
+            Ataque controlado contra el honeypot Cowrie en el laboratorio aislado (11/08/2026) con
+            credenciales válidas (admin:test123), más nueve sesiones adicionales ejecutadas el
+            11/09/2026 para reforzar la muestra de las hipótesis P3 y P4 sobre datos reales.
+          </p>
+          <ul>
+            <li>Extracción de IoCs: 9 de 9 sesiones con IoC de comando (100 %, IC 95 % Wilson [70,1 %, 100 %]).</li>
+            <li>Reportes automatizados: 7 de 8 ataques de interés cubiertos (87,5 %, medición original de P4).</li>
+            <li>Generación de reportes verificada contra el disparador programado (sin intervención manual).</li>
+          </ul>
+        </div>
+        <div class="card datos-card b-real">
+          <span class="datos-badge">Segundo entorno — portabilidad</span>
+          <h3>5 sesiones reales tras redespliegue completo desde cero</h3>
+          <p>
+            Stack completo (Cowrie, Dionaea, n8n, PostgreSQL) redesplegado en una segunda estación de
+            trabajo siguiendo la documentación del repositorio, sin exposición previa del entorno.
+            Valida la portabilidad de la arquitectura y aporta una segunda medición de P4.
+          </p>
+          <ul>
+            <li>4 de 5 sesiones con IoC de comando (80 %, IC 95 % Wilson [37,6 %, 96,4 %]).</li>
+            <li>Reportes automatizados: 4 de 4 ataques de interés cubiertos (100 %, IC 95 % Wilson [71,2 %, 100 %]), tras corregir el disparador a modo Schedule y auditar el modo de ejecución (<code>trigger</code>, no manual).</li>
+            <li>Defecto de agregación de IPs detectado y documentado como limitación técnica (§6.7.2).</li>
+          </ul>
+        </div>
+      </div>
+      <p class="datos-note">
+        Nota metodológica: la tesis declara el corpus de 201.125 eventos como sintético, generado de forma
+        reproducible para validar el pipeline de análisis a escala. No corresponde a tráfico real de Internet
+        y no se usa como evidencia de las hipótesis operativas. Toda la evidencia usada para verificar P1–P4
+        proviene de sesiones reales: 13 eventos + 9 sesiones en el entorno original y 5 sesiones en el
+        segundo entorno de despliegue. Ver la sección <a href="#hipotesis">Hipótesis operativas</a> para el
+        detalle de cada verificación.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== HIPÓTESIS OPERATIVAS ===================== -->
+  <section id="hipotesis" aria-labelledby="titulo-hipotesis" style="background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <h2 class="section-title" id="titulo-hipotesis">Hipótesis operativas</h2>
+      <p class="section-sub">
+        Verificación de las cuatro hipótesis operativas (P1–P4) definidas en §4.9 de la tesis, con los
+        umbrales exigidos, los resultados observados sobre datos reales y el veredicto de cada una
+        (Tabla 7.1, §7.2.1).
+      </p>
+
+      <div class="hip-grid">
+        <div class="card hip-card">
+          <div class="hip-head"><span class="hip-id">P1</span><span class="hip-badge">Aceptada</span></div>
+          <h3>Reducción de tiempo de procesamiento</h3>
+          <p>Umbral: ≥ 50 % de reducción frente al tiempo manual estimado (30 s por evento).</p>
+          <div class="hip-metric"><span class="val">99&nbsp;%</span><span class="thr">de reducción · 297 ms/evento</span></div>
+        </div>
+        <div class="card hip-card">
+          <div class="hip-head"><span class="hip-id">P2</span><span class="hip-badge">Aceptada</span></div>
+          <h3>Estructuración de datos</h3>
+          <p>Umbral: ≥ 80 % de eventos estructurados en JSON válido.</p>
+          <div class="hip-metric"><span class="val">100&nbsp;%</span><span class="thr">13/13 eventos estructurados</span></div>
+        </div>
+        <div class="card hip-card">
+          <div class="hip-head"><span class="hip-id">P3</span><span class="hip-badge">Confirmada (amplio)</span></div>
+          <h3>Generación de IoCs</h3>
+          <p>Umbral: ≥ 70 % de sesiones con actividad maliciosa confirmada que generan al menos un IoC.</p>
+          <div class="hip-metric"><span class="val">100&nbsp;%</span><span class="thr">n = 9 · IC 95 % Wilson [70,1 %, 100 %]</span></div>
+          <p>Indicador más exigente (IoC de tipo comando): 1 de 9 sesiones — <em>sugerida, no confirmada</em>.</p>
+        </div>
+        <div class="card hip-card">
+          <div class="hip-head"><span class="hip-id">P4</span><span class="hip-badge b-warn">Mixta</span></div>
+          <h3>Reportes automatizados</h3>
+          <p>Umbral: ≥ 90 % de ataques de interés (sesión con autenticación exitosa) cubiertos por reporte automático, sin intervención manual.</p>
+          <div class="hip-metric"><span class="val">87,5&nbsp;%</span><span class="thr">medición original · n = 8 · no confirmada</span></div>
+          <div class="hip-metric"><span class="val">100&nbsp;%</span><span class="thr">validación complementaria · n = 4 · confirmada</span></div>
+        </div>
+      </div>
+
+      <div class="chart-card span-full" style="margin-bottom: 8px;">
+        <h3 class="chart-title">Resultado observado vs. umbral exigido</h3>
+        <p class="chart-note">Indicadores porcentuales de P2, P3 y P4, comparados contra el umbral definido en §4.9</p>
+        <div class="chart-box">
+          <canvas id="chHipotesis" role="img" aria-label="Gráfico de barras agrupadas: resultado observado y umbral exigido para cada indicador de hipótesis"></canvas>
+        </div>
+        <p class="chart-fuente">Fuente: Tabla 7.1, §7.2.1 de la tesis · evidencia real (Anexo II/III)</p>
+      </div>
+      <p class="datos-note">
+        La validación complementaria de P4 (100 %, n = 4) se obtuvo en el segundo entorno de despliegue
+        tras corregir el disparador del workflow report-generator de modo manual a Schedule Trigger, y
+        auditar contra el historial de ejecuciones de n8n que la corrida usada tuvo <code>mode = trigger</code>,
+        no manual. No reemplaza la medición original (87,5 %, n = 8); se reporta como evidencia adicional
+        sobre una muestra más pequeña de un entorno recién desplegado.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== DASHBOARD ===================== -->
+  <section id="dashboard" aria-labelledby="titulo-dashboard" style="background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <h2 class="section-title" id="titulo-dashboard">Tablero de análisis</h2>
+      <p class="section-sub">
+        Indicadores maestros y distribuciones del corpus sintético de validación.
+        Los gráficos se generan en el navegador a partir de los datos embebidos; la página funciona sin conexión.
+      </p>
+
+      <div class="kpi-grid" aria-label="Indicadores clave">
+        <div class="kpi">
+          <div class="kpi-value">201.125</div>
+          <div class="kpi-label">Eventos capturados</div>
+          <div class="kpi-sub">Corpus sintético de validación · 30 días</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-value">94,7&nbsp;%</div>
+          <div class="kpi-label">Tasa de estructuración</div>
+          <div class="kpi-sub">190.465 estructurados · 10.660 no estructurados</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-value">6.730</div>
+          <div class="kpi-label">Sesiones totales</div>
+          <div class="kpi-sub">4.310 confirmadas · 92,3 % con IoC</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-value">4.234</div>
+          <div class="kpi-label">IoCs generados</div>
+          <div class="kpi-sub">3.128 IP · 462 dominio · 284 URL · 147 hash · 124 credencial · 89 comando</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-value">297&nbsp;ms</div>
+          <div class="kpi-label">Latencia media del pipeline</div>
+          <div class="kpi-sub">p99: 890 ms · n = 201.125</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-value">30</div>
+          <div class="kpi-label">Reportes automatizados</div>
+          <div class="kpi-sub">Generados por el workflow report-generator</div>
+        </div>
+      </div>
+
+      <div class="charts">
+        <!-- 1. Eventos por día -->
+        <article class="chart-card span-full">
+          <h3 class="chart-title">Eventos por día</h3>
+          <p class="chart-note">Serie temporal diaria del corpus sintético · 30 días (13/07/2026 – 11/08/2026)</p>
+          <div class="chart-box">
+            <canvas id="chEventosDia" role="img" aria-label="Gráfico de línea: eventos por día durante 30 días, con picos alrededor del 20 de julio y el 31 de julio"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a02_eventos_por_dia.csv</code></p>
+        </article>
+
+        <!-- 2. Eventos por hora -->
+        <article class="chart-card">
+          <h3 class="chart-title">Eventos por hora</h3>
+          <p class="chart-note">Distribución horaria · pico a las 04:00 con 28.050 eventos</p>
+          <div class="chart-box">
+            <canvas id="chEventosHora" role="img" aria-label="Gráfico de barras: eventos por hora del día, con el pico máximo a las 4 de la mañana"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a10_eventos_por_hora.csv</code></p>
+        </article>
+
+        <!-- 3. Sesiones por protocolo -->
+        <article class="chart-card">
+          <h3 class="chart-title">Sesiones por protocolo</h3>
+          <p class="chart-note">Distribución de las 6.730 sesiones · SSH concentra la mayoría</p>
+          <div class="chart-box">
+            <canvas id="chSesionesProto" role="img" aria-label="Gráfico de anillo: sesiones por protocolo, SSH mayoritario"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a09_sesiones_por_protocolo.csv</code></p>
+        </article>
+
+        <!-- 4. Eventos por protocolo -->
+        <article class="chart-card">
+          <h3 class="chart-title">Eventos por protocolo</h3>
+          <p class="chart-note">Volumen capturado por protocolo y honeypot</p>
+          <div class="chart-box">
+            <canvas id="chEventosProto" role="img" aria-label="Gráfico de barras horizontales: eventos por protocolo, SSH dominante"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a01_eventos_por_protocolo.csv</code></p>
+        </article>
+
+        <!-- 5. Top 10 comandos -->
+        <article class="chart-card">
+          <h3 class="chart-title">Top 10 comandos ejecutados</h3>
+          <p class="chart-note">Comandos más frecuentes en las sesiones capturadas</p>
+          <div class="chart-box">
+            <canvas id="chTopComandos" role="img" aria-label="Gráfico de barras horizontales: los diez comandos más ejecutados"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a05_top10_comandos.csv</code></p>
+        </article>
+
+        <!-- 6. Top 10 credenciales -->
+        <article class="chart-card">
+          <h3 class="chart-title">Top 10 credenciales más intentadas</h3>
+          <p class="chart-note">Pares de usuario/contraseña con más intentos de acceso</p>
+          <div class="chart-box">
+            <canvas id="chTopCredenciales" role="img" aria-label="Gráfico de barras: las diez credenciales más intentadas, con admin en primer lugar"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a04_top10_credenciales.csv</code></p>
+        </article>
+
+        <!-- 7. Top 15 IPs -->
+        <article class="chart-card">
+          <h3 class="chart-title">Top 15 IPs atacantes</h3>
+          <p class="chart-note">Direcciones IP con mayor volumen de eventos</p>
+          <div class="chart-box">
+            <canvas id="chTopIPs" role="img" aria-label="Gráfico de barras horizontales: las quince direcciones IP con más eventos"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a03_top15_ips.csv</code></p>
+        </article>
+
+        <!-- 8. IoCs por tipo -->
+        <article class="chart-card">
+          <h3 class="chart-title">IoCs por tipo</h3>
+          <p class="chart-note">Composición de los 4.234 indicadores de compromiso</p>
+          <div class="chart-box">
+            <canvas id="chIocsTipo" role="img" aria-label="Gráfico de anillo: indicadores de compromiso por tipo, las direcciones IP son mayoría"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a06_iocs_por_tipo_confianza.csv</code></p>
+        </article>
+
+        <!-- 9. IoCs por confianza -->
+        <article class="chart-card">
+          <h3 class="chart-title">IoCs por nivel de confianza</h3>
+          <p class="chart-note">Concentración por tipo según nivel: ALTO, MEDIO y BAJO</p>
+          <div class="chart-box">
+            <canvas id="chIocsConfianza" role="img" aria-label="Gráfico de barras apiladas: indicadores de compromiso por tipo y nivel de confianza"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a06_iocs_por_tipo_confianza.csv</code></p>
+        </article>
+
+        <!-- 10. Eventos por país -->
+        <article class="chart-card">
+          <h3 class="chart-title">Eventos por país</h3>
+          <p class="chart-note">Origen geográfico de las 3.128 IPs públicas · China lidera el volumen</p>
+          <div class="chart-box">
+            <canvas id="chPaises" role="img" aria-label="Gráfico de barras horizontales: eventos por país de origen de las direcciones IP"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a11_ips_por_pais.csv</code></p>
+        </article>
+
+        <!-- 11. Errores del pipeline -->
+        <article class="chart-card">
+          <h3 class="chart-title">Errores del pipeline por nodo</h3>
+          <p class="chart-note">Workflow event-ingest · 10.660 errores totales</p>
+          <div class="chart-box">
+            <canvas id="chErroresNodo" role="img" aria-label="Gráfico de barras: errores del pipeline por nodo, el enriquecimiento acumula la mayor cantidad"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/tablas/tabla_a07_error_log_por_nodo.csv</code></p>
+        </article>
+
+        <!-- 12. Latencia -->
+        <article class="chart-card span-full">
+          <h3 class="chart-title">Distribución de latencia del pipeline</h3>
+          <p class="chart-note">Resumen de la latencia end-to-end · n = 201.125 · desviación estándar: 221,049 ms</p>
+          <div class="chart-box">
+            <canvas id="chLatencia" role="img" aria-label="Gráfico de barras: resumen de latencia del pipeline en milisegundos, con media, mínimo, percentiles 50, 95 y 99, y máximo"></canvas>
+          </div>
+          <p class="chart-fuente">Fuente: Elaboración propia · <code>analitica/kpis.json</code> (valores canónicos)</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ENLACES ===================== -->
+  <section id="enlaces" aria-labelledby="titulo-enlaces">
+    <div class="container">
+      <h2 class="section-title" id="titulo-enlaces">Recursos del proyecto</h2>
+      <p class="section-sub">Repositorio, documentación e informe de auditoría.</p>
+      <div class="links-grid">
+        <a class="link-card" href="https://github.com/lucasnorton01/Honeypot_Final_Nocturne_Society" target="_blank" rel="noopener noreferrer">
+          <span class="link-icon" aria-hidden="true">GH</span>
+          <div>
+            <h3>Repositorio GitHub</h3>
+            <p>Código del proyecto: honeypots, workflows de n8n, scripts y documentación.</p>
+            <span class="link-url">github.com/lucasnorton01/Honeypot_Final_Nocturne_Society</span>
+          </div>
+        </a>
+        
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p class="footer-main">Elaboración propia — Trabajo de tesis. Corpus sintético de validación + evidencia real en dos entornos + verificación de hipótesis P1–P4.</p>
+    <p class="footer-sub">Nocturne Society (Crespo, Norton, Santos) · UTN FRM · 2026 · Tablero estático: funciona sin conexión a Internet.</p>
+  </div>
+</footer>
+
+<!-- Chart.js local (funciona con doble clic, sin CDN) -->
+<script src="chart.umd.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+   * DATOS EMBEBIDOS — copia exacta de analitica/kpis.json
+   * y de analitica/tablas/*.csv (fuente canónica del proyecto).
+   * La página no realiza ninguna solicitud de red (file:// OK).
+   * ============================================================ */
+  var DATOS = {
+    kpis: {
+      eventos: 201125,
+      estructurados: 190465,
+      no_estructurados: 10660,
+      tasa_estructuracion_pct: 94.7,
+      iocs_total: 4234,
+      iocs_por_tipo: { command: 89, credential: 124, domain: 462, hash: 147, ip: 3128, url: 284 },
+      iocs_por_confianza: { ALTO: 1482, MEDIO: 1998, BAJO: 754 },
+      sesiones_totales: 6730,
+      sesiones_confirmadas: 4310,
+      sesiones_con_ioc: 3978,
+      pct_sesiones_con_ioc: 92.3,
+      latencia: { n: 201125, media: 297.02, desviacion: 221.049, min: 85.496, p50: 292.957, p95: 604.0, p99: 890.0, max: 961.607 },
+      pico_horario: { hora: "04:00", eventos_hora: 28050 }
+    },
+    a01_eventos_por_protocolo: [
+      { protocolo: "ssh", honeypot: "cowrie", eventos: 142187 },
+      { protocolo: "smb", honeypot: "dionaea", eventos: 24023 },
+      { protocolo: "http", honeypot: "dionaea", eventos: 19868 },
+      { protocolo: "telnet", honeypot: "cowrie", eventos: 15047 }
+    ],
+    a02_eventos_por_dia: [
+      { dia: "2026-07-13", eventos: 6277, ips_unicas: 212, sesiones: 219 },
+      { dia: "2026-07-14", eventos: 6738, ips_unicas: 220, sesiones: 226 },
+      { dia: "2026-07-15", eventos: 6633, ips_unicas: 212, sesiones: 217 },
+      { dia: "2026-07-16", eventos: 5713, ips_unicas: 192, sesiones: 198 },
+      { dia: "2026-07-17", eventos: 6259, ips_unicas: 214, sesiones: 219 },
+      { dia: "2026-07-18", eventos: 7260, ips_unicas: 230, sesiones: 233 },
+      { dia: "2026-07-19", eventos: 6586, ips_unicas: 219, sesiones: 226 },
+      { dia: "2026-07-20", eventos: 11260, ips_unicas: 370, sesiones: 382 },
+      { dia: "2026-07-21", eventos: 6608, ips_unicas: 210, sesiones: 213 },
+      { dia: "2026-07-22", eventos: 6223, ips_unicas: 205, sesiones: 208 },
+      { dia: "2026-07-23", eventos: 6337, ips_unicas: 201, sesiones: 204 },
+      { dia: "2026-07-24", eventos: 7258, ips_unicas: 230, sesiones: 235 },
+      { dia: "2026-07-25", eventos: 5645, ips_unicas: 195, sesiones: 197 },
+      { dia: "2026-07-26", eventos: 5891, ips_unicas: 193, sesiones: 200 },
+      { dia: "2026-07-27", eventos: 6601, ips_unicas: 215, sesiones: 222 },
+      { dia: "2026-07-28", eventos: 7148, ips_unicas: 232, sesiones: 238 },
+      { dia: "2026-07-29", eventos: 6398, ips_unicas: 214, sesiones: 221 },
+      { dia: "2026-07-30", eventos: 7188, ips_unicas: 231, sesiones: 234 },
+      { dia: "2026-07-31", eventos: 10108, ips_unicas: 321, sesiones: 338 },
+      { dia: "2026-08-01", eventos: 6863, ips_unicas: 218, sesiones: 226 },
+      { dia: "2026-08-02", eventos: 6377, ips_unicas: 206, sesiones: 208 },
+      { dia: "2026-08-03", eventos: 6861, ips_unicas: 222, sesiones: 226 },
+      { dia: "2026-08-04", eventos: 6838, ips_unicas: 223, sesiones: 230 },
+      { dia: "2026-08-05", eventos: 7107, ips_unicas: 226, sesiones: 235 },
+      { dia: "2026-08-06", eventos: 6370, ips_unicas: 206, sesiones: 210 },
+      { dia: "2026-08-07", eventos: 6943, ips_unicas: 228, sesiones: 235 },
+      { dia: "2026-08-08", eventos: 3335, ips_unicas: 115, sesiones: 116 },
+      { dia: "2026-08-09", eventos: 7124, ips_unicas: 228, sesiones: 237 },
+      { dia: "2026-08-10", eventos: 5684, ips_unicas: 191, sesiones: 195 },
+      { dia: "2026-08-11", eventos: 5492, ips_unicas: 183, sesiones: 186 }
+    ],
+    a03_top15_ips: [
+      { src_ip: "125.120.124.40", eventos: 249, sesiones: 7 },
+      { src_ip: "156.30.125.65", eventos: 229, sesiones: 8 },
+      { src_ip: "160.177.51.131", eventos: 222, sesiones: 7 },
+      { src_ip: "112.80.111.1", eventos: 221, sesiones: 6 },
+      { src_ip: "210.158.133.75", eventos: 219, sesiones: 6 },
+      { src_ip: "213.138.17.124", eventos: 209, sesiones: 5 },
+      { src_ip: "163.252.45.218", eventos: 199, sesiones: 6 },
+      { src_ip: "109.28.2.169", eventos: 199, sesiones: 6 },
+      { src_ip: "125.102.79.104", eventos: 196, sesiones: 6 },
+      { src_ip: "80.161.1.187", eventos: 195, sesiones: 5 },
+      { src_ip: "206.168.190.149", eventos: 195, sesiones: 5 },
+      { src_ip: "173.31.51.139", eventos: 194, sesiones: 4 },
+      { src_ip: "101.35.236.243", eventos: 194, sesiones: 6 },
+      { src_ip: "58.113.173.119", eventos: 193, sesiones: 6 },
+      { src_ip: "176.155.125.200", eventos: 192, sesiones: 5 }
+    ],
+    a04_top10_credenciales: [
+      { username: "admin", password: "test123", intentos: 4036 },
+      { username: "administrator", password: "000000", intentos: 253 },
+      { username: "webadmin", password: "qwerty", intentos: 249 },
+      { username: "guest", password: "default", intentos: 247 },
+      { username: "backup", password: "login", intentos: 246 },
+      { username: "oracle", password: "toor", intentos: 246 },
+      { username: "tomcat", password: "passw0rd", intentos: 246 },
+      { username: "ubnt", password: "111111", intentos: 246 },
+      { username: "guest", password: "toor", intentos: 245 },
+      { username: "test", password: "abc123", intentos: 245 }
+    ],
+    a05_top10_comandos: [
+      { comando: "netstat -an", ejecuciones: 613 },
+      { comando: "cat /etc/shadow", ejecuciones: 588 },
+      { comando: "cd /tmp", ejecuciones: 585 },
+      { comando: "ls -la /home", ejecuciones: 584 },
+      { comando: "mkdir /tmp/.X11-unix", ejecuciones: 579 },
+      { comando: "chmod 777 /tmp", ejecuciones: 568 },
+      { comando: "busybox iwconfig", ejecuciones: 564 },
+      { comando: "rm -rf /", ejecuciones: 563 },
+      { comando: "w", ejecuciones: 559 },
+      { comando: "ls -la /tmp", ejecuciones: 559 }
+    ],
+    a06_iocs_por_tipo_confianza: [
+      { type: "command", confidence: "ALTO", cantidad: 40 },
+      { type: "command", confidence: "BAJO", cantidad: 19 },
+      { type: "command", confidence: "MEDIO", cantidad: 30 },
+      { type: "credential", confidence: "ALTO", cantidad: 61 },
+      { type: "credential", confidence: "BAJO", cantidad: 25 },
+      { type: "credential", confidence: "MEDIO", cantidad: 38 },
+      { type: "domain", confidence: "ALTO", cantidad: 62 },
+      { type: "domain", confidence: "BAJO", cantidad: 100 },
+      { type: "domain", confidence: "MEDIO", cantidad: 300 },
+      { type: "hash", confidence: "ALTO", cantidad: 89 },
+      { type: "hash", confidence: "BAJO", cantidad: 18 },
+      { type: "hash", confidence: "MEDIO", cantidad: 40 },
+      { type: "ip", confidence: "ALTO", cantidad: 1200 },
+      { type: "ip", confidence: "BAJO", cantidad: 488 },
+      { type: "ip", confidence: "MEDIO", cantidad: 1440 },
+      { type: "url", confidence: "ALTO", cantidad: 30 },
+      { type: "url", confidence: "BAJO", cantidad: 104 },
+      { type: "url", confidence: "MEDIO", cantidad: 150 }
+    ],
+    a07_error_log_por_nodo: [
+      { workflow: "event-ingest", node: "Enriquecimiento", errores: 6436 },
+      { workflow: "event-ingest", node: "Parseo de evento", errores: 3620 },
+      { workflow: "event-ingest", node: "Validacion de esquema", errores: 604 }
+    ],
+    a08_latencias: [
+      { metrica: "media", valor_ms: 297.02 },
+      { metrica: "min", valor_ms: 85.496 },
+      { metrica: "p50", valor_ms: 292.957 },
+      { metrica: "p95", valor_ms: 604.0 },
+      { metrica: "p99", valor_ms: 890.0 },
+      { metrica: "max", valor_ms: 961.607 }
+    ],
+    a09_sesiones_por_protocolo: [
+      { protocolo: "ssh", sesiones: 4680 },
+      { protocolo: "smb", sesiones: 780 },
+      { protocolo: "telnet", sesiones: 730 },
+      { protocolo: "http", sesiones: 540 }
+    ],
+    a10_eventos_por_hora: [
+      { hora: 0, eventos: 4047 }, { hora: 1, eventos: 6997 }, { hora: 2, eventos: 12965 },
+      { hora: 3, eventos: 27356 }, { hora: 4, eventos: 28050 }, { hora: 5, eventos: 26392 },
+      { hora: 6, eventos: 14602 }, { hora: 7, eventos: 10795 }, { hora: 8, eventos: 5713 },
+      { hora: 9, eventos: 4033 }, { hora: 10, eventos: 3452 }, { hora: 11, eventos: 3817 },
+      { hora: 12, eventos: 4065 }, { hora: 13, eventos: 3901 }, { hora: 14, eventos: 4787 },
+      { hora: 15, eventos: 4992 }, { hora: 16, eventos: 4604 }, { hora: 17, eventos: 5297 },
+      { hora: 18, eventos: 4553 }, { hora: 19, eventos: 5018 }, { hora: 20, eventos: 4237 },
+      { hora: 21, eventos: 4158 }, { hora: 22, eventos: 3572 }, { hora: 23, eventos: 3722 }
+    ],
+    a11_ips_por_pais: [
+      { pais: "China", ips: 976, eventos: 62776 },
+      { pais: "Rusia", ips: 579, eventos: 37907 },
+      { pais: "Estados Unidos", ips: 385, eventos: 23883 },
+      { pais: "Otros", ips: 338, eventos: 21038 },
+      { pais: "Brasil", ips: 213, eventos: 14296 },
+      { pais: "India", ips: 184, eventos: 12366 },
+      { pais: "Vietnam", ips: 128, eventos: 7574 },
+      { pais: "Indonesia", ips: 100, eventos: 6361 },
+      { pais: "Alemania", ips: 84, eventos: 5288 },
+      { pais: "Paises Bajos", ips: 75, eventos: 5148 },
+      { pais: "Francia", ips: 66, eventos: 4475 }
+    ],
+    /* Verificación de hipótesis operativas — Tabla 7.1, §7.2.1 de la tesis */
+    a12_hipotesis: [
+      { id: "P2", nombre: "P2 — Estructuración", umbral: 80, resultado: 100 },
+      { id: "P3 amplio", nombre: "P3 — IoC amplio (n=9)", umbral: 70, resultado: 100 },
+      { id: "P3 comando", nombre: "P3 — IoC comando (n=9)", umbral: 70, resultado: 11.1 },
+      { id: "P4 original", nombre: "P4 — original (n=8)", umbral: 90, resultado: 87.5 },
+      { id: "P4 complementaria", nombre: "P4 — complementaria (n=4)", umbral: 90, resultado: 100 }
+    ]
+  };
+
+  /* ============================================================
+   * Formato de números en español (es-AR): separador de miles
+   * con punto (201.125) y coma decimal (92,3).
+   * ============================================================ */
+  function fmt(n, dec) {
+    return n.toLocaleString("es-AR", {
+      minimumFractionDigits: dec == null ? 0 : dec,
+      maximumFractionDigits: dec == null ? 0 : dec
+    });
+  }
+
+  function pct(parte, total) {
+    return total === 0 ? "0,0" : fmt((parte / total) * 100, 1);
+  }
+
+  /* ============================================================
+   * Configuración base de Chart.js (tema oscuro)
+   * ============================================================ */
+  Chart.defaults.color = "#94a3b8";
+  Chart.defaults.borderColor = "rgba(148, 163, 184, 0.14)";
+  Chart.defaults.font.family = "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
+  Chart.defaults.plugins.legend.labels.boxWidth = 12;
+  Chart.defaults.plugins.legend.labels.boxHeight = 12;
+  Chart.defaults.plugins.legend.labels.padding = 14;
+
+  var tooltipDark = {
+    backgroundColor: "#0f172a",
+    borderColor: "#334155",
+    borderWidth: 1,
+    titleColor: "#e2e8f0",
+    bodyColor: "#cbd5e1",
+    padding: 10,
+    displayColors: false
+  };
+
+  function intAxis(axis) {
+    return { ticks: { callback: function (v) { return fmt(v); } } };
+  }
+
+  /* ============================================================
+   * 1. Eventos por día (línea, 30 días) — tabla_a02
+   * ============================================================ */
+  new Chart(document.getElementById("chEventosDia"), {
+    type: "line",
+    data: {
+      labels: DATOS.a02_eventos_por_dia.map(function (r) {
+        return r.dia.slice(8, 10) + "/" + r.dia.slice(5, 7);
+      }),
+      datasets: [{
+        label: "Eventos",
+        data: DATOS.a02_eventos_por_dia.map(function (r) { return r.eventos; }),
+        borderColor: "#22d3ee",
+        backgroundColor: "rgba(34, 211, 238, 0.12)",
+        fill: true,
+        tension: 0.3,
+        borderWidth: 2,
+        pointRadius: 2.5,
+        pointHoverRadius: 5,
+        pointBackgroundColor: "#22d3ee"
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: Object.assign({}, tooltipDark, {
+          callbacks: {
+            label: function (c) { return "Eventos: " + fmt(c.parsed.y); }
+          }
+        })
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 15 } },
+        y: Object.assign({ beginAtZero: true }, intAxis("y"))
+      }
+    }
+  });
+
+  /* ============================================================
+   * 2. Eventos por hora (barra, 24 h) — tabla_a10
+   * ============================================================ */
+  new Chart(document.getElementById("chEventosHora"), {
+    type: "bar",
+    data: {
+      labels: DATOS.a10_eventos_por_hora.map(function (r) {
+        return String(r.hora).padStart(2, "0") + ":00";
+      }),
+      datasets: [{
+        label: "Eventos",
+        data: DATOS.a10_eventos_por_hora.map(function (r) { return r.eventos; }),
+        backgroundColor: DATOS.a10_eventos_por_hora.map(function (r) {
+          return r.hora === 4 ? "#fbbf24" : "#22d3ee";
+        }),
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: Object.assign({}, tooltipDark, {
+          callbacks: {
+            label: function (c) { return "Eventos: " + fmt(c.parsed.y); }
+          }
+        })
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } },
+        y: Object.assign({ beginAtZero: true }, intAxis("y"))
+      }
+    }
+  });
+
+  /* ============================================================
+   * 3. Sesiones por protocolo (dona) — tabla_a09
+   * ============================================================ */
+  (function () {
+    var filas = DATOS.a09_sesiones_por_protocolo;
+    var total = filas.reduce(function (a, r) { return a + r.sesiones; }, 0);
+    new Chart(document.getElementById("chSesionesProto"), {
+      type: "doughnut",
+      data: {
+        labels: filas.map(function (r) { return r.protocolo.toUpperCase(); }),
+        datasets: [{
+          data: filas.map(function (r) { return r.sesiones; }),
+          backgroundColor: ["#22d3ee", "#a78bfa", "#34d399", "#fbbf24"],
+          borderColor: "#1e293b",
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "62%",
+        plugins: {
+          legend: { position: "bottom" },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) {
+                return " " + c.label + ": " + fmt(c.parsed) + " sesiones (" + pct(c.parsed, total) + " %)";
+              }
+            }
+          })
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 4. Eventos por protocolo (barra horizontal) — tabla_a01
+   * ============================================================ */
+  (function () {
+    var filas = DATOS.a01_eventos_por_protocolo;
+    new Chart(document.getElementById("chEventosProto"), {
+      type: "bar",
+      data: {
+        labels: filas.map(function (r) { return r.protocolo.toUpperCase(); }),
+        datasets: [{
+          label: "Eventos",
+          data: filas.map(function (r) { return r.eventos; }),
+          backgroundColor: "#22d3ee",
+          borderRadius: 4,
+          maxBarThickness: 26
+        }]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) {
+                var f = filas[c.dataIndex];
+                return "Eventos: " + fmt(c.parsed.x) + " (honeypot " + f.honeypot + ")";
+              }
+            }
+          })
+        },
+        scales: {
+          x: Object.assign({ beginAtZero: true }, intAxis("x")),
+          y: { grid: { display: false } }
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 5. Top 10 comandos ejecutados (barra horizontal) — tabla_a05
+   * ============================================================ */
+  (function () {
+    var filas = DATOS.a05_top10_comandos;
+    new Chart(document.getElementById("chTopComandos"), {
+      type: "bar",
+      data: {
+        labels: filas.map(function (r) { return r.comando; }),
+        datasets: [{
+          label: "Ejecuciones",
+          data: filas.map(function (r) { return r.ejecuciones; }),
+          backgroundColor: "#34d399",
+          borderRadius: 4,
+          maxBarThickness: 18
+        }]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) { return "Ejecuciones: " + fmt(c.parsed.x); }
+            }
+          })
+        },
+        scales: {
+          x: Object.assign({ beginAtZero: true }, intAxis("x")),
+          y: { grid: { display: false } }
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 6. Top 10 credenciales más intentadas (barra) — tabla_a04
+   * ============================================================ */
+  (function () {
+    var filas = DATOS.a04_top10_credenciales;
+    new Chart(document.getElementById("chTopCredenciales"), {
+      type: "bar",
+      data: {
+        labels: filas.map(function (r) { return r.username; }),
+        datasets: [{
+          label: "Intentos",
+          data: filas.map(function (r) { return r.intentos; }),
+          backgroundColor: "#fbbf24",
+          borderRadius: 4,
+          maxBarThickness: 30
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) {
+                var f = filas[c.dataIndex];
+                return " " + f.username + " / " + f.password + ": " + fmt(c.parsed.y) + " intentos";
+              }
+            }
+          })
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0 } },
+          y: Object.assign({ beginAtZero: true }, intAxis("y"))
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 7. Top 15 IPs atacantes (barra horizontal) — tabla_a03
+   * ============================================================ */
+  (function () {
+    var filas = DATOS.a03_top15_ips;
+    new Chart(document.getElementById("chTopIPs"), {
+      type: "bar",
+      data: {
+        labels: filas.map(function (r) { return r.src_ip; }),
+        datasets: [{
+          label: "Eventos",
+          data: filas.map(function (r) { return r.eventos; }),
+          backgroundColor: "#a78bfa",
+          borderRadius: 4,
+          maxBarThickness: 16
+        }]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) {
+                var f = filas[c.dataIndex];
+                return "Eventos: " + fmt(c.parsed.x) + " · Sesiones: " + fmt(f.sesiones);
+              }
+            }
+          })
+        },
+        scales: {
+          x: Object.assign({ beginAtZero: true }, intAxis("x")),
+          y: { grid: { display: false } }
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 8. IoCs por tipo (dona) — agregación de tabla_a06
+   * ============================================================ */
+  (function () {
+    var NOMBRES = { ip: "IP", domain: "Dominio", url: "URL", hash: "Hash", credential: "Credencial", command: "Comando" };
+    var ORDEN = ["ip", "domain", "url", "hash", "credential", "command"];
+    var porTipo = {};
+    DATOS.a06_iocs_por_tipo_confianza.forEach(function (r) {
+      porTipo[r.type] = (porTipo[r.type] || 0) + r.cantidad;
+    });
+    var etiquetas = ORDEN.map(function (t) { return NOMBRES[t]; });
+    var valores = ORDEN.map(function (t) { return porTipo[t]; });
+    var total = valores.reduce(function (a, v) { return a + v; }, 0);
+    new Chart(document.getElementById("chIocsTipo"), {
+      type: "doughnut",
+      data: {
+        labels: etiquetas,
+        datasets: [{
+          data: valores,
+          backgroundColor: ["#22d3ee", "#a78bfa", "#fbbf24", "#34d399", "#f87171", "#60a5fa"],
+          borderColor: "#1e293b",
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "62%",
+        plugins: {
+          legend: { position: "bottom" },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) {
+                return " " + c.label + ": " + fmt(c.parsed) + " IoCs (" + pct(c.parsed, total) + " %)";
+              }
+            }
+          })
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 9. IoCs por nivel de confianza (barra apilada) — tabla_a06
+   * ============================================================ */
+  (function () {
+    var NOMBRES = { ip: "IP", domain: "Dominio", url: "URL", hash: "Hash", credential: "Credencial", command: "Comando" };
+    var ORDEN = ["ip", "domain", "url", "hash", "credential", "command"];
+    var NIVELES = ["ALTO", "MEDIO", "BAJO"];
+    var niveles = { ALTO: [], MEDIO: [], BAJO: [] };
+    ORDEN.forEach(function (tipo) {
+      NIVELES.forEach(function (niv) {
+        var fila = DATOS.a06_iocs_por_tipo_confianza.find(function (r) {
+          return r.type === tipo && r.confidence === niv;
+        });
+        niveles[niv].push(fila ? fila.cantidad : 0);
+      });
+    });
+    new Chart(document.getElementById("chIocsConfianza"), {
+      type: "bar",
+      data: {
+        labels: ORDEN.map(function (t) { return NOMBRES[t]; }),
+        datasets: [
+          { label: "ALTO", data: niveles.ALTO, backgroundColor: "#34d399", borderRadius: 3 },
+          { label: "MEDIO", data: niveles.MEDIO, backgroundColor: "#fbbf24", borderRadius: 3 },
+          { label: "BAJO", data: niveles.BAJO, backgroundColor: "#94a3b8", borderRadius: 3 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom" },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) { return " " + c.dataset.label + ": " + fmt(c.parsed.y) + " IoCs"; }
+            }
+          })
+        },
+        scales: {
+          x: { stacked: true, grid: { display: false } },
+          y: Object.assign({ stacked: true, beginAtZero: true }, intAxis("y"))
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 10. Eventos por país (barra horizontal) — tabla_a11
+   * ============================================================ */
+  (function () {
+    var filas = DATOS.a11_ips_por_pais.map(function (r) {
+      return { pais: r.pais === "Paises Bajos" ? "Países Bajos" : r.pais, ips: r.ips, eventos: r.eventos };
+    });
+    new Chart(document.getElementById("chPaises"), {
+      type: "bar",
+      data: {
+        labels: filas.map(function (r) { return r.pais; }),
+        datasets: [{
+          label: "Eventos",
+          data: filas.map(function (r) { return r.eventos; }),
+          backgroundColor: "#2dd4bf",
+          borderRadius: 4,
+          maxBarThickness: 18
+        }]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) {
+                var f = filas[c.dataIndex];
+                return "Eventos: " + fmt(c.parsed.x) + " · IPs: " + fmt(f.ips);
+              }
+            }
+          })
+        },
+        scales: {
+          x: Object.assign({ beginAtZero: true }, intAxis("x")),
+          y: { grid: { display: false } }
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 11. Errores del pipeline por nodo (barra) — tabla_a07
+   * ============================================================ */
+  (function () {
+    var filas = DATOS.a07_error_log_por_nodo.map(function (r) {
+      return {
+        node: r.node === "Validacion de esquema" ? "Validación de esquema" : r.node,
+        errores: r.errores
+      };
+    });
+    new Chart(document.getElementById("chErroresNodo"), {
+      type: "bar",
+      data: {
+        labels: filas.map(function (r) { return r.node; }),
+        datasets: [{
+          label: "Errores",
+          data: filas.map(function (r) { return r.errores; }),
+          backgroundColor: ["#f87171", "#fb923c", "#fca5a5"],
+          borderRadius: 4,
+          maxBarThickness: 46
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) { return "Errores: " + fmt(c.parsed.y); }
+            }
+          })
+        },
+        scales: {
+          x: { grid: { display: false } },
+          y: Object.assign({ beginAtZero: true }, intAxis("y"))
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 12. Distribución de latencia (barra) — kpis.json canónico
+   * ============================================================ */
+  (function () {
+    var NOMBRES = { media: "Media", min: "Mínimo", p50: "P50", p95: "P95", p99: "P99", max: "Máximo" };
+    var filas = DATOS.a08_latencias;
+    new Chart(document.getElementById("chLatencia"), {
+      type: "bar",
+      data: {
+        labels: filas.map(function (r) { return NOMBRES[r.metrica]; }),
+        datasets: [{
+          label: "Milisegundos",
+          data: filas.map(function (r) { return r.valor_ms; }),
+          backgroundColor: "#60a5fa",
+          borderRadius: 4,
+          maxBarThickness: 56
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) { return " " + fmt(c.parsed.y, 3) + " ms"; }
+            }
+          })
+        },
+        scales: {
+          x: { grid: { display: false } },
+          y: Object.assign({ beginAtZero: true }, intAxis("y"))
+        }
+      }
+    });
+  })();
+
+  /* ============================================================
+   * 13. Hipótesis operativas: resultado vs. umbral (barras agrupadas)
+   * ============================================================ */
+  (function () {
+    var filas = DATOS.a12_hipotesis;
+    new Chart(document.getElementById("chHipotesis"), {
+      type: "bar",
+      data: {
+        labels: filas.map(function (r) { return r.nombre; }),
+        datasets: [
+          {
+            label: "Resultado observado",
+            data: filas.map(function (r) { return r.resultado; }),
+            backgroundColor: filas.map(function (r) { return r.resultado >= r.umbral ? "#34d399" : "#f87171"; }),
+            borderRadius: 4,
+            maxBarThickness: 34
+          },
+          {
+            label: "Umbral exigido",
+            data: filas.map(function (r) { return r.umbral; }),
+            backgroundColor: "rgba(148, 163, 184, 0.35)",
+            borderRadius: 4,
+            maxBarThickness: 34
+          }
+        ]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom" },
+          tooltip: Object.assign({}, tooltipDark, {
+            callbacks: {
+              label: function (c) { return " " + c.dataset.label + ": " + fmt(c.parsed.x, 1) + " %"; }
+            }
+          })
+        },
+        scales: {
+          x: Object.assign({ beginAtZero: true, max: 100 }, intAxis("x")),
+          y: { grid: { display: false } }
+        }
+      }
+    });
+  })();
+
+})();
+</script>
+</body>
+</html>

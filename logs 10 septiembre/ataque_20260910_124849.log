@@ -1,0 +1,177 @@
+
+────────────────────────────────────────────────────────────
+  FASE 1: ATAQUE SIMULADO
+────────────────────────────────────────────────────────────
+
+  Conectando a 127.0.0.1:2323...
+  Banner recibido: ��login:...
+
+  ── Intentos de login ──
+  ✗ Login fallido:  root / toor
+  ✗ Login fallido:  admin / admin
+
+  ✓ Login exitoso: admin / test123
+  Shell prompt detectado
+
+  ── Ejecutando comandos ──
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hadmin@mail-server-01:~$
+  $ id
+    id
+    [4luid=1001(admin) gid=1001(admin) groups=1001(admin)
+    [4hadmin@mail-server-01:~$
+  $ ls -la /
+    drwxr-xr-x 1 root root 4096 2024-06-12 00:00 usr
+    drwxr-xr-x 1 root root 4096 2024-06-12 00:00 var
+    [4hadmin@mail-server-01:~$
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+  $ history
+    4  whoami
+    5  history
+    [4hadmin@mail-server-01:~$
+  $ exit
+    exit
+    [4l
+
+  ✓ Conexión cerrada
+
+  Esperando 3s para que el forwarder procese...
+
+────────────────────────────────────────────────────────────
+  FASE 2: CAPTURA DE LOGS
+────────────────────────────────────────────────────────────
+
+  [1/3] Leyendo cowrie.json vía log-reader :9000...
+  OK (14738 bytes)
+  [2/3] Leyendo forwarder logs...
+  OK (2095 líneas)
+  [3/3] Verificando entrega en n8n...
+  OK
+
+────────────────────────────────────────────────────────────
+  FASE 3: REPORTE DE ATAQUE
+────────────────────────────────────────────────────────────
+
+  ╔══════════════════════════════════════════════╗
+  ║       HONEYPOT LAB - REPORTE DE ATAQUE       ║
+  ║       20260910 124849             ║
+  ╚══════════════════════════════════════════════╝
+
+  Atacante simulado:  127.0.0.1:2323 (Telnet)
+  Servicio honeypot:  Cowrie (SSH/Telnet)
+  Total intentos:     3
+  Comandos ejec.:     6
+  Pipeline:           Cowrie -> Forwarder -> n8n -> PostgreSQL
+
+
+────────────────────────────────────────────────────────────
+  INTENTOS DE LOGIN
+────────────────────────────────────────────────────────────
+  #1  ✗  root / toor  (fallido)
+  #2  ✗  admin / admin  (fallido)
+  #3  ✓  admin / test123  (EXITOSO)
+
+────────────────────────────────────────────────────────────
+  COMANDOS EJECUTADOS POR EL ATACANTE
+────────────────────────────────────────────────────────────
+
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hadmin@mail-server-01:~$
+
+  $ id
+    id
+    [4luid=1001(admin) gid=1001(admin) groups=1001(admin)
+    [4hadmin@mail-server-01:~$
+
+  $ ls -la /
+    ls -la /
+    [4ldrwxr-xr-x 1 root root    0 2024-06-12 00:00 .
+    drwxr-xr-x 1 root root    0 2024-06-12 00:00 ..
+    -rwxr-xr-x 1 root root    0 2026-05-04 14:44 .dockerenv
+    lrwxrwxrwx 1 root root    7 2024-06-12 00:00 bin -> usr/bin
+
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+
+  $ history
+    history
+    [4l    1  uname -a
+        2  id
+        3  ls -la /
+        4  whoami
+
+  $ exit
+    exit
+    [4l
+
+────────────────────────────────────────────────────────────
+  LOG CRUDO - COWRIE.JSON (reporte log-reader)
+────────────────────────────────────────────────────────────
+  total_eventos:   247
+  conexiones:      19
+  logins_fallidos: 38
+  logins_exitosos: 19
+  comandos:        114
+  sesiones_unicas: 19
+  ips_unicas:      ['172.18.0.1']
+  [cowrie.command.input] 172.18.0.1 -> CMD: uname -a
+  [cowrie.command.input] 172.18.0.1 -> CMD: id
+  [cowrie.command.input] 172.18.0.1 -> CMD: ls -la /
+  [cowrie.command.input] 172.18.0.1 -> CMD: whoami
+  [cowrie.command.input] 172.18.0.1 -> CMD: history
+  [cowrie.command.input] 172.18.0.1 -> CMD: exit
+  [cowrie.log.closed] 172.18.0.1 -> Closing TTY Log: var/lib/cowrie/tty/730c1a201c909a5900e29f3e29513b57480215459898
+  [cowrie.session.closed] 172.18.0.1 -> Connection lost after 130324 milliseconds
+
+────────────────────────────────────────────────────────────
+  FORWARDER - EVENTOS ENVIADOS A N8N
+────────────────────────────────────────────────────────────
+  [2026-09-10T15:35:45] [OK] cowrie.login.failed from 172.18.0.1 -> n8n
+  [2026-09-10T15:36:06] [OK] cowrie.login.failed from 172.18.0.1 -> n8n
+  [2026-09-10T15:36:28] [OK] cowrie.login.success from 172.18.0.1 -> n8n
+  [2026-09-10T15:36:28] [OK] cowrie.session.params from 172.18.0.1 -> n8n
+  [2026-09-10T15:37:00] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:37:11] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:37:22] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:37:33] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:37:43] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:37:54] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:37:54] [OK] cowrie.log.closed from 172.18.0.1 -> n8n
+  [2026-09-10T15:37:54] [OK] cowrie.session.closed from 172.18.0.1 -> n8n
+  [2026-09-10T15:48:49] [OK] cowrie.session.connect from 172.18.0.1 -> n8n
+  [2026-09-10T15:48:50] [OK] cowrie.login.failed from 172.18.0.1 -> n8n
+  [2026-09-10T15:49:11] [OK] cowrie.login.failed from 172.18.0.1 -> n8n
+  [2026-09-10T15:49:33] [OK] cowrie.login.success from 172.18.0.1 -> n8n
+  [2026-09-10T15:49:33] [OK] cowrie.session.params from 172.18.0.1 -> n8n
+  [2026-09-10T15:50:05] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:50:16] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:50:27] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:50:38] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:50:48] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:50:59] [OK] cowrie.command.input from 172.18.0.1 -> n8n
+  [2026-09-10T15:50:59] [OK] cowrie.log.closed from 172.18.0.1 -> n8n
+  [2026-09-10T15:50:59] [OK] cowrie.session.closed from 172.18.0.1 -> n8n
+
+────────────────────────────────────────────────────────────
+  N8N - VERIFICACION
+────────────────────────────────────────────────────────────
+  Revisar en la UI de n8n (http://localhost:5678) las ejecuciones
+  y en PostgreSQL las filas de la tabla events:
+  docker compose exec postgres psql -U honeypot -d honeypot -c 'SELECT count(*) FROM events;'
+
+────────────────────────────────────────────────────────────
+
+  Reporte guardado en: C:\Users\lnorton\Desktop\Reestructuracion de tesis\HONEYPOT_FINAL-NOCTURNE--main\HONEYPOT_FINAL-NOCTURNE--main\evidencia\ataque_20260910_124849.log
+
+
+  Tiempo total: 134.5s
+
