@@ -1,0 +1,118 @@
+{
+    "name": "report-generator-manual",
+    "nodes": [
+        {
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [0, 300],
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "report-generate",
+                "responseMode": "responseNode"
+            }
+        },
+        {
+            "name": "Postgres: Datos del reporte",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2,
+            "position": [260, 300],
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT (SELECT count(*) FROM events) AS total_eventos, (SELECT COALESCE(json_agg(t), '[]'::json) FROM (SELECT src_ip, count(*) AS eventos, COUNT(DISTINCT session) AS sesiones FROM events GROUP BY src_ip ORDER BY eventos DESC LIMIT 15) t) AS top_ips, (SELECT COALESCE(json_agg(t), '[]'::json) FROM (SELECT eventid, count(*) AS cantidad FROM events GROUP BY eventid ORDER BY cantidad DESC) t) AS distribucion_eventid, (SELECT COALESCE(json_agg(t), '[]'::json) FROM (SELECT username, password, count(*) AS intentos FROM events WHERE username IS NOT NULL GROUP BY username, password ORDER BY intentos DESC LIMIT 10) t) AS credenciales, (SELECT COALESCE(json_agg(t), '[]'::json) FROM (SELECT type, count(*) AS cantidad FROM iocs WHERE created_at >= now() - interval '24 hours' GROUP BY type ORDER BY cantidad DESC) t) AS iocs_24h"
+            },
+            "credentials": {
+                "postgres": {
+                    "name": "Postgres",
+                    "id": "E56uxYa034ezaNIn"
+                }
+            }
+        },
+        {
+            "name": "Ensamblar Reporte",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [520, 300],
+            "parameters": {
+                "mode": "runOnceForAllItems",
+                "language": "javaScript",
+                "jsCode": "const j = items[0].json;\nconst report = {\n  generated_at: new Date().toISOString(),\n  total_eventos: j.total_eventos,\n  top_ips: j.top_ips,\n  distribucion_eventid: j.distribucion_eventid,\n  credenciales: j.credenciales,\n  iocs_24h: j.iocs_24h\n};\nreturn [{ json: { content: JSON.stringify(report) } }];"
+            }
+        },
+        {
+            "name": "Postgres: Guardar Reporte",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2,
+            "position": [780, 300],
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "INSERT INTO reports (period_start, period_end, content) VALUES (now() - interval '24 hours', now(), '{{ $json.content }}'::jsonb)"
+            },
+            "credentials": {
+                "postgres": {
+                    "name": "Postgres",
+                    "id": "E56uxYa034ezaNIn"
+                }
+            }
+        },
+        {
+            "name": "Respond to Webhook",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1,
+            "position": [1040, 300],
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ { \"status\": \"ok\", \"message\": \"Report generated successfully\" } }}"
+            }
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Postgres: Datos del reporte",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Postgres: Datos del reporte": {
+            "main": [
+                [
+                    {
+                        "node": "Ensamblar Reporte",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Ensamblar Reporte": {
+            "main": [
+                [
+                    {
+                        "node": "Postgres: Guardar Reporte",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Postgres: Guardar Reporte": {
+            "main": [
+                [
+                    {
+                        "node": "Respond to Webhook",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    }
+}

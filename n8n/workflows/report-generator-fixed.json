@@ -1,0 +1,130 @@
+{
+    "id": "wf-report-generator-0003",
+    "name": "report-generator",
+    "nodes": [
+        {
+            "id": "wf-report-manual",
+            "name": "Manual Trigger",
+            "type": "n8n-nodes-base.manualTrigger",
+            "typeVersion": 1,
+            "position": [0, 100],
+            "parameters": {}
+        },
+        {
+            "id": "wf-report-schedule",
+            "name": "Schedule",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [0, 300],
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 8 * * *"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": "wf-report-data",
+            "name": "Postgres: Datos del reporte",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2,
+            "position": [260, 300],
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT (SELECT count(*) FROM events) AS total_eventos, (SELECT COALESCE(json_agg(t), '[]'::json) FROM (SELECT src_ip, count(*) AS eventos, COUNT(DISTINCT session) AS sesiones FROM events GROUP BY src_ip ORDER BY eventos DESC LIMIT 15) t) AS top_ips, (SELECT COALESCE(json_agg(t), '[]'::json) FROM (SELECT eventid, count(*) AS cantidad FROM events GROUP BY eventid ORDER BY cantidad DESC) t) AS distribucion_eventid, (SELECT COALESCE(json_agg(t), '[]'::json) FROM (SELECT username, password, count(*) AS intentos FROM events WHERE username IS NOT NULL GROUP BY username, password ORDER BY intentos DESC LIMIT 10) t) AS credenciales, (SELECT COALESCE(json_agg(t), '[]'::json) FROM (SELECT type, count(*) AS cantidad FROM iocs WHERE created_at >= now() - interval '24 hours' GROUP BY type ORDER BY cantidad DESC) t) AS iocs_24h"
+            },
+            "credentials": {
+                "postgres": {
+                    "name": "Postgres",
+                    "id": "E56uxYa034ezaNIn"
+                }
+            }
+        },
+        {
+            "id": "wf-report-assemble",
+            "name": "Ensamblar Reporte",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [520, 300],
+            "parameters": {
+                "mode": "runOnceForAllItems",
+                "language": "javaScript",
+                "jsCode": "const j = items[0].json;\nconst report = {\n  generated_at: new Date().toISOString(),\n  total_eventos: j.total_eventos,\n  top_ips: j.top_ips,\n  distribucion_eventid: j.distribucion_eventid,\n  credenciales: j.credenciales,\n  iocs_24h: j.iocs_24h\n};\nreturn [{ json: { content: JSON.stringify(report) } }];"
+            }
+        },
+        {
+            "id": "wf-report-insert",
+            "name": "Postgres: Guardar Reporte",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2,
+            "position": [780, 300],
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "INSERT INTO reports (period_start, period_end, content) VALUES (now() - interval '24 hours', now(), '{{ $json.content }}'::jsonb)"
+            },
+            "credentials": {
+                "postgres": {
+                    "name": "Postgres",
+                    "id": "E56uxYa034ezaNIn"
+                }
+            }
+        }
+    ],
+    "connections": {
+        "Manual Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Postgres: Datos del reporte",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Schedule": {
+            "main": [
+                [
+                    {
+                        "node": "Postgres: Datos del reporte",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Postgres: Datos del reporte": {
+            "main": [
+                [
+                    {
+                        "node": "Ensamblar Reporte",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Ensamblar Reporte": {
+            "main": [
+                [
+                    {
+                        "node": "Postgres: Guardar Reporte",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": false
+    }
+}

@@ -1,12 +1,15 @@
 /**
  * Dashboard — eventos en vivo, métricas, IoCs, comandos.
+ * v2: Loading states, error handling, usa apiFetch con auth, pagination meta.
  */
 class Dashboard {
-  constructor(socket) {
+  constructor(socket, authToken) {
     this.socket = socket;
+    this.authToken = authToken;
     this.eventCount = 0;
     this.eventsFeed = document.getElementById('events-feed');
     this.commandsFeed = document.getElementById('commands-feed');
+    this._loadingStates = new Set();
   }
 
   init() {
@@ -14,6 +17,34 @@ class Dashboard {
     this._initSocketListeners();
     this._loadInitialData();
     console.log('[dashboard] Inicializado');
+  }
+
+  // --- Loading state management ---
+  _showLoading(elementId, message = 'Cargando...') {
+    this._loadingStates.add(elementId);
+    const el = document.getElementById(elementId);
+    if (el) {
+      if (el.tagName === 'TBODY') {
+        el.innerHTML = `<tr><td colspan="100" class="table-empty loading">${message}</td></tr>`;
+      } else {
+        el.innerHTML = `<div class="loading-indicator">${message}</div>`;
+      }
+    }
+  }
+
+  _hideLoading(elementId) {
+    this._loadingStates.delete(elementId);
+  }
+
+  _showError(elementId, message) {
+    const el = document.getElementById(elementId);
+    if (el) {
+      if (el.tagName === 'TBODY') {
+        el.innerHTML = `<tr><td colspan="100" class="table-empty error">${message}</td></tr>`;
+      } else {
+        el.innerHTML = `<div class="error-indicator">${message}</div>`;
+      }
+    }
   }
 
   // --- Tabs ---
@@ -48,25 +79,24 @@ class Dashboard {
 
   // --- Cargar datos iniciales ---
   async _loadInitialData() {
-    await this._loadMetrics();
-    await this._loadIoCs();
+    await Promise.allSettled([
+      this._loadMetrics(),
+      this._loadIoCs()
+    ]);
   }
 
   // --- Socket listeners ---
   _initSocketListeners() {
-    // Evento nuevo en tiempo real
     this.socket.on('event:new', (event) => {
       this._addEventToFeed(event);
       this.eventCount++;
       document.getElementById('event-counter').textContent = this.eventCount + ' eventos (esta sesión)';
     });
 
-    // Stats actualizados
     this.socket.on('stats:update', (stats) => {
       this._updateStats(stats);
     });
 
-    // Comando ejecutado
     this.socket.on('command:executed', (cmd) => {
       this._addCommandToFeed(cmd);
     });
@@ -157,8 +187,8 @@ class Dashboard {
 
     const topEventsList = document.getElementById('top-events-list');
     topEventsList.innerHTML = '';
-    if (stats.topEvents) {
-      stats.topEvents.forEach(item => {
+    if (stats.topEventTypes) {
+      stats.topEventTypes.forEach(item => {
         const div = document.createElement('div');
         div.className = 'top-item';
         div.innerHTML = `
@@ -168,37 +198,34 @@ class Dashboard {
         topEventsList.appendChild(div);
       });
     }
+
+    // Top IPs
+    const topIpsList = document.getElementById('top-ips-list');
+    topIpsList.innerHTML = '';
+    if (stats.topSourceIps) {
+      stats.topSourceIps.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'top-item';
+        div.innerHTML = `
+          <span class="top-item-label">${item.src_ip}</span>
+          <span class="top-item-count">${this._formatNumber(item.count)}</span>
+        `;
+        topIpsList.appendChild(div);
+      });
+    }
   }
 
   async _loadMetrics() {
+    this._showLoading('top-events-list', 'Cargando métricas...');
     try {
-      const res = await fetch('/api/stats');
-      const json = await res.json();
+      const json = await window.apiFetch('/api/stats');
       if (json.ok && json.data) {
-        this._updateStats({
-          totalEvents: json.data.totalEvents,
-          totalIocs: json.data.totalIocs,
-          totalSessions: json.data.totalSessions,
-          topEvents: json.data.topEventTypes
-        });
-
-        // Top IPs
-        const topIpsList = document.getElementById('top-ips-list');
-        topIpsList.innerHTML = '';
-        if (json.data.topSourceIps) {
-          json.data.topSourceIps.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'top-item';
-            div.innerHTML = `
-              <span class="top-item-label">${item.src_ip}</span>
-              <span class="top-item-count">${this._formatNumber(item.count)}</span>
-            `;
-            topIpsList.appendChild(div);
-          });
-        }
+        this._updateStats(json.data);
+        this._hideLoading('top-events-list');
       }
     } catch (err) {
       console.error('[dashboard] Error al cargar métricas:', err);
+      this._showError('top-events-list', `Error: ${err.message}`);
     }
   }
 
@@ -211,13 +238,14 @@ class Dashboard {
 
   // --- IoCs ---
   async _loadIoCs() {
+    this._showLoading('iocs-tbody', 'Cargando IoCs...');
     try {
-      const res = await fetch('/api/iocs?limit=50');
-      const json = await res.json();
+      const json = await window.apiFetch('/api/iocs?limit=50');
       const tbody = document.getElementById('iocs-tbody');
 
       if (!json.ok || !json.data.length) {
         tbody.innerHTML = '<tr><td colspan="5" class="table-empty">No hay IoCs registrados</td></tr>';
+        this._hideLoading('iocs-tbody');
         return;
       }
 
@@ -227,14 +255,17 @@ class Dashboard {
         tr.innerHTML = `
           <td><span class="badge badge-sm">${ioc.type}</span></td>
           <td style="font-family: var(--font-mono); font-size: 11px;">${this._escapeHtml(ioc.value)}</td>
-          <td>${this._escapeHtml(ioc.context || '')}</td>
+          <td>${this._escapeHtml(ioc.source || '')}</td>
           <td>${ioc.confidence || '-'}</td>
           <td>${ioc.created_at ? new Date(ioc.created_at).toLocaleString('es-AR') : '-'}</td>
         `;
         tbody.appendChild(tr);
       });
+
+      this._hideLoading('iocs-tbody');
     } catch (err) {
       console.error('[dashboard] Error al cargar IoCs:', err);
+      this._showError('iocs-tbody', `Error: ${err.message}`);
     }
   }
 }

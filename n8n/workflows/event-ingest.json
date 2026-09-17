@@ -1,93 +1,59 @@
 {
-    "id":  "wf-event-ingest-0001",
-    "name":  "event-ingest",
-    "nodes":  [
-                  {
-                      "id":  "wf-event-ingest-webhook",
-                      "name":  "Webhook",
-                      "type":  "n8n-nodes-base.webhook",
-                      "typeVersion":  2,
-                      "webhookId":  "a8269d32-e527-4d90-bdca-deae0998dc1d",
-                      "position":  [
-                                       0,
-                                       300
-                                   ],
-                      "parameters":  {
-                                         "httpMethod":  "POST",
-                                         "path":  "cowrie",
-                                         "responseMode":  "onReceived",
-                                         "options":  {
-
-                                                     }
-                                     }
-                  },
-                  {
-                      "id":  "wf-event-ingest-normalize",
-                      "name":  "Normalizar Evento",
-                      "type":  "n8n-nodes-base.code",
-                      "typeVersion":  2,
-                      "position":  [
-                                       260,
-                                       300
-                                   ],
-                      "parameters":  {
-                                         "mode":  "runOnceForAllItems",
-                                         "language":  "javaScript",
-                                         "jsCode":  "return items.map(item =\u003e {\n  const d = item.json.body \u0026\u0026 typeof item.json.body === \u0027object\u0027 ? item.json.body : item.json;\n  return {\n    json: {\n      eventid: d.eventid || \u0027\u0027,\n      session: d.session || null,\n      src_ip: d.src_ip || null,\n      src_port: d.src_port || null,\n      username: d.username || null,\n      password: d.password || null,\n      input: d.input || null,\n      message: d.message || null,\n      timestamp: d.timestamp || new Date().toISOString()\n    }\n  };\n});"
-                                     }
-                  },
-                  {
-                      "id":  "wf-event-ingest-insert",
-                      "name":  "Postgres: Insertar Evento",
-                      "type":  "n8n-nodes-base.postgres",
-                      "typeVersion":  2,
-                      "position":  [
-                                       520,
-                                       300
-                                   ],
-                      "parameters":  {
-                                         "operation":  "executeQuery",
-                                         "query":  "INSERT INTO events (eventid, session, src_ip, src_port, username, password, input, message, timestamp) VALUES (\u0027{{ $json.eventid }}\u0027, {{ $json.session ? \"\u0027\" + String($json.session).replace(/\u0027/g, \"\u0027\u0027\") + \"\u0027\" : \u0027NULL\u0027 }}, {{ $json.src_ip ? \"\u0027\" + String($json.src_ip).replace(/\u0027/g, \"\u0027\u0027\") + \"\u0027::inet\" : \u0027NULL\u0027 }}, {{ $json.src_port || \u0027NULL\u0027 }}, {{ $json.username ? \"\u0027\" + String($json.username).replace(/\u0027/g, \"\u0027\u0027\") + \"\u0027\" : \u0027NULL\u0027 }}, {{ $json.password ? \"\u0027\" + String($json.password).replace(/\u0027/g, \"\u0027\u0027\") + \"\u0027\" : \u0027NULL\u0027 }}, {{ $json.input ? \"\u0027\" + String($json.input).replace(/\u0027/g, \"\u0027\u0027\") + \"\u0027\" : \u0027NULL\u0027 }}, {{ $json.message ? \"\u0027\" + String($json.message).replace(/\u0027/g, \"\u0027\u0027\") + \"\u0027\" : \u0027NULL\u0027 }}, \u0027{{ $json.timestamp }}\u0027)"
-                                     },
-                        "credentials":  {
-                                           "postgres":  {
-                                                            "name":  "Postgres",
-                                                            "id":  "E56uxYa034ezaNIn"
-                                                        }
-                                       }
-                  }
-              ],
-    "connections":  {
-                        "Webhook":  {
-                                        "main":  [
-                                                     [
-                                                         {
-                                                             "node":  "Normalizar Evento",
-                                                             "type":  "main",
-                                                             "index":  0
-                                                         }
-                                                     ]
-                                                 ]
-                                    },
-                        "Normalizar Evento":  {
-                                                  "main":  [
-                                                               [
-                                                                   {
-                                                                       "node":  "Postgres: Insertar Evento",
-                                                                       "type":  "main",
-                                                                       "index":  0
-                                                                   }
-                                                               ]
-                                                           ]
-                                              }
-                    },
-    "settings":  {
-                     "executionOrder":  "v1"
-                 },
-    "pinData":  {
-
-                },
-    "meta":  {
-                 "templateCredsSetupCompleted":  false
-             }
+    "name": "event-ingest",
+    "nodes": [
+        {
+            "id": "wf-ei-webhook",
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "webhookId": "a8269d32-e527-4d90-bdca-deae0998dc1d",
+            "position": [0, 300],
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "cowrie",
+                "responseMode": "onReceived",
+                "options": {}
+            }
+        },
+        {
+            "id": "wf-ei-process",
+            "name": "Process and Insert",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [300, 300],
+            "parameters": {
+                "mode": "runOnceForAllItems",
+                "language": "javaScript",
+                "jsCode": "const results = [];\n\nfor (const item of items) {\n  const d = item.json.body && typeof item.json.body === 'object' ? item.json.body : item.json;\n  \n  const eventid = d.eventid || '';\n  const session = d.session || null;\n  const src_ip = d.src_ip || null;\n  const src_port = d.src_port || null;\n  const username = d.username || null;\n  const password = d.password || null;\n  const input = d.input || null;\n  const message = d.message || null;\n  const timestamp = d.timestamp || new Date().toISOString();\n  \n  // GeoIP - best effort, don't block on failure\n  let country = 'Desconocido';\n  if (src_ip) {\n    try {\n      const resp = await fetch(`http://ip-api.com/json/${src_ip}?fields=country`, { signal: AbortSignal.timeout(2000) });\n      const geo = await resp.json();\n      if (geo.country) country = geo.country;\n    } catch (e) {\n      // GeoIP failed, keep default\n    }\n  }\n  \n  // Build safe SQL values\n  const esc = (v) => v == null ? 'NULL' : \"'\" + String(v).replace(/'/g, \"''\") + \"'\";\n  const inetVal = src_ip ? \"'\" + String(src_ip).replace(/'/g, \"''\") + \"'::inet\" : 'NULL';\n  const portVal = src_port ? parseInt(src_port) : 'NULL';\n  const tsVal = esc(timestamp);\n  \n  const sql = `INSERT INTO events (eventid, session, src_ip, src_port, username, password, input, message, timestamp, country) VALUES (${esc(eventid)}, ${esc(session)}, ${inetVal}, ${portVal}, ${esc(username)}, ${esc(password)}, ${esc(input)}, ${esc(message)}, ${tsVal}, ${esc(country)})`;\n  \n  results.push({ json: { sql, eventid, src_ip, session } });\n}\n\nreturn results;"
+            }
+        },
+        {
+            "id": "wf-ei-insert",
+            "name": "Postgres: Insert Event",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2,
+            "position": [600, 300],
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "={{ $json.sql }}"
+            },
+            "credentials": {
+                "postgres": {
+                    "name": "Postgres",
+                    "id": "PLACEHOLDER_CRED_ID"
+                }
+            }
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [[{ "node": "Process and Insert", "type": "main", "index": 0 }]]
+        },
+        "Process and Insert": {
+            "main": [[{ "node": "Postgres: Insert Event", "type": "main", "index": 0 }]]
+        }
+    },
+    "settings": { "executionOrder": "v1" },
+    "pinData": {},
+    "meta": { "templateCredsSetupCompleted": true }
 }

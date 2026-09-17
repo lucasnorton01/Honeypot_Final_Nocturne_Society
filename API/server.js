@@ -8,6 +8,7 @@ const { Pool } = require('pg');
 const CowrieBridge = require('./services/cowrie-bridge');
 const EventStream = require('./services/event-stream');
 const apiRoutes = require('./routes/api');
+const authMiddleware = require('./middleware/auth');
 
 const app = express();
 const server = http.createServer(app);
@@ -62,8 +63,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// --- REST API ---
-app.use('/api', apiRoutes(pool));
+// --- REST API (requiere auth) ---
+app.use('/api', authMiddleware, apiRoutes(pool));
 
 // --- WebSocket + Terminal Bridge ---
 const bridges = new Map();

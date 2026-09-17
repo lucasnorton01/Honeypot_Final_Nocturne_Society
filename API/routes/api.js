@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const Database = require('../services/database');
+const { validateSrcIp, validateEventId, validateIocType, validateSince } = require('../middleware/validate');
 
 module.exports = function apiRoutes(pool) {
   const router = Router();
@@ -9,16 +10,33 @@ module.exports = function apiRoutes(pool) {
   router.get('/events', async (req, res) => {
     try {
       const { limit = 50, offset = 0, eventid, src_ip, since } = req.query;
-      const events = await db.getEvents({
-        limit: parseInt(limit),
-        offset: parseInt(offset),
-        eventid,
-        src_ip,
-        since
+
+      // Validar parámetros
+      const evCheck = validateEventId(eventid);
+      const ipCheck = validateSrcIp(src_ip);
+      const sinceCheck = validateSince(since);
+      const errors = [...evCheck.errors, ...ipCheck.errors, ...sinceCheck.errors];
+
+      if (errors.length > 0) {
+        return res.status(400).json({ ok: false, error: 'Parámetros inválidos', details: errors });
+      }
+
+      const result = await db.getEvents({
+        limit: Math.min(parseInt(limit) || 50, 200),
+        offset: Math.max(parseInt(offset) || 0, 0),
+        eventid: evCheck.value,
+        src_ip: ipCheck.value,
+        since: sinceCheck.value
       });
-      res.json({ ok: true, data: events });
+
+      res.json({
+        ok: true,
+        data: result.data,
+        pagination: result.pagination
+      });
     } catch (err) {
-      res.status(500).json({ ok: false, error: err.message });
+      console.error('[api] GET /events error:', err.message);
+      res.status(500).json({ ok: false, error: 'Error interno al consultar eventos' });
     }
   });
 
@@ -27,7 +45,8 @@ module.exports = function apiRoutes(pool) {
       const count = await db.getEventCount();
       res.json({ ok: true, total: count });
     } catch (err) {
-      res.status(500).json({ ok: false, error: err.message });
+      console.error('[api] GET /events/count error:', err.message);
+      res.status(500).json({ ok: false, error: 'Error interno al contar eventos' });
     }
   });
 
@@ -35,14 +54,26 @@ module.exports = function apiRoutes(pool) {
   router.get('/iocs', async (req, res) => {
     try {
       const { limit = 50, offset = 0, type } = req.query;
-      const iocs = await db.getIoCs({
-        limit: parseInt(limit),
-        offset: parseInt(offset),
-        type
+
+      const typeCheck = validateIocType(type);
+      if (typeCheck.errors.length > 0) {
+        return res.status(400).json({ ok: false, error: 'Parámetros inválidos', details: typeCheck.errors });
+      }
+
+      const result = await db.getIoCs({
+        limit: Math.min(parseInt(limit) || 50, 200),
+        offset: Math.max(parseInt(offset) || 0, 0),
+        type: typeCheck.value
       });
-      res.json({ ok: true, data: iocs });
+
+      res.json({
+        ok: true,
+        data: result.data,
+        pagination: result.pagination
+      });
     } catch (err) {
-      res.status(500).json({ ok: false, error: err.message });
+      console.error('[api] GET /iocs error:', err.message);
+      res.status(500).json({ ok: false, error: 'Error interno al consultar IoCs' });
     }
   });
 
@@ -51,7 +82,8 @@ module.exports = function apiRoutes(pool) {
       const count = await db.getIocCount();
       res.json({ ok: true, total: count });
     } catch (err) {
-      res.status(500).json({ ok: false, error: err.message });
+      console.error('[api] GET /iocs/count error:', err.message);
+      res.status(500).json({ ok: false, error: 'Error interno al contar IoCs' });
     }
   });
 
@@ -59,13 +91,20 @@ module.exports = function apiRoutes(pool) {
   router.get('/reports', async (req, res) => {
     try {
       const { limit = 20, offset = 0 } = req.query;
-      const reports = await db.getReports({
-        limit: parseInt(limit),
-        offset: parseInt(offset)
+
+      const result = await db.getReports({
+        limit: Math.min(parseInt(limit) || 20, 100),
+        offset: Math.max(parseInt(offset) || 0, 0)
       });
-      res.json({ ok: true, data: reports });
+
+      res.json({
+        ok: true,
+        data: result.data,
+        pagination: result.pagination
+      });
     } catch (err) {
-      res.status(500).json({ ok: false, error: err.message });
+      console.error('[api] GET /reports error:', err.message);
+      res.status(500).json({ ok: false, error: 'Error interno al consultar reportes' });
     }
   });
 
@@ -75,7 +114,8 @@ module.exports = function apiRoutes(pool) {
       const stats = await db.getStats();
       res.json({ ok: true, data: stats });
     } catch (err) {
-      res.status(500).json({ ok: false, error: err.message });
+      console.error('[api] GET /stats error:', err.message);
+      res.status(500).json({ ok: false, error: 'Error interno al consultar estadísticas' });
     }
   });
 

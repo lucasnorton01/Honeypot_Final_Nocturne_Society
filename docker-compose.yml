@@ -16,6 +16,7 @@ services:
       - cowrie-var:/cowrie/cowrie-git/var
       - ./cowrie/cowrie.cfg:/cowrie/cowrie-git/etc/cowrie.cfg:ro
       - ./cowrie/userdb.txt:/cowrie/cowrie-git/etc/userdb.txt:ro
+      - ./cowrie/moduli:/cowrie/cowrie-git/etc/moduli:ro
     networks:
       - honeypot-net
 
@@ -107,6 +108,17 @@ services:
       NODE_TLS_REJECT_UNAUTHORIZED: "0"
       # DB_* removed: n8n uses SQLite for its own storage.
       # Workflow PostgreSQL nodes connect via credential "Postgres" (host: postgres)
+    networks:
+      - honeypot-net
+
+  # ─────────────────────────────────────────
+  # Attack Runner - SSH attacks from inside Docker
+  # ─────────────────────────────────────────
+  attack-runner:
+    build: ./attack-runner
+    container_name: attack-runner
+    depends_on:
+      - cowrie
     networks:
       - honeypot-net
 

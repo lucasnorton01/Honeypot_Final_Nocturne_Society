@@ -51,8 +51,12 @@ CREATE TABLE IF NOT EXISTS error_log (
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- Enriquecimiento geográfico (M2: geolocalización de IPs)
+ALTER TABLE events ADD COLUMN IF NOT EXISTS country TEXT;
+
 -- Índices para consultas frecuentes
 CREATE INDEX IF NOT EXISTS idx_events_src_ip    ON events (src_ip);
 CREATE INDEX IF NOT EXISTS idx_events_timestamp ON events (timestamp);
 CREATE INDEX IF NOT EXISTS idx_events_processed ON events (processed);
+CREATE INDEX IF NOT EXISTS idx_events_country   ON events (country);
 CREATE INDEX IF NOT EXISTS idx_iocs_type       ON iocs (type);

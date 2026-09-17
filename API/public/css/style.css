@@ -836,6 +836,55 @@ body::after {
 }
 
 /* ============================================================
+   LOADING & ERROR STATES
+   ============================================================ */
+.loading-indicator,
+.error-indicator {
+  padding: 24px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+.loading-indicator::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-indicator {
+  color: var(--red);
+  border-color: var(--red);
+  background: rgba(255, 59, 48, 0.05);
+}
+
+.table-empty.loading,
+.table-empty.error {
+  padding: 24px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.table-empty.loading { color: var(--text-muted); }
+.table-empty.error { color: var(--red); }
+
+/* ============================================================
    REDUCED MOTION
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {

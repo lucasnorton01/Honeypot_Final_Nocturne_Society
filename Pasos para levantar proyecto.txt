@@ -1,0 +1,3 @@
+Levantar Docker compose up -d
+n8n:nortonlucas01@gmail.com password:Norton01
+Cowrie: admin password:test123

@@ -1,24 +1,66 @@
-# Secretos y configuración local
+# ============================================================
+# Honeypot Lab - .gitignore
+# ============================================================
+
+# ─── Secretos y configuración local ─────────────────────────
 .env
+API/.env
+*.env.local
+*.env.production
 
-# Bases de datos locales
-*.sqlite
-*.sqlite3
+# ─── Backups de base de datos ────────────────────────────────
+db/backup.sql
+*.sql.gz
+*.dump
 
-# Datos de volúmenes Docker
+# ─── Node.js ────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ─── Python ──────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# ─── Docker (volúmenes de datos) ────────────────────────────
 n8n-data/
 pg-data/
 cowrie-var/
 
-# Evidencia generada localmente (logs del simulador, dumps)
+# ─── Bases de datos locales ─────────────────────────────────
+*.sqlite
+*.sqlite3
+
+# ─── Evidencia y logs generados ─────────────────────────────
 evidencia/
+Logs/
+logs 10 septiembre/
+*.log
 
-# Python
-__pycache__/
-*.pyc
-
-# Sistema
+# ─── Sistema operativo ──────────────────────────────────────
 .DS_Store
 Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
 
-node_modules/
+# ─── IDEs / Editores ────────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ─── Archivos temporales del setup ──────────────────────────
+script_entorno/*.tmp
+script_entorno/*.bak
+
+# ─── PostgreSQL dump temporal ────────────────────────────────
+db/*.sql
+!db/schema.sql

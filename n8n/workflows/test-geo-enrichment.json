@@ -1,0 +1,46 @@
+{
+    "id": "wf-test-geo-0001",
+    "name": "test-geo-enrichment",
+    "nodes": [
+        {
+            "id": "wf-test-geo-webhook",
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "webhookId": "test-geo-trigger-001",
+            "position": [0, 300],
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "test-geo",
+                "responseMode": "lastNode",
+                "options": {}
+            }
+        },
+        {
+            "id": "wf-test-geo-lookup",
+            "name": "GeoIP Lookup",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4,
+            "position": [260, 300],
+            "parameters": {
+                "url": "=http://ip-api.com/json/{{ $json.src_ip }}?fields=country",
+                "method": "GET",
+                "options": {
+                    "timeout": 5000
+                }
+            }
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [[{"node": "GeoIP Lookup", "type": "main", "index": 0}]]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": false
+    }
+}

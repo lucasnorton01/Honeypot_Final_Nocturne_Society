@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+import socket, time
+s = socket.create_connection(('127.0.0.1', 2323), timeout=10)
+s.settimeout(5)
+data = s.recv(4096)
+print('Banner:', repr(data[:100]))
+s.sendall(b'admin\r\n')
+time.sleep(0.5)
+data = s.recv(4096)
+print('After user:', repr(data[:200]))
+s.sendall(b'test123\r\n')
+time.sleep(1)
+data = s.recv(4096)
+print('After pass:', repr(data[:200]))
+s.close()
