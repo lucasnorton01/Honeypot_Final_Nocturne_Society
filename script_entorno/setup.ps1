@@ -209,9 +209,9 @@ Write-Host ""
 Write-Host "  Para correr el API:" -ForegroundColor White
 Write-Host "    cd API && npm start" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "  Credenciales n8n:" -ForegroundColor White
-Write-Host "    Email:    nortonlucas01@gmail.com" -ForegroundColor Gray
-Write-Host "    Password: Norton01" -ForegroundColor Gray
+Write-Host "  Credenciales n8n (definir en .env):" -ForegroundColor White
+Write-Host "    Email:    `$env:N8N_EMAIL" -ForegroundColor Gray
+Write-Host "    Password: `$env:N8N_PASS" -ForegroundColor Gray
 Write-Host ""
 Write-Host "  IMPORTANTE:" -ForegroundColor Red
 Write-Host "    1. Editar .env con tus valores reales (Telegram token, etc.)" -ForegroundColor Yellow

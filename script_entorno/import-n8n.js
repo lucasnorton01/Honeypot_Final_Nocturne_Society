@@ -10,8 +10,13 @@ const path = require('path');
 
 const N8N_HOST = 'localhost';
 const N8N_PORT = 5678;
-const N8N_EMAIL = 'nortonlucas01@gmail.com';
-const N8N_PASS = 'Norton01';
+const N8N_EMAIL = process.env.N8N_EMAIL;
+const N8N_PASS = process.env.N8N_PASS;
+
+if (!N8N_EMAIL || !N8N_PASS) {
+  console.error('ERROR: Faltan variables de entorno N8N_EMAIL y N8N_PASS. Definirlas antes de ejecutar.');
+  process.exit(1);
+}
 
 // Ruta a los workflows exportados
 const WORKFLOWS_DIR = path.join(__dirname, '..', 'n8n', 'workflows');
@@ -84,7 +89,7 @@ async function main() {
         port: 5432,
         database: 'honeypot',
         user: 'honeypot',
-        password: 'honeypot_pass',
+        password: process.env.POSTGRES_PASSWORD,
         ssl: 'disable',
         allowUnauthorizedCertificates: false
       }

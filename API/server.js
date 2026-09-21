@@ -25,7 +25,7 @@ const DB_CONFIG = {
   port: parseInt(process.env.DB_PORT || '5432'),
   database: process.env.DB_NAME || 'honeypot',
   user: process.env.DB_USER || 'honeypot',
-  password: process.env.DB_PASSWORD || 'honeypot_pass'
+  password: process.env.DB_PASSWORD
 };
 
 // Telegram

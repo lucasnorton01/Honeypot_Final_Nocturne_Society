@@ -42,11 +42,11 @@ npm start
 
 ## Credenciales
 
-| Servicio | Usuario | Contraseña |
-|----------|---------|------------|
-| n8n | nortonlucas01@gmail.com | Norton01 |
-| API/SSH | admin | test123 |
-| PostgreSQL | honeypot | honeypot_pass |
+| Servicio | Variable de entorno | Nota |
+|----------|-------------------|------|
+| n8n | `N8N_EMAIL`, `N8N_PASS` | Definir en `.env` |
+| API/SSH | `admin` | Credencial del honeypot (cowrie/userdb.txt) |
+| PostgreSQL | `POSTGRES_USER`, `POSTGRES_PASSWORD` | Definir en `.env` |
 
 ## Webhooks
 

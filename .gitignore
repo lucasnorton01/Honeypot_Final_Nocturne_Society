@@ -7,6 +7,8 @@
 API/.env
 *.env.local
 *.env.production
+postgres-cred.json
+n8n/workflows/postgres-credential.json
 
 # ─── Backups de base de datos ────────────────────────────────
 db/backup.sql
