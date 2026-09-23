@@ -263,6 +263,28 @@ rastreo de citas, declarado explícitamente en esa sección.
 └─ Landing page/            ← landing HTML estática
 ```
 
+## Historia del repositorio
+
+El repositorio contiene **dos historias git independientes sin ancestro común**:
+
+- **Raíz `b669726`** (tag `Honeypot_Cowrie`, 18/08/2026): historial original del proyecto.
+- **Raíz `2147ad4`** (rama `main`, 15/09/2026): segunda historia, iniciada sin vínculo con la primera.
+
+```
+$ git rev-list --max-parents=0 --all
+2147ad47e3141880d0d3bc1a33a7bb0177fdd878
+b6697266650cb2ee2c42860d4ab5b983c440567d
+
+$ git merge-base main Honeypot_Cowrie
+(no output — sin ancestro común)
+```
+
+## Dónde está la evidencia
+
+- `evidencia/` **no está versionada** por diseño: contiene logs y dumps generados durante los experimentos.
+- `datasets-sinteticos/` **no es evidencia**: son datos sintéticos generados para pruebas.
+- Los hashes SHA-256 de los archivos de evidencia reales se publican en [`docs/EVIDENCIA_HASHES.md`](docs/EVIDENCIA_HASHES.md).
+
 ## Seguridad
 
 - El entorno **expone puertos solo en localhost** (`127.0.0.1`). Cowrie escucha en

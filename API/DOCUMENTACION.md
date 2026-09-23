@@ -111,7 +111,7 @@ DB_HOST=localhost
 DB_PORT=5433
 DB_NAME=honeypot
 DB_USER=honeypot
-DB_PASSWORD=honeypot_pass
+DB_PASSWORD=<POSTGRES_PASSWORD>
 TELEGRAM_BOT_TOKEN=<token-del-bot>
 TELEGRAM_CHAT_ID=<chat-id>
 ```
@@ -216,8 +216,8 @@ Abrir el navegador en: **http://localhost:4000**
 Las credenciales del bot de Telegram se configuran en el archivo `.env`:
 
 ```env
-TELEGRAM_BOT_TOKEN=8966577069:AAH-...
-TELEGRAM_CHAT_ID=8855727280
+TELEGRAM_BOT_TOKEN=<TELEGRAM_BOT_TOKEN>
+TELEGRAM_CHAT_ID=<TELEGRAM_CHAT_ID>
 ```
 
 ### 8.2 Alertas Enviadas

@@ -96,6 +96,8 @@ foreach ($f in $files) {
         $line = $lines[$i]
         if (Is-AllowedLine $f $line) { continue }
         foreach ($p in $patterns) {
+            # cowrie/moduli — DH moduli OpenSSH, timestamps 14 dígitos son falsos positivos de chat-id (no debilita scanner en otros archivos)
+            if ($p.Name -eq 'chat-id' -and $f -eq 'cowrie/moduli') { continue }
             if ($line -match $p.Regex) {
                 $hit = "{0}:{1} [{2}]" -f $f, ($i + 1), $p.Name
                 $hits.Add($hit)

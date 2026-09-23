@@ -9,7 +9,7 @@ Cada paso de la reestructuración queda registrado aquí con fecha, archivo afec
 ## Fase A — Sistema
 
 ### [2026-08-10] docker-compose.yml — reescrito
-- **Agregado** servicio `postgres` (imagen `postgres:16`) con volumen `pg-data`, red `honeypot-net`, healthcheck y credenciales desde `.env` (defaults: `honeypot` / `honeypot_pass` / `honeypot`).
+- **Agregado** servicio `postgres` (imagen `postgres:16`) con volumen `pg-data`, red `honeypot-net`, healthcheck y credenciales desde `.env` (defaults: `honeypot` / `<POSTGRES_PASSWORD>` / `honeypot`).
 - **Montado** `db/schema.sql` en `/docker-entrypoint-initdb.d/schema.sql` → el esquema se crea automáticamente en el primer arranque.
 - **Corregido** `N8N_URL` del forwarder: de `http://n8n:5678/webhook/56e26d9f-.../webhook/cowrie` (generaba 404) a `http://n8n:5678/webhook/cowrie`.
 - **Movido** `TELEGRAM_BOT_TOKEN` y `TELEGRAM_CHAT_ID` a variables de entorno (`.env`), vacías por defecto = alertas desactivadas.

@@ -9,11 +9,14 @@ API/.env
 *.env.production
 postgres-cred.json
 n8n/workflows/postgres-credential.json
+Pasos para levantar proyecto.txt
 
 # ─── Backups de base de datos ────────────────────────────────
 db/backup.sql
 *.sql.gz
 *.dump
+respaldo*/
+*.tgz
 
 # ─── Node.js ────────────────────────────────────────────────
 node_modules/
@@ -62,6 +65,15 @@ Desktop.ini
 # ─── Archivos temporales del setup ──────────────────────────
 script_entorno/*.tmp
 script_entorno/*.bak
+
+# ─── Tesis (no versionar .docx — binario generado) ──────────
+Tesis_Nocturne_Society_COMPLETA_FINAL_v4.docx
+Tesis_Nocturne_Society_v*.docx
+*.docx
+
+# ─── Ejecuciones n8n (TSV — evidencia hasheada, no versionar) ─
+ejecuciones-*.tsv
+*.tsv
 
 # ─── PostgreSQL dump temporal ────────────────────────────────
 db/*.sql
