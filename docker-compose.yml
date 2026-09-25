@@ -4,7 +4,7 @@ services:
   # Cowrie - SSH/Telnet Honeypot
   # ─────────────────────────────────────────
   cowrie:
-    image: cowrie/cowrie:latest  # TODO: fijar versión para reproducibilidad
+    image: cowrie/cowrie@sha256:fc57120d88c2bfb5817f63f6c132ce5c2969b641c2f1ac67887652b6f294148d
     container_name: cowrie
     restart: unless-stopped
     ports:
@@ -90,7 +90,7 @@ services:
   # n8n - Workflow Automation Engine
   # ─────────────────────────────────────────
   n8n:
-    image: n8nio/n8n:latest  # TODO: fijar versión para reproducibilidad
+    image: n8nio/n8n@sha256:94d70bcbc868123de206d6f89786bb90f753c26b8f28889f8ddc5e224b230247
     container_name: n8n
     restart: unless-stopped
     depends_on:
