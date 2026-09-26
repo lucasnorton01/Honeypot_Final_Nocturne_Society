@@ -270,3 +270,91 @@ A partir de este momento los 3 cron/triggers quedan operativos de forma automát
 - report-generator: cron `0 8 * * *` (diario 8am America/Argentina/Mendoza)
 
 **Aclaración honesta:** esta sección confirma que el *estado* de los 3 workflows es "activo" según la CLI de n8n inmediatamente después del restart. No se dejó pasar tiempo suficiente en esta fase para observar una ejecución automática real del cron de 15 minutos ni del diario de las 8am — esa validación (ver disparos automáticos reales en `docker logs n8n` o nuevas filas en `iocs`/`reports` sin intervención manual) queda pendiente para una fase posterior si se requiere evidencia de disparo automático, no solo de estado activo.
+
+## Tabla III-1 (v9) — Latencia de persistencia (agregados)
+
+### Verificación previa de columnas (obligatoria, no se asumió nada)
+
+```sql
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name='events' ORDER BY ordinal_position;
+```
+
+Resultado real:
+
+```
+ column_name |        data_type
+-------------+--------------------------
+ id          | bigint
+ eventid     | text
+ session     | text
+ src_ip      | inet
+ src_port    | integer
+ username    | text
+ password    | text
+ input       | text
+ message     | text
+ timestamp   | timestamp with time zone
+ processed   | boolean
+ created_at  | timestamp with time zone
+ country     | text
+(13 rows)
+```
+
+Confirmado: existen dos columnas de tiempo distintas, ambas `timestamptz`: `timestamp` (momento del evento original, generado por Cowrie/forwarder) y `created_at` (momento en que la fila se insertó en Postgres, `DEFAULT now()`). El delta `created_at - timestamp` representa la latencia real de persistencia (evento ocurrido → evento persistido en DB). No fue necesario ajustar la query original: los nombres de columna coinciden exactamente con lo asumido.
+
+### Query real ejecutada (lote 25/09, las 5 sesiones reales del lote 2)
+
+```sql
+SELECT
+  count(*) AS n,
+  min(EXTRACT(EPOCH FROM (created_at - timestamp)) * 1000) AS min_ms,
+  avg(EXTRACT(EPOCH FROM (created_at - timestamp)) * 1000) AS avg_ms,
+  max(EXTRACT(EPOCH FROM (created_at - timestamp)) * 1000) AS max_ms,
+  stddev(EXTRACT(EPOCH FROM (created_at - timestamp)) * 1000) AS sd_ms,
+  percentile_cont(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (created_at - timestamp)) * 1000) AS median_ms
+FROM events
+WHERE session IN ('a3f0aaaa0cca','d1e20e2ea9b9','5e6fe1c13050','54cf066a37cd','e355bc9ba0d1');
+```
+
+Resultado real (`docker exec postgres psql -U honeypot -d honeypot`):
+
+```
+ n  |   min_ms   |        avg_ms        |   max_ms   |      sd_ms       | median_ms
+----+------------+----------------------+------------+------------------+-----------
+ 65 | 100.163000 | 348.0190461538461538 | 798.338000 | 160.077283446683 |   330.557
+```
+
+Chequeo de sanidad adicional (nulls y deltas negativos):
+
+```sql
+SELECT
+  count(*) AS total_rows,
+  count(*) FILTER (WHERE created_at IS NULL) AS null_created_at,
+  count(*) FILTER (WHERE timestamp IS NULL) AS null_timestamp,
+  count(*) FILTER (WHERE created_at < timestamp) AS negative_delta
+FROM events
+WHERE session IN ('a3f0aaaa0cca','d1e20e2ea9b9','5e6fe1c13050','54cf066a37cd','e355bc9ba0d1');
+```
+
+```
+ total_rows | null_created_at | null_timestamp | negative_delta
+------------+-----------------+----------------+----------------
+         65 |               0 |              0 |              0
+```
+
+`n=65` real (no forzado): coincide exactamente con las 5 sesiones x 13 eventos documentadas en la sección "5 sesiones nuevas" de Fase 2. Sin NULLs, sin deltas negativos — el resultado es consistente y no requiere corrección manual.
+
+### Tabla III-1 (v9)
+
+| Fuente / Lote | N | Media (ms) | Mediana (ms) | SD (ms) | Min (ms) | Max (ms) |
+|---|---|---|---|---|---|---|
+| v8 (Anexo III, agregado histórico) | 13 | 297 | 293 | 221.2 | 85.5 | 961.6 |
+| lote 25/09 (real, este trabajo) | 65 | 348.02 | 330.56 | 160.08 | 100.16 | 798.34 |
+
+Nota: la fila v8 es una referencia complementaria citada del Anexo III histórico (agregado publicado, sin las 13 mediciones individuales disponibles), no constituye base de P1. Ver §5.2.5.
+
+**Aclaración explícita sobre la naturaleza de cada fila:**
+- La fila **v8** es una **cita textual** de un agregado publicado en una versión previa del documento (Anexo III). No fue recalculada, no fue reverificada, y las 13 mediciones individuales que la originaron nunca se encontraron en este trabajo — se transcribe tal como está documentada en v8, sin alteración.
+- La fila **lote 25/09** es una **medición real**, ejecutada ahora mismo contra la base Postgres viva del laboratorio (`docker exec postgres psql`), sobre las 5 sesiones reales del lote 2 de Fase 2 (65 eventos reales, verificados fila por fila arriba). No es una simulación ni una extrapolación.
+
+Ambas filas no son directamente comparables sin reservas: v8 no se sabe si mide la misma definición de "latencia de persistencia" (mismas columnas, mismo pipeline) que la medida acá, dado que no hay acceso a su metodología original más allá del agregado citado.
