@@ -2,3 +2,7 @@
 # Format: username:hashmethod:password (one per line)
 admin:x:test123
 guest:x:guest123
+oracle:x:oracle2024
+backup:x:backupsvc99
+deploy:x:deployKey7
+ftpuser:x:ftpPass321

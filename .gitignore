@@ -48,6 +48,12 @@ Logs/
 logs 10 septiembre/
 *.log
 
+# docs/evidencia/ SI se versiona: son los CSV publicados como evidencia
+# verificable (Tarea 3), a diferencia de la carpeta evidencia/ de la raiz
+# (logs crudos/dumps, no versionados por tamano y posible contenido sensible).
+!docs/evidencia/
+!docs/evidencia/**
+
 # ─── Sistema operativo ──────────────────────────────────────
 .DS_Store
 Thumbs.db

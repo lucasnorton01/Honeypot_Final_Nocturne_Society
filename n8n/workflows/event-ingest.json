@@ -1,4 +1,5 @@
 {
+    "id": "wf-event-ingest-0001",
     "name": "event-ingest",
     "nodes": [
         {
@@ -40,7 +41,7 @@
             "credentials": {
                 "postgres": {
                     "name": "Postgres",
-                    "id": "PLACEHOLDER_CRED_ID"
+                    "id": "E56uxYa034ezaNIn"
                 }
             }
         }

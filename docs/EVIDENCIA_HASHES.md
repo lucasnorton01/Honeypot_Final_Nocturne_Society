@@ -53,3 +53,14 @@ Los archivos listados NO se publican; solo sus hashes. Cualquier persona puede v
 ---
 
 > **Nota**: No se encontró `n8n-executions.json` del 10/09 en las carpetas de respaldo. Los datos de ejecuciones del 10/09 provienen de `ejecuciones-orig-completo.tsv`.
+
+## Evidencia con contenido verificable (no solo hashes) — validación P3/P4, 2026-09-28
+
+Las tablas de arriba solo prueban integridad (hash), no permiten a un tercero revisar el contenido sin pedir los archivos originales. Para la validación de P3/P4 de la Tarea 4 (ventana automática de 6-8h, ver `BITACORA.md`), se publican en el repo dos extractos CSV con el contenido real, sin datos sensibles:
+
+| Archivo | Contenido | Filas |
+|---------|-----------|-------|
+| [`evidencia/ejecuciones.csv`](evidencia/ejecuciones.csv) | Historial real de ejecuciones de n8n (`id, workflow, modo, inicio, estado`) durante la ventana de validación, extraído de `execution_entity` en la base interna de n8n | 440 |
+| [`evidencia/iocs_events.csv`](evidencia/iocs_events.csv) | Cruce `iocs` × `events` por `event_id` (`ioc_id, ioc_type, event_id, session, eventid`) | 21 |
+
+Generados el 2026-09-28, después de cerrar la ventana de validación (no reflejan la evidencia anterior de Fase 0-2b). Consultas y contexto completo en `BITACORA.md`, entrada "Cierre de la ventana (Pasos 6-8)".

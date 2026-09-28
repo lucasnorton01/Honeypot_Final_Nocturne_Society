@@ -54,9 +54,20 @@ CREATE TABLE IF NOT EXISTS error_log (
 -- Enriquecimiento geográfico (M2: geolocalización de IPs)
 ALTER TABLE events ADD COLUMN IF NOT EXISTS country TEXT;
 
+-- Trazabilidad de lectura de ioc-extractor: un registro por cada evento que
+-- el workflow lee, produzca o no un IoC (evita perder de vista los eventos
+-- sin indicador extraído, ver A-02 de la auditoría).
+CREATE TABLE IF NOT EXISTS ioc_observations (
+    id           BIGSERIAL PRIMARY KEY,
+    event_id     BIGINT      REFERENCES events(id),
+    produced_ioc BOOLEAN     NOT NULL DEFAULT FALSE,
+    checked_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
 -- Índices para consultas frecuentes
 CREATE INDEX IF NOT EXISTS idx_events_src_ip    ON events (src_ip);
 CREATE INDEX IF NOT EXISTS idx_events_timestamp ON events (timestamp);
 CREATE INDEX IF NOT EXISTS idx_events_processed ON events (processed);
 CREATE INDEX IF NOT EXISTS idx_events_country   ON events (country);
 CREATE INDEX IF NOT EXISTS idx_iocs_type       ON iocs (type);
+CREATE INDEX IF NOT EXISTS idx_ioc_observations_event_id ON ioc_observations (event_id);
