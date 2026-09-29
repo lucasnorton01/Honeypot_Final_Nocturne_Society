@@ -396,3 +396,18 @@ Segunda ventana de validación (la del 28/09 queda como antecedente, con el bug 
 - **Verificado antes de arrancar:** los 3 workflows (`event-ingest`, `ioc-extractor`, `report-generator`) activos; stack completo (`cowrie`, `forwarder`, `log-reader`, `n8n`, `postgres`) `Up`/`healthy`.
 - **Inicio formal:** `SELECT now()` en Postgres = `2026-09-29 21:12:31.84145+00`. **Fin previsto (8h): 2026-09-30 05:12:31 UTC / 02:12 hora local.**
 - Sin tráfico manual desde este punto — solo el cron de `attack-runner` (cada 15 min) y los crons propios de `ioc-extractor` (cada 15 min) y `report-generator` (cada 2h).
+
+### [2026-09-29 ~21:30 a ~23:47 UTC] Interrupción de infraestructura — ventana anterior descartada
+El host se apagó/reinició en medio de la ventana por una actualización obligatoria de WSL2 (mensaje del sistema: versión de WSL desactualizada). Docker Desktop dejó de responder, y con él **todo el stack** (no solo `attack-runner`).
+
+- **Datos reales de esa corrida:** solo 21:12:31–21:30 UTC (≈18 min), 70 eventos (dos corridas de `attack-runner`, 21:15 y 21:30 UTC), 0 reportes (el primer disparo de `report-generator` con el cron de validación caía a las 22:00 UTC y se perdió — `n8n` estaba caído).
+- **Detección:** tarea `HoneypotAttackRunner` con `Last Result: 1` (falla) en la corrida de las 20:45 local; sin eventos nuevos en Postgres entre 21:30 y 23:51 UTC (~2h17min de hueco real, no tráfico ausente sino sistema caído).
+- **Decisión:** descartar esa corrida completa y reiniciar la ventana desde cero, en vez de tratar de conciliar o rellenar el hueco — una interrupción real de infraestructura en medio de una validación que exige "sin intervención, continua" no es algo defendible de parchear.
+- **Verificado antes de reiniciar:** Docker y WSL ya actualizados y funcionando (`docker compose ps` con los 5 servicios `Up`/`healthy`), workflows siguen activos, cron de validación (`0 */2 * * *`) y tarea programada (cada 15 min) intactos — no hizo falta reconfigurar nada, solo truncar y volver a arrancar el reloj.
+
+### [2026-09-29 23:53:57 UTC / 20:53 local] Paso 8 — REINICIO de la ventana de validación (8h)
+Segundo intento de esta ventana (tercero contando la del 28/09). Mismos fixes de los Pasos 6, 7 y 9 vigentes desde el primer evento.
+
+- Tablas truncadas de nuevo (`events, iocs, reports, ioc_observations, ioc_sessions, error_log RESTART IDENTITY`), confirmado 0 filas.
+- **Inicio formal:** `SELECT now()` en Postgres = `2026-09-29 23:53:57.32858+00`. **Fin previsto (8h): 2026-09-30 07:53:57 UTC / 04:53:57 hora local.**
+- Sin tráfico manual desde este punto.
