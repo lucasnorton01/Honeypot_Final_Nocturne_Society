@@ -385,3 +385,14 @@ Preparación previa a la próxima ventana de validación de 6-8h. Rama `fix/extr
   - **Prueba con credenciales repetidas deliberadamente** (dos corridas de `attack-runner` en la misma hora, mismo rotado de cuenta válida): P3 medida por `event_id` directo contra `iocs` (método viejo) = 2/3 sesiones exitosas con IoC propio (66%); P3 medida vía `ioc_sessions` (nuevo) = 3/3 (100%) — la sesión que antes quedaba sin contar sí tiene actividad con un indicador ya conocido (la IP del simulador, que se repite siempre). Confirma que el método nuevo resuelve exactamente la limitación encontrada el 28/09.
 - **Prueba combinada final** (Paso 6 + 7 + 9 juntos, datos limpios): 85/85 eventos procesados, geo correcto, 16 iocs / 29 filas en `ioc_sessions`, 0 filas en `error_log`. Sin conflictos entre los tres cambios.
 - **Nota:** ninguno de estos cambios estaba publicado antes de esta entrada (ver advertencia de `INSTRUCCIONES.md`, sección 7). Con esto publicado, la tesis puede citar el fix del extractor y `ioc_sessions` como vigentes para la próxima ventana de validación.
+
+### [2026-09-29 21:12:31 UTC / 18:12 local] Paso 8 — INICIO de la ventana de validación nueva (8h)
+Segunda ventana de validación (la del 28/09 queda como antecedente, con el bug del extractor sin corregir durante gran parte de esa corrida). Esta ventana arranca con los tres fixes de los Pasos 6, 7 y 9 ya publicados desde el primer evento — a diferencia del 28/09, no hay correcciones a mitad de camino.
+
+- **Config de producción verificada intacta** antes de tocar nada: `n8n/workflows/report-generator.json` coincidía byte a byte con `experimentos/report-generator-produccion.json` (`0 8 * * *`).
+- **Cron de validación:** cambiado a `0 */2 * * *`, reimportado, reactivado, n8n reiniciado y confirmado activo. Se revertirá a producción al cierre (igual que el 28/09).
+- **Frecuencia de `attack-runner`:** tarea de Windows `HoneypotAttackRunner` recreada — cada **15 minutos** (antes cada 1h), para llegar a 30+ sesiones exitosas en 8h en vez de las ~10 de la ventana anterior. Primera corrida programada 18:15 local.
+- **Tablas truncadas** (`events, iocs, reports, ioc_observations, ioc_sessions, error_log RESTART IDENTITY`) — confirmado 0 filas en las cuatro principales antes del inicio.
+- **Verificado antes de arrancar:** los 3 workflows (`event-ingest`, `ioc-extractor`, `report-generator`) activos; stack completo (`cowrie`, `forwarder`, `log-reader`, `n8n`, `postgres`) `Up`/`healthy`.
+- **Inicio formal:** `SELECT now()` en Postgres = `2026-09-29 21:12:31.84145+00`. **Fin previsto (8h): 2026-09-30 05:12:31 UTC / 02:12 hora local.**
+- Sin tráfico manual desde este punto — solo el cron de `attack-runner` (cada 15 min) y los crons propios de `ioc-extractor` (cada 15 min) y `report-generator` (cada 2h).
