@@ -64,6 +64,19 @@ CREATE TABLE IF NOT EXISTS ioc_observations (
     checked_at   TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- Relación indicador-sesión: una fila por cada aparición de un IoC ya
+-- conocido en una sesión, sin romper la unicidad de iocs (type, value).
+-- Permite medir cobertura de P3 por sesión aunque el mismo indicador ya
+-- se haya visto antes en otra sesión (ver Paso 7, limitación de iocs
+-- UNIQUE encontrada en la validación del 28/09).
+CREATE TABLE IF NOT EXISTS ioc_sessions (
+    id         BIGSERIAL PRIMARY KEY,
+    ioc_id     BIGINT      REFERENCES iocs(id),
+    event_id   BIGINT      REFERENCES events(id),
+    session    TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
 -- Índices para consultas frecuentes
 CREATE INDEX IF NOT EXISTS idx_events_src_ip    ON events (src_ip);
 CREATE INDEX IF NOT EXISTS idx_events_timestamp ON events (timestamp);
@@ -71,3 +84,5 @@ CREATE INDEX IF NOT EXISTS idx_events_processed ON events (processed);
 CREATE INDEX IF NOT EXISTS idx_events_country   ON events (country);
 CREATE INDEX IF NOT EXISTS idx_iocs_type       ON iocs (type);
 CREATE INDEX IF NOT EXISTS idx_ioc_observations_event_id ON ioc_observations (event_id);
+CREATE INDEX IF NOT EXISTS idx_ioc_sessions_session ON ioc_sessions (session);
+CREATE INDEX IF NOT EXISTS idx_ioc_sessions_ioc_id  ON ioc_sessions (ioc_id);

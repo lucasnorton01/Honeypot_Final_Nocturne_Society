@@ -8,7 +8,10 @@
             "type": "n8n-nodes-base.webhook",
             "typeVersion": 2,
             "webhookId": "a8269d32-e527-4d90-bdca-deae0998dc1d",
-            "position": [0, 300],
+            "position": [
+                0,
+                300
+            ],
             "parameters": {
                 "httpMethod": "POST",
                 "path": "cowrie",
@@ -21,11 +24,14 @@
             "name": "Process and Insert",
             "type": "n8n-nodes-base.code",
             "typeVersion": 2,
-            "position": [300, 300],
+            "position": [
+                300,
+                300
+            ],
             "parameters": {
                 "mode": "runOnceForAllItems",
                 "language": "javaScript",
-                "jsCode": "const results = [];\n\nfor (const item of items) {\n  const d = item.json.body && typeof item.json.body === 'object' ? item.json.body : item.json;\n  \n  const eventid = d.eventid || '';\n  const session = d.session || null;\n  const src_ip = d.src_ip || null;\n  const src_port = d.src_port || null;\n  const username = d.username || null;\n  const password = d.password || null;\n  const input = d.input || null;\n  const message = d.message || null;\n  const timestamp = d.timestamp || new Date().toISOString();\n  \n  // GeoIP - best effort, don't block on failure\n  let country = 'Desconocido';\n  if (src_ip) {\n    try {\n      const resp = await fetch(`http://ip-api.com/json/${src_ip}?fields=country`, { signal: AbortSignal.timeout(2000) });\n      const geo = await resp.json();\n      if (geo.country) country = geo.country;\n    } catch (e) {\n      // GeoIP failed, keep default\n    }\n  }\n  \n  // Build safe SQL values\n  const esc = (v) => v == null ? 'NULL' : \"'\" + String(v).replace(/'/g, \"''\") + \"'\";\n  const inetVal = src_ip ? \"'\" + String(src_ip).replace(/'/g, \"''\") + \"'::inet\" : 'NULL';\n  const portVal = src_port ? parseInt(src_port) : 'NULL';\n  const tsVal = esc(timestamp);\n  \n  const sql = `INSERT INTO events (eventid, session, src_ip, src_port, username, password, input, message, timestamp, country) VALUES (${esc(eventid)}, ${esc(session)}, ${inetVal}, ${portVal}, ${esc(username)}, ${esc(password)}, ${esc(input)}, ${esc(message)}, ${tsVal}, ${esc(country)})`;\n  \n  results.push({ json: { sql, eventid, src_ip, session } });\n}\n\nreturn results;"
+                "jsCode": "const results = [];\n\nfor (const item of items) {\n  const d = item.json.body && typeof item.json.body === 'object' ? item.json.body : item.json;\n  \n  const eventid = d.eventid || '';\n  const session = d.session || null;\n  const src_ip = d.src_ip || null;\n  const src_port = d.src_port || null;\n  const username = d.username || null;\n  const password = d.password || null;\n  const input = d.input || null;\n  const message = d.message || null;\n  const timestamp = d.timestamp || new Date().toISOString();\n  \n  // GeoIP - best effort, don't block on failure\n  let country = 'Desconocido';\n  if (src_ip) {\n    try {\n      const geo = await this.helpers.httpRequest({ method: 'GET', url: `http://ip-api.com/json/${src_ip}?fields=country`, json: true, timeout: 2000 });\n      if (geo && geo.country) country = geo.country;\n    } catch (e) {\n      // GeoIP failed, keep default\n    }\n  }\n  \n  // Build safe SQL values\n  const esc = (v) => v == null ? 'NULL' : \"'\" + String(v).replace(/'/g, \"''\") + \"'\";\n  const inetVal = src_ip ? \"'\" + String(src_ip).replace(/'/g, \"''\") + \"'::inet\" : 'NULL';\n  const portVal = src_port ? parseInt(src_port) : 'NULL';\n  const tsVal = esc(timestamp);\n  \n  const sql = `INSERT INTO events (eventid, session, src_ip, src_port, username, password, input, message, timestamp, country) VALUES (${esc(eventid)}, ${esc(session)}, ${inetVal}, ${portVal}, ${esc(username)}, ${esc(password)}, ${esc(input)}, ${esc(message)}, ${tsVal}, ${esc(country)})`;\n  \n  results.push({ json: { sql, eventid, src_ip, session } });\n}\n\nreturn results;"
             }
         },
         {
@@ -33,7 +39,10 @@
             "name": "Postgres: Insert Event",
             "type": "n8n-nodes-base.postgres",
             "typeVersion": 2,
-            "position": [600, 300],
+            "position": [
+                600,
+                300
+            ],
             "parameters": {
                 "operation": "executeQuery",
                 "query": "={{ $json.sql }}"
@@ -48,13 +57,33 @@
     ],
     "connections": {
         "Webhook": {
-            "main": [[{ "node": "Process and Insert", "type": "main", "index": 0 }]]
+            "main": [
+                [
+                    {
+                        "node": "Process and Insert",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
         },
         "Process and Insert": {
-            "main": [[{ "node": "Postgres: Insert Event", "type": "main", "index": 0 }]]
+            "main": [
+                [
+                    {
+                        "node": "Postgres: Insert Event",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
         }
     },
-    "settings": { "executionOrder": "v1" },
+    "settings": {
+        "executionOrder": "v1"
+    },
     "pinData": {},
-    "meta": { "templateCredsSetupCompleted": true }
+    "meta": {
+        "templateCredsSetupCompleted": true
+    }
 }
