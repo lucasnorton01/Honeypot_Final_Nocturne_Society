@@ -44,7 +44,7 @@
             ],
             "parameters": {
                 "operation": "executeQuery",
-                "query": "SELECT id, eventid, src_ip, username, password, input, message, timestamp FROM events WHERE processed = FALSE ORDER BY id ASC LIMIT 500"
+                "query": "SELECT id, eventid, session, src_ip, username, password, input, message, timestamp FROM events WHERE processed = FALSE ORDER BY id ASC LIMIT 500"
             },
             "credentials": {
                 "postgres": {
@@ -65,7 +65,7 @@
             "parameters": {
                 "mode": "runOnceForAllItems",
                 "language": "javaScript",
-                "jsCode": "// Sin eventos pendientes el nodo anterior entrega un ítem vacío: no hay nada que procesar.\nconst valid = items.filter(i => i.json && i.json.id !== undefined && i.json.id !== null);\nif (valid.length === 0) return [];\nconst out = [];\nfor (const item of valid) {\n  const e = item.json;\n  const eventId = e.id;\n  const found = [];\n  if (e.src_ip && e.eventid === 'cowrie.session.connect') {\n    found.push({ type: 'ip', value: String(e.src_ip) });\n  }\n  if (e.username && e.password) {\n    found.push({ type: 'credential', value: `${e.username}:${e.password}` });\n  }\n  if (e.input && e.input.match(/wget|curl|nc |python|\\/bin|sh |bash|chmod|tftp/i)) {\n    found.push({ type: 'command', value: String(e.input).slice(0, 500) });\n  }\n  if (e.message && e.message.includes('sha256')) {\n    const m = e.message.match(/[a-f0-9]{64}/);\n    if (m) found.push({ type: 'hash', value: m[0] });\n  }\n  const valuesSql = found.length\n    ? found.map(f => `('${f.type}', '${String(f.value).replace(/'/g, \"''\")}', ${eventId}, 'cowrie')`).join(',')\n    : '(NULL,NULL,NULL,NULL)';\n  out.push({ json: { event_id: eventId, produced_ioc: found.length > 0, values_sql: valuesSql }, pairedItem: { item: items.indexOf(item) } });\n}\nreturn out;"
+                "jsCode": "// Sin eventos pendientes el nodo anterior entrega un ítem vacío: no hay nada que procesar.\nconst valid = items.filter(i => i.json && i.json.id !== undefined && i.json.id !== null);\nif (valid.length === 0) return [];\nconst out = [];\nfor (const item of valid) {\n  const e = item.json;\n  const eventId = e.id;\n  const found = [];\n  if (e.src_ip && e.eventid === 'cowrie.session.connect') {\n    found.push({ type: 'ip', value: String(e.src_ip) });\n  }\n  if (e.username && e.password) {\n    found.push({ type: 'credential', value: `${e.username}:${e.password}` });\n  }\n  if (e.input && e.input.match(/wget|curl|nc |python|\\/bin|sh |bash|chmod|tftp/i)) {\n    found.push({ type: 'command', value: String(e.input).slice(0, 500) });\n  }\n  if (e.message && e.message.includes('sha256')) {\n    const m = e.message.match(/[a-f0-9]{64}/);\n    if (m) found.push({ type: 'hash', value: m[0] });\n  }\n  const valuesSql = found.length\n    ? found.map(f => `('${f.type}', '${String(f.value).replace(/'/g, \"''\")}', ${eventId}, 'cowrie')`).join(',')\n    : '(NULL,NULL,NULL,NULL)';\n  const sessionSql = e.session ? `'${String(e.session).replace(/'/g, \"''\")}'` : 'NULL';\n  out.push({ json: { event_id: eventId, produced_ioc: found.length > 0, values_sql: valuesSql, session_sql: sessionSql }, pairedItem: { item: items.indexOf(item) } });\n}\nreturn out;"
             }
         },
         {
@@ -79,7 +79,7 @@
             ],
             "parameters": {
                 "operation": "executeQuery",
-                "query": "WITH ins AS (\n  INSERT INTO iocs (type, value, event_id, source)\n  SELECT type, value, event_id::bigint, source FROM (VALUES {{ $json.values_sql }}) AS v(type, value, event_id, source)\n  WHERE type IS NOT NULL\n  ON CONFLICT (type, value) DO NOTHING\n), obs AS (\n  INSERT INTO ioc_observations (event_id, produced_ioc) VALUES ({{ $json.event_id }}, {{ $json.produced_ioc }})\n)\nUPDATE events SET processed = TRUE WHERE id = {{ $json.event_id }}",
+                "query": "WITH ins AS (\n  INSERT INTO iocs (type, value, event_id, source)\n  SELECT type, value, event_id::bigint, source FROM (VALUES {{ $json.values_sql }}) AS v(type, value, event_id, source)\n  WHERE type IS NOT NULL\n  ON CONFLICT (type, value) DO UPDATE SET type = EXCLUDED.type\n  RETURNING id\n), sess AS (\n  INSERT INTO ioc_sessions (ioc_id, event_id, session)\n  SELECT ins.id, {{ $json.event_id }}, {{ $json.session_sql }} FROM ins\n), obs AS (\n  INSERT INTO ioc_observations (event_id, produced_ioc) VALUES ({{ $json.event_id }}, {{ $json.produced_ioc }})\n)\nUPDATE events SET processed = TRUE WHERE id = {{ $json.event_id }}",
                 "options": {
                     "queryBatching": "independently"
                 }
