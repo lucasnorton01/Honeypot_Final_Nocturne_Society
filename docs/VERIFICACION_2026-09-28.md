@@ -239,7 +239,7 @@ Resumen: se agregó el `id` de workflow (faltaba y bloqueaba el `import:workflow
   4 | 2026-09-27 07:00:01.146983+00 | 2026-09-28 07:00:01.146983+00 | 2026-09-28 07:00:01.146983+00
 ```
 
-**Ejecuciones de `report-generator` dentro de la ventana final (`docs/evidencia/ejecuciones.csv`):**
+**Ejecuciones de `report-generator` dentro de la ventana final (`docs/evidencia/ejecuciones_2026-09-28.csv`):**
 
 ```
 430,report-generator,trigger,2026-09-28 01:00:00.171,success

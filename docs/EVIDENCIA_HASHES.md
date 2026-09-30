@@ -60,7 +60,19 @@ Las tablas de arriba solo prueban integridad (hash), no permiten a un tercero re
 
 | Archivo | Contenido | Filas |
 |---------|-----------|-------|
-| [`evidencia/ejecuciones.csv`](evidencia/ejecuciones.csv) | Historial real de ejecuciones de n8n (`id, workflow, modo, inicio, estado`) durante la ventana de validación, extraído de `execution_entity` en la base interna de n8n | 440 |
-| [`evidencia/iocs_events.csv`](evidencia/iocs_events.csv) | Cruce `iocs` × `events` por `event_id` (`ioc_id, ioc_type, event_id, session, eventid`) | 21 |
+| [`evidencia/ejecuciones_2026-09-28.csv`](evidencia/ejecuciones_2026-09-28.csv) | Historial real de ejecuciones de n8n (`id, workflow, modo, inicio, estado`) durante la ventana de validación del 28/09, extraído de `execution_entity` en la base interna de n8n | 440 |
+| [`evidencia/iocs_events_2026-09-28.csv`](evidencia/iocs_events_2026-09-28.csv) | Cruce `iocs` × `events` por `event_id` (`ioc_id, ioc_type, event_id, session, eventid`), ventana del 28/09 | 21 |
 
-Generados el 2026-09-28, después de cerrar la ventana de validación (no reflejan la evidencia anterior de Fase 0-2b). Consultas y contexto completo en `BITACORA.md`, entrada "Cierre de la ventana (Pasos 6-8)".
+Generados el 2026-09-28, después de cerrar la ventana de validación (no reflejan la evidencia anterior de Fase 0-2b). Consultas y contexto completo en `BITACORA.md`, entrada "Cierre de la ventana (Pasos 6-8)" y en `VERIFICACION_2026-09-28.md`.
+
+## Evidencia de la ventana de validación del 2026-09-30
+
+Segunda ventana completa (23:53:57 UTC del 29/09 a ~08:01 UTC del 30/09, con las correcciones de los Pasos 6, 7 y 9 ya aplicadas). Los archivos del 28/09 se conservan sin modificar (idénticos a los publicados en el tag `Honeypot_Final_2026-09-29`); los de esta ventana llevan la fecha en el nombre.
+
+| Archivo | Contenido | Filas |
+|---------|-----------|-------|
+| [`evidencia/ejecuciones_2026-09-30.csv`](evidencia/ejecuciones_2026-09-30.csv) | Historial de ejecuciones de n8n de esta ventana (`id, workflow, modo, inicio, estado`) | 2035 |
+| [`evidencia/iocs_events_2026-09-30.csv`](evidencia/iocs_events_2026-09-30.csv) | Cruce `iocs` × `events` por `event_id` | 21 |
+| [`evidencia/ioc_sessions_2026-09-30.csv`](evidencia/ioc_sessions_2026-09-30.csv) | Cruce `ioc_sessions` × `iocs` (`ioc_session_id, ioc_id, ioc_type, ioc_value, event_id, session`); sustenta el P3 por el método `ioc_sessions` | 654 |
+
+Consultas y resultados crudos en `VERIFICACION_2026-09-30.md`.

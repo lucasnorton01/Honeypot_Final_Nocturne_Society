@@ -312,7 +312,7 @@ Resultado completo (41 filas):
  e6e724010458 | 2026-09-30 08:00:13.785999+00 |        0
 ```
 
-**P4 = 35/41 = 85,3%.** Las 6 sesiones sin cobertura (`reportes = 0`)
+**P4 = 35/41 = 85,4%.** Las 6 sesiones sin cobertura (`reportes = 0`)
 son, sin excepción, las últimas 6 de la ventana (07:00–08:00 UTC): el
 último reporte se generó a las 07:00:00 UTC y cubre hasta esa hora; el
 siguiente disparo del cron de validación hubiera sido a las 09:00 UTC,
@@ -326,9 +326,9 @@ que corregirse después.
 
 | Archivo | Contenido | Filas |
 |---------|-----------|-------|
-| `docs/evidencia/ejecuciones.csv` | Historial de ejecuciones de n8n de esta ventana (`id, workflow, modo, inicio, estado`) | 2035 |
-| `docs/evidencia/iocs_events.csv` | Cruce `iocs` × `events` por `event_id` | 21 |
-| `docs/evidencia/ioc_sessions.csv` | **Nuevo** — cruce `ioc_sessions` × `iocs` (`ioc_session_id, ioc_id, ioc_type, ioc_value, event_id, session`), la evidencia que sustenta el 95,1% de P3 | 654 |
+| `docs/evidencia/ejecuciones_2026-09-30.csv` | Historial de ejecuciones de n8n de esta ventana (`id, workflow, modo, inicio, estado`) | 2035 |
+| `docs/evidencia/iocs_events_2026-09-30.csv` | Cruce `iocs` × `events` por `event_id` | 21 |
+| `docs/evidencia/ioc_sessions_2026-09-30.csv` | **Nuevo** — cruce `ioc_sessions` × `iocs` (`ioc_session_id, ioc_id, ioc_type, ioc_value, event_id, session`), la evidencia que sustenta el 95,1% de P3 | 654 |
 
 ---
 
@@ -352,4 +352,4 @@ que corregirse después.
   reemplazar el número viejo sin explicar por qué cambia: el argumento
   de que el método de conteo estaba mal medido es más fuerte que
   mostrar solo el número que da bien.
-- P4: 85,3% (35/41).
+- P4: 85,4% (35/41).
