@@ -62,6 +62,8 @@ Las tablas de arriba solo prueban integridad (hash), no permiten a un tercero re
 |---------|-----------|-------|
 | [`evidencia/ejecuciones_2026-09-28.csv`](evidencia/ejecuciones_2026-09-28.csv) | Historial real de ejecuciones de n8n (`id, workflow, modo, inicio, estado`) durante la ventana de validación del 28/09, extraído de `execution_entity` en la base interna de n8n | 440 |
 | [`evidencia/iocs_events_2026-09-28.csv`](evidencia/iocs_events_2026-09-28.csv) | Cruce `iocs` × `events` por `event_id` (`ioc_id, ioc_type, event_id, session, eventid`), ventana del 28/09 | 21 |
+| [`evidencia/sesiones_2026-09-28.csv`](evidencia/sesiones_2026-09-28.csv) | **Agregado el 2026-10-01.** Las 10 sesiones con `cowrie.login.success` de la ventana, con IoCs atribuidos y reportes que las cubren (denominador de P3 y P4); SHA-256 `94b8209558ce9799304a731a2463ff90e1f63f6fca9e1bff18bc8d3104f2dc9d` | 10 |
+| [`evidencia/cowrie_ventana_2026-09-28.json`](evidencia/cowrie_ventana_2026-09-28.json) | **Agregado el 2026-10-01.** Log JSON de Cowrie de la ventana (00:57:55–08:30 UTC), sin modificar, del volumen `cowrie-var`; fuente primaria de la tabla anterior; SHA-256 `210302cd4aa91c5670555ea29db4b15d2ff306ef4927b4c0d1a7eb1a35e00137` | 405 |
 
 Generados el 2026-09-28, después de cerrar la ventana de validación (no reflejan la evidencia anterior de Fase 0-2b). Consultas y contexto completo en `BITACORA.md`, entrada "Cierre de la ventana (Pasos 6-8)" y en `VERIFICACION_2026-09-28.md`.
 
@@ -74,5 +76,6 @@ Segunda ventana completa (23:53:57 UTC del 29/09 a ~08:01 UTC del 30/09, con las
 | [`evidencia/ejecuciones_2026-09-30.csv`](evidencia/ejecuciones_2026-09-30.csv) | Historial de ejecuciones de n8n de esta ventana (`id, workflow, modo, inicio, estado`) | 2035 |
 | [`evidencia/iocs_events_2026-09-30.csv`](evidencia/iocs_events_2026-09-30.csv) | Cruce `iocs` × `events` por `event_id` | 21 |
 | [`evidencia/ioc_sessions_2026-09-30.csv`](evidencia/ioc_sessions_2026-09-30.csv) | Cruce `ioc_sessions` × `iocs` (`ioc_session_id, ioc_id, ioc_type, ioc_value, event_id, session`); sustenta el P3 por el método `ioc_sessions` | 654 |
+| [`evidencia/attack-runner-cron_2026-09-30.log`](evidencia/attack-runner-cron_2026-09-30.log) | **Agregado el 2026-10-01.** Registro de la tarea programada del simulador (33 corridas, cada 15 min); SHA-256 `3b8b2b8ee1365f6a003ce8c1203c51aaa06a9b3dc95dd6f1e4870c7cadbcdd3a` | 2224 líneas |
 
 Consultas y resultados crudos en `VERIFICACION_2026-09-30.md`.

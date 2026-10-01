@@ -79,6 +79,16 @@ docker compose exec postgres psql -U honeypot -d honeypot -f /docker-entrypoint-
    - `report-generator.json`
 3. Crear una credencial **PostgreSQL** (host `postgres`, puerto `5432`, db `honeypot`,
    usuario/password según `.env`) y asignarla a los nodos PostgreSQL de los tres workflows.
+
+   > **Identificador de la credencial:** los tres workflows exportados hacen referencia a
+   > la credencial `Postgres` con id `E56uxYa034ezaNIn`, que es el id de la instancia
+   > donde se ejecutaron las validaciones. Ese id no existe en una instalación nueva, y la
+   > plantilla `n8n/workflows/postgres-credential.example.json` usa otro (`cred-postgres-001`).
+   > Por eso, después de importar, n8n muestra los nodos PostgreSQL sin credencial válida.
+   > Hay que abrir cada nodo PostgreSQL de los tres workflows y elegir la credencial creada
+   > en este paso. Si la importación se hace por CLI (`n8n import:credentials`), se puede
+   > cambiar el `id` de la plantilla a `E56uxYa034ezaNIn` antes de importarla, y los
+   > workflows la toman sin reasignar nada.
 4. Activar los tres workflows (toggle **Active**), dejando el cron de `report-generator`
    en su configuración estándar (`0 8 * * *`, una vez por día). El webhook de
    `event-ingest` quedará disponible en `http://localhost:5678/webhook/cowrie`.

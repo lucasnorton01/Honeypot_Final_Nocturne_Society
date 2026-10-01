@@ -357,3 +357,56 @@ Ningún archivo del repo cita ese tag anterior.
 
 - `main` y el tag `Honeypot_Final_2026-09-28` ya fueron pusheados a `origin` (`7ff60e0..7882a30`, nuevo tag publicado).
 - No se modificó código, workflows, esquema ni datos durante esta verificación.
+
+---
+
+## 9 — Reconstrucción de las 10 sesiones con autenticación exitosa (agregado 2026-10-01)
+
+La base de PostgreSQL de esta ventana se truncó antes de la ventana del
+30/09, así que las 10 sesiones del denominador de P3 y P4 (Tablas 5.9a y
+5.9c de la tesis) no podían reconstruirse con la evidencia publicada hasta
+ahora: `iocs_events_2026-09-28.csv` solo contiene las sesiones con IoC.
+Se reconstruyen desde la fuente primaria, el log JSON de Cowrie, que se
+conservó en el volumen `honeypot_final-vers_cowrie-var`
+(`log/cowrie/cowrie.json` dentro del volumen; en el contenedor `cowrie`, `/cowrie/cowrie-git/var/log/cowrie/cowrie.json`; eventos del 2026-09-27 21:40 al
+2026-09-30 08:00 UTC).
+
+**Extracción de la ventana** (00:57:55–08:30:00 UTC del 28/09):
+`docs/evidencia/cowrie_ventana_2026-09-28.json` — **405 eventos**, una
+línea JSON por evento, sin modificar. Coincide con las 405 ejecuciones de
+`event-ingest` de `ejecuciones_2026-09-28.csv`.
+
+**Sesiones con `cowrie.login.success`**:
+`docs/evidencia/sesiones_2026-09-28.csv` — 10 filas. Columnas:
+
+- `session`, `login_success_utc`, `src_ip`, `username`: del log de Cowrie.
+- `iocs_atribuidos_event_id`: filas de `iocs_events_2026-09-28.csv` con
+  esa sesión (criterio del §4.9.3 de la tesis).
+- `reportes_trigger_que_cubren`: ids de los reportes de la sección 6 cuyo
+  intervalo `[period_start, period_end]` contiene `login_success_utc`.
+
+```
+session,login_success_utc,src_ip,username,iocs_atribuidos_event_id,reportes_trigger_que_cubren
+4d51d10d620a,2026-09-28T01:45:24.238018Z,172.19.0.5,admin,1,2 3 4
+eeac3a0a6920,2026-09-28T02:45:12.609432Z,172.19.0.5,oracle,1,2 3 4
+25b267072c6e,2026-09-28T03:45:11.191879Z,172.19.0.5,backup,1,3 4
+288c84e44ce4,2026-09-28T03:45:24.720025Z,172.19.0.5,oracle,0,3 4
+b823986a217b,2026-09-28T04:45:05.597873Z,172.19.0.5,deploy,1,3 4
+95e63fb49317,2026-09-28T05:45:06.011551Z,172.19.0.5,ftpuser,1,4
+d29deee8497d,2026-09-28T05:45:11.062810Z,172.19.0.5,backup,0,4
+91e5b5a84891,2026-09-28T06:45:14.376256Z,172.19.0.5,deploy,0,4
+ccd16ec6808b,2026-09-28T06:45:33.016703Z,172.19.0.5,guest,1,4
+106fccee7392,2026-09-28T07:45:04.311289Z,172.19.0.5,admin,0,ninguno
+```
+
+**Resultado:** P3 = 6/10 (60 %) y P4 = 9/10 (90 %), idénticos a las
+Tablas 5.9a y 5.9c de la tesis, sesión por sesión y hora por hora.
+
+**Corridas del simulador confirmadas por el log de Cowrie.** El
+`attack-runner-cron.log` de esta ventana no se conservó: el archivo se
+reinició antes de la ventana del 30/09, y su transcripción está en la
+sección 4. Las conexiones de `cowrie_ventana_2026-09-28.json` confirman
+de forma independiente las 7 corridas de la ventana. Hay eventos
+`cowrie.session.connect` solo en los minutos :45–:49 de cada hora entre
+las 01 y las 07 UTC (01:4x 12, 02:4x 7, 03:4x 12, 04:4x 7, 05:4x 8,
+06:4x 13, 07:4x 7 conexiones).

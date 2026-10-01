@@ -121,7 +121,7 @@ WHERE w.name='ioc-extractor' AND e.startedAt >= '2026-09-29 23:53:57' AND e.stat
 
 ## 4 — P3, dos métodos (comparación explícita)
 
-### 4a — Método viejo (SQL original de la Tarea 4, sin modificar)
+### 4a — Método viejo: criterio definido de antemano (SQL original de la Tarea 4, sin modificar)
 
 ```sql
 SELECT e.session, count(i.id) AS iocs
@@ -184,7 +184,7 @@ válidas, el numerador queda fijo (solo la primera sesión con cada
 credencial genera un IoC propio) mientras el denominador crece. Es el
 fenómeno exacto que motivó el Paso 7, ahora con más datos.
 
-### 4b — Método nuevo (`ioc_sessions`, Paso 7)
+### 4b — Método nuevo: análisis complementario posterior a los datos (`ioc_sessions`, Paso 7)
 
 ```sql
 SELECT e.session,
@@ -241,17 +241,24 @@ Resultado completo (41 filas):
  ff922597da7f |           2
 ```
 
-**P3 (método nuevo) = 39/41 = 95,1%** — supera ampliamente el umbral de
-70%. Las 2 sesiones en 0 (`455f83de0743`, `e6e724010458`) son exactamente
-las 2 últimas sesiones exitosas de la ventana (08:00:07 y 08:00:13 UTC),
-parte de la tanda que todavía no había pasado por el extractor al cierre
-(sección 2) — no son un fallo del método, es la cola natural de la
-ventana.
+**P3 (método complementario `ioc_sessions`) = 39/41 = 95,1%**
+(IC 95 % de Wilson: 83,9–98,7). Las 2 sesiones en 0 (`455f83de0743`,
+`e6e724010458`) son exactamente las 2 últimas sesiones exitosas de la
+ventana (08:00:07 y 08:00:13 UTC), parte de la tanda que todavía no había
+pasado por el extractor al cierre (sección 2) — no son un fallo del
+método, es la cola natural de la ventana.
 
-**Conclusión:** la limitación encontrada el 28/09 era del método de
-conteo (una tabla de indicadores deduplicada, correcta por diseño, no
-sirve para medir cobertura por sesión), no del pipeline. Con el método
-correcto (`ioc_sessions`), P3 se confirma.
+**Conclusión:** la limitación encontrada el 28/09 se explica por el
+método de conteo (una tabla de indicadores deduplicada, correcta por
+diseño, no sirve para medir cobertura por sesión), no por el pipeline.
+Sin embargo, la medición con `ioc_sessions` es un **análisis
+complementario definido después de observar los datos del 28/09**
+(tesis, §5.12), no el criterio fijado de antemano. El veredicto de la
+tesis se toma con el criterio definido de antemano (sección 4a,
+6/41 = 14,6 %, IC 95 % 6,9–28,4), que no alcanza el umbral del 70 %:
+**P3 no confirmada**. El 95,1 % se informa como evidencia de que el
+pipeline sí atribuye indicadores a cada sesión cuando la cobertura se
+mide por apariciones.
 
 ---
 
@@ -318,7 +325,9 @@ son, sin excepción, las últimas 6 de la ventana (07:00–08:00 UTC): el
 siguiente disparo del cron de validación hubiera sido a las 09:00 UTC,
 después del cierre de la ventana (~08:01 UTC). Explicación completa,
 sin ambigüedad — a diferencia de la entrada original del 28/09, que tuvo
-que corregirse después.
+que corregirse después. Con umbral del 90 %, **P4 no confirmada**
+(IC 95 % de Wilson: 71,6–93,1); las 4 ejecuciones de report-generator
+fueron en modo trigger, sin intervención manual (sección 3).
 
 ---
 
@@ -328,7 +337,7 @@ que corregirse después.
 |---------|-----------|-------|
 | `docs/evidencia/ejecuciones_2026-09-30.csv` | Historial de ejecuciones de n8n de esta ventana (`id, workflow, modo, inicio, estado`) | 2035 |
 | `docs/evidencia/iocs_events_2026-09-30.csv` | Cruce `iocs` × `events` por `event_id` | 21 |
-| `docs/evidencia/ioc_sessions_2026-09-30.csv` | **Nuevo** — cruce `ioc_sessions` × `iocs` (`ioc_session_id, ioc_id, ioc_type, ioc_value, event_id, session`), la evidencia que sustenta el 95,1% de P3 | 654 |
+| `docs/evidencia/ioc_sessions_2026-09-30.csv` | **Nuevo** — cruce `ioc_sessions` × `iocs` (`ioc_session_id, ioc_id, ioc_type, ioc_value, event_id, session`), la evidencia del análisis complementario de P3 (95,1 %) | 654 |
 
 ---
 
@@ -346,10 +355,18 @@ que corregirse después.
 ## 8 — Números a usar en la tesis para esta ventana
 
 - P1/P2: sin cambios respecto a lo ya reportado para el 25/09 y 28/09.
-- **P3: recomendado citar ambos métodos** — 14,6% (6/41, método viejo,
-  el mismo que reportó la tesis hasta ahora) y **95,1% (39/41, método
-  `ioc_sessions`, Paso 7)** — con la explicación de la sección 4. No
-  reemplazar el número viejo sin explicar por qué cambia: el argumento
-  de que el método de conteo estaba mal medido es más fuerte que
-  mostrar solo el número que da bien.
-- P4: 85,4% (35/41).
+- **P3: no confirmada.** Veredicto con el criterio definido de antemano:
+  14,6 % (6/41, IC 95 % 6,9–28,4), por debajo del umbral del 70 %.
+  Se cita además, como análisis complementario definido después de
+  observar los datos del 28/09 (tesis, §5.12), **95,1 % (39/41,
+  IC 95 % 83,9–98,7, método `ioc_sessions`, Paso 7)**, con la
+  explicación de la sección 4. El número complementario no reemplaza
+  al del criterio predefinido ni cambia el veredicto.
+- **P4: no confirmada.** 85,4 % (35/41, IC 95 % 71,6–93,1), por debajo
+  del umbral del 90 %; 4/4 ejecuciones en modo trigger.
+
+> Nota de revisión (2026-10-01): se reescribieron las conclusiones de
+> las secciones 4, 5 y 8 para alinearlas con el criterio de veredicto
+> de la tesis (criterio definido de antemano; `ioc_sessions` como
+> análisis complementario posterior). Las consultas, sus salidas
+> literales y los CSV de evidencia no cambiaron.

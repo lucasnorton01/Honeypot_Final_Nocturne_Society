@@ -1,0 +1,2224 @@
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T00:00:03.681466+00:00
+Target: cowrie:2222
+Sessions: 10
+============================================================
+
+[1/10] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[2/10] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    guest    pts/0    172.19.0.7        00:00    0.00s  0.00s  0.00s w
+    [4hguest@mail-server-01:~$
+  $ id
+    id
+    [4luid=9609(guest) gid=9609(guest) groups=9609(guest)
+    [4hguest@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/guest
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+[3/10] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[4/10] root:toor (fail)
+  - Login FAIL: root:toor
+
+[5/10] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[6/10] test:test (fail)
+  - Login FAIL: test:test
+
+[7/10] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[8/10] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[9/10] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[10/10] root:password (fail)
+  - Login FAIL: root:password
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 10
+Succeeded (login OK): 1
+Auth failed (expected): 9
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T00:15:02.318493+00:00
+Target: cowrie:2222
+Sessions: 10
+============================================================
+
+[1/10] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[2/10] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[3/10] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    guest    pts/0    172.19.0.7        00:15    0.00s  0.00s  0.00s w
+    [4hguest@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/guest
+    [4hguest@mail-server-01:~$
+  $ id
+    id
+    [4luid=9609(guest) gid=9609(guest) groups=9609(guest)
+    [4hguest@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+[4/10] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[5/10] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[6/10] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[7/10] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[8/10] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[9/10] test:test (fail)
+  - Login FAIL: test:test
+
+[10/10] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 10
+Succeeded (login OK): 1
+Auth failed (expected): 9
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T00:30:02.203618+00:00
+Target: cowrie:2222
+Sessions: 10
+============================================================
+
+[1/10] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[2/10] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[3/10] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[4/10] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[5/10] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[6/10] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[7/10] root:password (fail)
+  - Login FAIL: root:password
+
+[8/10] test:test (fail)
+  - Login FAIL: test:test
+
+[9/10] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[10/10] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hguest@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hguest@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 00:30:23 UTC 2026
+    [4hguest@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    guest    pts/0    172.19.0.7        00:30    0.00s  0.00s  0.00s w
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 10
+Succeeded (login OK): 1
+Auth failed (expected): 9
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T00:45:02.079794+00:00
+Target: cowrie:2222
+Sessions: 14
+============================================================
+
+[1/14] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[2/14] test:test (fail)
+  - Login FAIL: test:test
+
+[3/14] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[4/14] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[5/14] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[6/14] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[7/14] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[8/14] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ whoami
+    whoami
+    [4lguest
+    [4hguest@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hguest@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/guest
+    [4hguest@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hguest@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    guest    pts/0    172.19.0.7        00:45    0.00s  0.00s  0.00s w
+    [4hguest@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 00:45:21 UTC 2026
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+[9/14] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[10/14] root:password (fail)
+  - Login FAIL: root:password
+
+[11/14] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[12/14] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[13/14] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[14/14] root:toor (fail)
+  - Login FAIL: root:toor
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 14
+Succeeded (login OK): 1
+Auth failed (expected): 13
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T01:00:02.250895+00:00
+Target: cowrie:2222
+Sessions: 7
+============================================================
+
+[1/7] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[2/7] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[3/7] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[4/7] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[5/7] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[6/7] admin:test123 (SUCCESS)
+  + Login OK: admin:test123
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hadmin@mail-server-01:~$
+  $ id
+    id
+    [4luid=9673(admin) gid=9673(admin) groups=9673(admin)
+    [4hadmin@mail-server-01:~$
+  -> SESSION OK
+
+[7/7] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 7
+Succeeded (login OK): 1
+Auth failed (expected): 6
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T01:15:02.611555+00:00
+Target: cowrie:2222
+Sessions: 12
+============================================================
+
+[1/12] backup:backupsvc99 (SUCCESS)
+  + Login OK: backup:backupsvc99
+  $ whoami
+    whoami
+    [4lbackup
+    [4hbackup@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l01:15:04  up  1:29,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hbackup@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1452        2602          19        4015        6564
+    Swap:          2097           0        2097
+    [4hbackup@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 01:15:06 UTC 2026
+    [4hbackup@mail-server-01:~$
+  $ id
+    id
+    [4luid=34(backup) gid=34(backup) groups=34(backup)
+    [4hbackup@mail-server-01:~$
+  -> SESSION OK
+
+[2/12] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[3/12] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[4/12] root:password (fail)
+  - Login FAIL: root:password
+
+[5/12] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[6/12] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[7/12] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[8/12] admin:test123 (SUCCESS)
+  + Login OK: admin:test123
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    admin    pts/0    172.19.0.7        01:15    0.00s  0.00s  0.00s w
+    [4hadmin@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1524        2528          19        4017        6492
+    Swap:          2097           0        2097
+    [4hadmin@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 9673 9673 4096 2026-09-30 01:15 admin
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hadmin@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hadmin@mail-server-01:~$
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+  -> SESSION OK
+
+[9/12] test:test (fail)
+  - Login FAIL: test:test
+
+[10/12] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[11/12] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[12/12] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 12
+Succeeded (login OK): 2
+Auth failed (expected): 10
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T01:30:04.877301+00:00
+Target: cowrie:2222
+Sessions: 10
+============================================================
+
+[1/10] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[2/10] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[3/10] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[4/10] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[5/10] admin:test123 (SUCCESS)
+  + Login OK: admin:test123
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hadmin@mail-server-01:~$
+  $ id
+    id
+    [4luid=9673(admin) gid=9673(admin) groups=9673(admin)
+    [4hadmin@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1473        2575          19        4021        6543
+    Swap:          2097           0        2097
+    [4hadmin@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    admin    pts/0    172.19.0.7        01:30    0.00s  0.00s  0.00s w
+    [4hadmin@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hadmin@mail-server-01:~$
+  -> SESSION OK
+
+[6/10] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[7/10] root:password (fail)
+  - Login FAIL: root:password
+
+[8/10] test:test (fail)
+  - Login FAIL: test:test
+
+[9/10] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[10/10] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 10
+Succeeded (login OK): 1
+Auth failed (expected): 9
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T01:45:03.386308+00:00
+Target: cowrie:2222
+Sessions: 9
+============================================================
+
+[1/9] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[2/9] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[3/9] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[4/9] root:toor (fail)
+  - Login FAIL: root:toor
+
+[5/9] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[6/9] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[7/9] backup:backupsvc99 (SUCCESS)
+  + Login OK: backup:backupsvc99
+  $ date
+    date
+    [4lWed Sep 30 01:45:16 UTC 2026
+    [4hbackup@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hbackup@mail-server-01:~$
+  $ whoami
+    whoami
+    [4lbackup
+    [4hbackup@mail-server-01:~$
+  -> SESSION OK
+
+[8/9] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[9/9] admin:test123 (SUCCESS)
+  + Login OK: admin:test123
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    admin    pts/0    172.19.0.7        01:45    0.00s  0.00s  0.00s w
+    [4hadmin@mail-server-01:~$
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hadmin@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 9673 9673 4096 2026-09-30 01:45 admin
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hadmin@mail-server-01:~$
+  -> SESSION OK
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 9
+Succeeded (login OK): 2
+Auth failed (expected): 7
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T02:00:03.396162+00:00
+Target: cowrie:2222
+Sessions: 5
+============================================================
+
+[1/5] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[2/5] test:test (fail)
+  - Login FAIL: test:test
+
+[3/5] oracle:oracle2024 (SUCCESS)
+  + Login OK: oracle:oracle2024
+  $ date
+    date
+    [4lWed Sep 30 02:00:08 UTC 2026
+    [4horacle@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1482        2559          19        4028        6534
+    Swap:          2097           0        2097
+    [4horacle@mail-server-01:~$
+  $ id
+    id
+    [4luid=6373(oracle) gid=6373(oracle) groups=6373(oracle)
+    [4horacle@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/oracle
+    [4horacle@mail-server-01:~$
+  -> SESSION OK
+
+[4/5] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[5/5] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 5
+Succeeded (login OK): 1
+Auth failed (expected): 4
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T02:15:03.431325+00:00
+Target: cowrie:2222
+Sessions: 16
+============================================================
+
+[1/16] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[2/16] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[3/16] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[4/16] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[5/16] root:toor (fail)
+  - Login FAIL: root:toor
+
+[6/16] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[7/16] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hguest@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hguest@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    guest    pts/0    172.19.0.7        02:15    0.00s  0.00s  0.00s w
+    [4hguest@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/guest
+    [4hguest@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l02:15:20  up  2:29,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hguest@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1472        2566          19        4031        6544
+    Swap:          2097           0        2097
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+[8/16] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[9/16] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[10/16] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[11/16] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[12/16] oracle:oracle2024 (SUCCESS)
+  + Login OK: oracle:oracle2024
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    oracle   pts/0    172.19.0.7        02:15    0.00s  0.00s  0.00s w
+    [4horacle@mail-server-01:~$
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4horacle@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 02:15:34 UTC 2026
+    [4horacle@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l02:15:35  up  2:29,  1 user,  load average: 0.00, 0.00, 0.00
+    [4horacle@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1519        2517          19        4032        6496
+    Swap:          2097           0        2097
+    [4horacle@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4horacle@mail-server-01:~$
+  -> SESSION OK
+
+[13/16] root:password (fail)
+  - Login FAIL: root:password
+
+[14/16] test:test (fail)
+  - Login FAIL: test:test
+
+[15/16] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[16/16] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 16
+Succeeded (login OK): 2
+Auth failed (expected): 14
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T02:30:05.048178+00:00
+Target: cowrie:2222
+Sessions: 6
+============================================================
+
+[1/6] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[2/6] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[3/6] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[4/6] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[5/6] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hguest@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 02:30:16 UTC 2026
+    [4hguest@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hguest@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 9609 9609 4096 2026-09-30 02:30 guest
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hguest@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/guest
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+[6/6] oracle:oracle2024 (SUCCESS)
+  + Login OK: oracle:oracle2024
+  $ ls -la /home
+    drwxr-xr-x 1 6373 6373 4096 2026-09-30 02:30 oracle
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4horacle@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/oracle
+    [4horacle@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1508        2525          19        4036        6508
+    Swap:          2097           0        2097
+    [4horacle@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4horacle@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l02:30:24  up  2:44,  1 user,  load average: 0.00, 0.00, 0.00
+    [4horacle@mail-server-01:~$
+  -> SESSION OK
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 6
+Succeeded (login OK): 2
+Auth failed (expected): 4
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T02:45:03.126925+00:00
+Target: cowrie:2222
+Sessions: 13
+============================================================
+
+[1/13] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[2/13] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[3/13] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[4/13] oracle:oracle2024 (SUCCESS)
+  + Login OK: oracle:oracle2024
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4horacle@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4horacle@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4horacle@mail-server-01:~$
+  -> SESSION OK
+
+[5/13] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[6/13] test:test (fail)
+  - Login FAIL: test:test
+
+[7/13] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[8/13] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[9/13] root:toor (fail)
+  - Login FAIL: root:toor
+
+[10/13] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[11/13] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[12/13] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[13/13] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 13
+Succeeded (login OK): 1
+Auth failed (expected): 12
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T03:00:03.366220+00:00
+Target: cowrie:2222
+Sessions: 12
+============================================================
+
+[1/12] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[2/12] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[3/12] test:test (fail)
+  - Login FAIL: test:test
+
+[4/12] root:password (fail)
+  - Login FAIL: root:password
+
+[5/12] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[6/12] backup:backupsvc99 (SUCCESS)
+  + Login OK: backup:backupsvc99
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hbackup@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hbackup@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l03:00:16  up  3:14,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hbackup@mail-server-01:~$
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hbackup@mail-server-01:~$
+  -> SESSION OK
+
+[7/12] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[8/12] root:toor (fail)
+  - Login FAIL: root:toor
+
+[9/12] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[10/12] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[11/12] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[12/12] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 12
+Succeeded (login OK): 1
+Auth failed (expected): 11
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T03:15:02.627544+00:00
+Target: cowrie:2222
+Sessions: 15
+============================================================
+
+[1/15] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[2/15] root:toor (fail)
+  - Login FAIL: root:toor
+
+[3/15] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[4/15] admin:test123 (SUCCESS)
+  + Login OK: admin:test123
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hadmin@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 03:15:10 UTC 2026
+    [4hadmin@mail-server-01:~$
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hadmin@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    admin    pts/0    172.19.0.7        03:15    0.00s  0.00s  0.00s w
+    [4hadmin@mail-server-01:~$
+  -> SESSION OK
+
+[5/15] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[6/15] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[7/15] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[8/15] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[9/15] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[10/15] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[11/15] test:test (fail)
+  - Login FAIL: test:test
+
+[12/15] backup:backupsvc99 (SUCCESS)
+  + Login OK: backup:backupsvc99
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    backup   pts/0    172.19.0.7        03:15    0.00s  0.00s  0.00s w
+    [4hbackup@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/var/backups
+    [4hbackup@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hbackup@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 root root    0 2024-06-12 00:00 ..
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hbackup@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1582        2437          19        4050        6434
+    Swap:          2097           0        2097
+    [4hbackup@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l03:15:34  up  3:29,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hbackup@mail-server-01:~$
+  -> SESSION OK
+
+[13/15] root:password (fail)
+  - Login FAIL: root:password
+
+[14/15] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[15/15] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 15
+Succeeded (login OK): 2
+Auth failed (expected): 13
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T03:30:02.456318+00:00
+Target: cowrie:2222
+Sessions: 6
+============================================================
+
+[1/6] backup:backupsvc99 (SUCCESS)
+  + Login OK: backup:backupsvc99
+  $ pwd
+    pwd
+    [4l/var/backups
+    [4hbackup@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hbackup@mail-server-01:~$
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hbackup@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l03:30:05  up  3:44,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hbackup@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hbackup@mail-server-01:~$
+  -> SESSION OK
+
+[2/6] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[3/6] root:toor (fail)
+  - Login FAIL: root:toor
+
+[4/6] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[5/6] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[6/6] root:password (fail)
+  - Login FAIL: root:password
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 6
+Succeeded (login OK): 1
+Auth failed (expected): 5
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T03:45:02.207668+00:00
+Target: cowrie:2222
+Sessions: 15
+============================================================
+
+[1/15] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[2/15] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[3/15] test:test (fail)
+  - Login FAIL: test:test
+
+[4/15] root:toor (fail)
+  - Login FAIL: root:toor
+
+[5/15] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[6/15] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[7/15] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[8/15] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[9/15] backup:backupsvc99 (SUCCESS)
+  + Login OK: backup:backupsvc99
+  $ pwd
+    pwd
+    [4l/var/backups
+    [4hbackup@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 03:45:20 UTC 2026
+    [4hbackup@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l03:45:21  up  3:59,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hbackup@mail-server-01:~$
+  -> SESSION OK
+
+[10/15] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[11/15] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[12/15] root:password (fail)
+  - Login FAIL: root:password
+
+[13/15] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[14/15] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[15/15] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 15
+Succeeded (login OK): 1
+Auth failed (expected): 14
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T04:00:02.362781+00:00
+Target: cowrie:2222
+Sessions: 6
+============================================================
+
+[1/6] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[2/6] test:test (fail)
+  - Login FAIL: test:test
+
+[3/6] deploy:deployKey7 (SUCCESS)
+  + Login OK: deploy:deployKey7
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hdeploy@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 2196 2196 4096 2026-09-30 04:00 deploy
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hdeploy@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hdeploy@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hdeploy@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/deploy
+    [4hdeploy@mail-server-01:~$
+  -> SESSION OK
+
+[4/6] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ uptime
+    uptime
+    [4l04:00:14  up  4:14,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hguest@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    guest    pts/0    172.19.0.7        04:00    0.00s  0.00s  0.00s w
+    [4hguest@mail-server-01:~$
+  $ whoami
+    whoami
+    [4lguest
+    [4hguest@mail-server-01:~$
+  $ id
+    id
+    [4luid=9609(guest) gid=9609(guest) groups=9609(guest)
+    [4hguest@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1504        2504          20        4061        6512
+    Swap:          2097           0        2097
+    [4hguest@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+[5/6] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[6/6] root:toor (fail)
+  - Login FAIL: root:toor
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 6
+Succeeded (login OK): 2
+Auth failed (expected): 4
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T04:15:02.367110+00:00
+Target: cowrie:2222
+Sessions: 8
+============================================================
+
+[1/8] root:toor (fail)
+  - Login FAIL: root:toor
+
+[2/8] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[3/8] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[4/8] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[5/8] ftpuser:ftpPass321 (SUCCESS)
+  + Login OK: ftpuser:ftpPass321
+  $ date
+    date
+    [4lWed Sep 30 04:15:11 UTC 2026
+    [4hftpuser@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hftpuser@mail-server-01:~$
+  $ whoami
+    whoami
+    [4lftpuser
+    [4hftpuser@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    ftpuser  pts/0    172.19.0.7        04:15    0.00s  0.00s  0.00s w
+    [4hftpuser@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1490        2515          20        4064        6526
+    Swap:          2097           0        2097
+    [4hftpuser@mail-server-01:~$
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hftpuser@mail-server-01:~$
+  -> SESSION OK
+
+[6/8] deploy:deployKey7 (SUCCESS)
+  + Login OK: deploy:deployKey7
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    deploy   pts/0    172.19.0.7        04:15    0.00s  0.00s  0.00s w
+    [4hdeploy@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/deploy
+    [4hdeploy@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l04:15:20  up  4:29,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hdeploy@mail-server-01:~$
+  -> SESSION OK
+
+[7/8] root:password (fail)
+  - Login FAIL: root:password
+
+[8/8] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 8
+Succeeded (login OK): 2
+Auth failed (expected): 6
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T04:30:02.417733+00:00
+Target: cowrie:2222
+Sessions: 11
+============================================================
+
+[1/11] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[2/11] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[3/11] root:password (fail)
+  - Login FAIL: root:password
+
+[4/11] deploy:deployKey7 (SUCCESS)
+  + Login OK: deploy:deployKey7
+  $ ls -la /home
+    drwxr-xr-x 1 2196 2196 4096 2026-09-30 04:30 deploy
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hdeploy@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/deploy
+    [4hdeploy@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1507        2495          20        4067        6510
+    Swap:          2097           0        2097
+    [4hdeploy@mail-server-01:~$
+  $ whoami
+    whoami
+    [4ldeploy
+    [4hdeploy@mail-server-01:~$
+  -> SESSION OK
+
+[5/11] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[6/11] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[7/11] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[8/11] test:test (fail)
+  - Login FAIL: test:test
+
+[9/11] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[10/11] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[11/11] root:toor (fail)
+  - Login FAIL: root:toor
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 11
+Succeeded (login OK): 1
+Auth failed (expected): 10
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T04:45:02.511142+00:00
+Target: cowrie:2222
+Sessions: 5
+============================================================
+
+[1/5] root:toor (fail)
+  - Login FAIL: root:toor
+
+[2/5] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[3/5] root:password (fail)
+  - Login FAIL: root:password
+
+[4/5] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[5/5] deploy:deployKey7 (SUCCESS)
+  + Login OK: deploy:deployKey7
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hdeploy@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 2196 2196 4096 2026-09-30 04:45 deploy
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hdeploy@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1480        2518          20        4071        6537
+    Swap:          2097           0        2097
+    [4hdeploy@mail-server-01:~$
+  $ id
+    id
+    [4luid=2196(deploy) gid=2196(deploy) groups=2196(deploy)
+    [4hdeploy@mail-server-01:~$
+  -> SESSION OK
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 5
+Succeeded (login OK): 1
+Auth failed (expected): 4
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T05:00:02.298896+00:00
+Target: cowrie:2222
+Sessions: 9
+============================================================
+
+[1/9] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[2/9] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[3/9] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[4/9] root:toor (fail)
+  - Login FAIL: root:toor
+
+[5/9] root:password (fail)
+  - Login FAIL: root:password
+
+[6/9] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[7/9] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[8/9] ftpuser:ftpPass321 (SUCCESS)
+  + Login OK: ftpuser:ftpPass321
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hftpuser@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 05:00:18 UTC 2026
+    [4hftpuser@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 9141 9141 4096 2026-09-30 05:00 ftpuser
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hftpuser@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hftpuser@mail-server-01:~$
+  -> SESSION OK
+
+[9/9] git:git123 (fail)
+  - Login FAIL: git:git123
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 9
+Succeeded (login OK): 1
+Auth failed (expected): 8
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T05:15:02.419735+00:00
+Target: cowrie:2222
+Sessions: 12
+============================================================
+
+[1/12] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[2/12] test:test (fail)
+  - Login FAIL: test:test
+
+[3/12] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[4/12] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[5/12] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[6/12] root:password (fail)
+  - Login FAIL: root:password
+
+[7/12] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[8/12] ftpuser:ftpPass321 (SUCCESS)
+  + Login OK: ftpuser:ftpPass321
+  $ pwd
+    pwd
+    [4l/home/ftpuser
+    [4hftpuser@mail-server-01:~$
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hftpuser@mail-server-01:~$
+  $ whoami
+    whoami
+    [4lftpuser
+    [4hftpuser@mail-server-01:~$
+  $ id
+    id
+    [4luid=9141(ftpuser) gid=9141(ftpuser) groups=9141(ftpuser)
+    [4hftpuser@mail-server-01:~$
+  -> SESSION OK
+
+[9/12] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[10/12] root:toor (fail)
+  - Login FAIL: root:toor
+
+[11/12] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[12/12] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 12
+Succeeded (login OK): 1
+Auth failed (expected): 11
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T05:30:02.214392+00:00
+Target: cowrie:2222
+Sessions: 13
+============================================================
+
+[1/13] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[2/13] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[3/13] ftpuser:ftpPass321 (SUCCESS)
+  + Login OK: ftpuser:ftpPass321
+  $ whoami
+    whoami
+    [4lftpuser
+    [4hftpuser@mail-server-01:~$
+  $ id
+    id
+    [4luid=9141(ftpuser) gid=9141(ftpuser) groups=9141(ftpuser)
+    [4hftpuser@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    ftpuser  pts/0    172.19.0.7        05:30    0.00s  0.00s  0.00s w
+    [4hftpuser@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hftpuser@mail-server-01:~$
+  -> SESSION OK
+
+[4/13] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[5/13] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[6/13] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[7/13] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[8/13] test:test (fail)
+  - Login FAIL: test:test
+
+[9/13] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[10/13] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[11/13] root:toor (fail)
+  - Login FAIL: root:toor
+
+[12/13] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[13/13] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 13
+Succeeded (login OK): 1
+Auth failed (expected): 12
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T05:45:03.231267+00:00
+Target: cowrie:2222
+Sessions: 11
+============================================================
+
+[1/11] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[2/11] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[3/11] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[4/11] root:toor (fail)
+  - Login FAIL: root:toor
+
+[5/11] ftpuser:ftpPass321 (SUCCESS)
+  + Login OK: ftpuser:ftpPass321
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hftpuser@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hftpuser@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l05:45:15  up  5:59,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hftpuser@mail-server-01:~$
+  -> SESSION OK
+
+[6/11] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[7/11] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[8/11] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[9/11] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[10/11] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[11/11] test:test (fail)
+  - Login FAIL: test:test
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 11
+Succeeded (login OK): 1
+Auth failed (expected): 10
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T06:00:03.506936+00:00
+Target: cowrie:2222
+Sessions: 12
+============================================================
+
+[1/12] root:toor (fail)
+  - Login FAIL: root:toor
+
+[2/12] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[3/12] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[4/12] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[5/12] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[6/12] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[7/12] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[8/12] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[9/12] root:password (fail)
+  - Login FAIL: root:password
+
+[10/12] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[11/12] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[12/12] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hguest@mail-server-01:~$
+  $ whoami
+    whoami
+    [4lguest
+    [4hguest@mail-server-01:~$
+  $ id
+    id
+    [4luid=9609(guest) gid=9609(guest) groups=9609(guest)
+    [4hguest@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l06:00:29  up  6:14,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hguest@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/guest
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 12
+Succeeded (login OK): 1
+Auth failed (expected): 11
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T06:15:02.346996+00:00
+Target: cowrie:2222
+Sessions: 8
+============================================================
+
+[1/8] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[2/8] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[3/8] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    guest    pts/0    172.19.0.7        06:15    0.00s  0.00s  0.00s w
+    [4hguest@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hguest@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l06:15:09  up  6:29,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hguest@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/guest
+    [4hguest@mail-server-01:~$
+  $ id
+    id
+    [4luid=9609(guest) gid=9609(guest) groups=9609(guest)
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+[4/8] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[5/8] root:password (fail)
+  - Login FAIL: root:password
+
+[6/8] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[7/8] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[8/8] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 8
+Succeeded (login OK): 1
+Auth failed (expected): 7
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T06:30:03.548754+00:00
+Target: cowrie:2222
+Sessions: 14
+============================================================
+
+[1/14] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[2/14] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hguest@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l06:30:07  up  6:44,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hguest@mail-server-01:~$
+  $ whoami
+    whoami
+    [4lguest
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+[3/14] root:toor (fail)
+  - Login FAIL: root:toor
+
+[4/14] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[5/14] test:test (fail)
+  - Login FAIL: test:test
+
+[6/14] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[7/14] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[8/14] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[9/14] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[10/14] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[11/14] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[12/14] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[13/14] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[14/14] root:password (fail)
+  - Login FAIL: root:password
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 14
+Succeeded (login OK): 1
+Auth failed (expected): 13
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T06:45:02.950993+00:00
+Target: cowrie:2222
+Sessions: 5
+============================================================
+
+[1/5] guest:guest123 (SUCCESS)
+  + Login OK: guest:guest123
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hguest@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l06:45:05  up  6:59,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hguest@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 9609 9609 4096 2026-09-30 06:45 guest
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hguest@mail-server-01:~$
+  $ id
+    id
+    [4luid=9609(guest) gid=9609(guest) groups=9609(guest)
+    [4hguest@mail-server-01:~$
+  -> SESSION OK
+
+[2/5] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[3/5] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[4/5] test:test (fail)
+  - Login FAIL: test:test
+
+[5/5] git:git123 (fail)
+  - Login FAIL: git:git123
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 5
+Succeeded (login OK): 1
+Auth failed (expected): 4
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T07:00:03.554573+00:00
+Target: cowrie:2222
+Sessions: 11
+============================================================
+
+[1/11] root:password (fail)
+  - Login FAIL: root:password
+
+[2/11] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[3/11] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[4/11] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[5/11] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[6/11] admin:test123 (SUCCESS)
+  + Login OK: admin:test123
+  $ ls -la /home
+    drwxr-xr-x 1 9673 9673 4096 2026-09-30 07:00 admin
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hadmin@mail-server-01:~$
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+  $ id
+    id
+    [4luid=9673(admin) gid=9673(admin) groups=9673(admin)
+    [4hadmin@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hadmin@mail-server-01:~$
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hadmin@mail-server-01:~$
+  $ uptime
+    uptime
+    [4l07:00:19  up  7:14,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hadmin@mail-server-01:~$
+  -> SESSION OK
+
+[7/11] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[8/11] root:toor (fail)
+  - Login FAIL: root:toor
+
+[9/11] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[10/11] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[11/11] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 11
+Succeeded (login OK): 1
+Auth failed (expected): 10
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T07:15:03.256051+00:00
+Target: cowrie:2222
+Sessions: 14
+============================================================
+
+[1/14] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[2/14] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[3/14] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[4/14] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[5/14] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[6/14] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[7/14] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[8/14] root:password (fail)
+  - Login FAIL: root:password
+
+[9/14] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[10/14] admin:test123 (SUCCESS)
+  + Login OK: admin:test123
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hadmin@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hadmin@mail-server-01:~$
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 9673 9673 4096 2026-09-30 07:15 admin
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hadmin@mail-server-01:~$
+  $ id
+    id
+    [4luid=9673(admin) gid=9673(admin) groups=9673(admin)
+    [4hadmin@mail-server-01:~$
+  -> SESSION OK
+
+[11/14] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[12/14] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[13/14] root:toor (fail)
+  - Login FAIL: root:toor
+
+[14/14] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 14
+Succeeded (login OK): 1
+Auth failed (expected): 13
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T07:30:03.466310+00:00
+Target: cowrie:2222
+Sessions: 6
+============================================================
+
+[1/6] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[2/6] root:toor (fail)
+  - Login FAIL: root:toor
+
+[3/6] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[4/6] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[5/6] admin:test123 (SUCCESS)
+  + Login OK: admin:test123
+  $ uptime
+    uptime
+    [4l07:30:13  up  7:44,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hadmin@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hadmin@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 9673 9673 4096 2026-09-30 07:30 admin
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hadmin@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 07:30:15 UTC 2026
+    [4hadmin@mail-server-01:~$
+  $ id
+    id
+    [4luid=9673(admin) gid=9673(admin) groups=9673(admin)
+    [4hadmin@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1498        2191          20        4379        6526
+    Swap:          2097           0        2097
+    [4hadmin@mail-server-01:~$
+  -> SESSION OK
+
+[6/6] git:git123 (fail)
+  - Login FAIL: git:git123
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 6
+Succeeded (login OK): 1
+Auth failed (expected): 5
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T07:45:03.345581+00:00
+Target: cowrie:2222
+Sessions: 12
+============================================================
+
+[1/12] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[2/12] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[3/12] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[4/12] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[5/12] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[6/12] root:password (fail)
+  - Login FAIL: root:password
+
+[7/12] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[8/12] test:test (fail)
+  - Login FAIL: test:test
+
+[9/12] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[10/12] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[11/12] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[12/12] admin:test123 (SUCCESS)
+  + Login OK: admin:test123
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hadmin@mail-server-01:~$
+  $ whoami
+    whoami
+    [4ladmin
+    [4hadmin@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hadmin@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hadmin@mail-server-01:~$
+  $ date
+    date
+    [4lWed Sep 30 07:45:30 UTC 2026
+    [4hadmin@mail-server-01:~$
+  $ free -m
+    Mem:           8070        1553        2132          20        4383        6471
+    Swap:          2097           0        2097
+    [4hadmin@mail-server-01:~$
+  -> SESSION OK
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 12
+Succeeded (login OK): 1
+Auth failed (expected): 11
+Errors: 0
+ Container cowrie  Running
+SSH Attack Runner - 2026-09-30T08:00:03.450342+00:00
+Target: cowrie:2222
+Sessions: 11
+============================================================
+
+[1/11] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[2/11] root:password (fail)
+  - Login FAIL: root:password
+
+[3/11] deploy:deployKey7 (SUCCESS)
+  + Login OK: deploy:deployKey7
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4hdeploy@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hdeploy@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/deploy
+    [4hdeploy@mail-server-01:~$
+  $ whoami
+    whoami
+    [4ldeploy
+    [4hdeploy@mail-server-01:~$
+  -> SESSION OK
+
+[4/11] oracle:oracle2024 (SUCCESS)
+  + Login OK: oracle:oracle2024
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4horacle@mail-server-01:~$
+  $ uname -a
+    uname -a
+    [4lLinux mail-server-01 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+    [4horacle@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 6373 6373 4096 2026-09-30 08:00 oracle
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4horacle@mail-server-01:~$
+  -> SESSION OK
+
+[5/11] root:toor (fail)
+  - Login FAIL: root:toor
+
+[6/11] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[7/11] test:test (fail)
+  - Login FAIL: test:test
+
+[8/11] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[9/11] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[10/11] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[11/11] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 11
+Succeeded (login OK): 2
+Auth failed (expected): 9
+Errors: 0
