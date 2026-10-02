@@ -16,7 +16,7 @@ HOST = "cowrie"
 SSH_PORT = 2222
 
 # Credentials from cowrie/userdb.txt
-VALID_CREDS = {"admin": "test123", "guest": "guest123"}
+# VALID_CREDS = {"admin": "test123", "guest": "guest123"}  # no usada; ver SUCCESS_SESSIONS
 
 # Pool de sesiones fallidas (credenciales invalidas) - se sortea un subconjunto
 # distinto en cada corrida para no repetir exactamente la misma sesion siempre

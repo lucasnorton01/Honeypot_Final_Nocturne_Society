@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS events (
 -- Indicadores de compromiso extraídos (pipeline ioc-extractor)
 CREATE TABLE IF NOT EXISTS iocs (
     id          BIGSERIAL PRIMARY KEY,
-    type        TEXT        NOT NULL,          -- ip | credential | hash | url | domain
+    type        TEXT        NOT NULL,          -- ip | credential | command | hash (url y domain previstos, no implementados)
     value       TEXT        NOT NULL,
     confidence  TEXT        DEFAULT 'BAJO',    -- ALTO | MEDIO | BAJO
     event_id    BIGINT      REFERENCES events(id),

@@ -77,5 +77,8 @@ Segunda ventana completa (23:53:57 UTC del 29/09 a ~08:01 UTC del 30/09, con las
 | [`evidencia/iocs_events_2026-09-30.csv`](evidencia/iocs_events_2026-09-30.csv) | Cruce `iocs` × `events` por `event_id` | 21 |
 | [`evidencia/ioc_sessions_2026-09-30.csv`](evidencia/ioc_sessions_2026-09-30.csv) | Cruce `ioc_sessions` × `iocs` (`ioc_session_id, ioc_id, ioc_type, ioc_value, event_id, session`); sustenta el P3 por el método `ioc_sessions` | 654 |
 | [`evidencia/attack-runner-cron_2026-09-30.log`](evidencia/attack-runner-cron_2026-09-30.log) | **Agregado el 2026-10-01.** Registro de la tarea programada del simulador (33 corridas, cada 15 min); SHA-256 `3b8b2b8ee1365f6a003ce8c1203c51aaa06a9b3dc95dd6f1e4870c7cadbcdd3a` | 2224 líneas |
+| [`evidencia/cowrie_ventana_2026-09-30.json`](evidencia/cowrie_ventana_2026-09-30.json) | **Agregado el 2026-10-02.** Log JSON de Cowrie de la ventana (23:53:57 a 08:01:00 UTC), extraído sin modificar del volumen `honeypot_final-vers_cowrie-var`; SHA-256 `c0f66ca5f3692a570c15bd5e266e9ade62443caa6d8f6b5c8dc2a6801caa4f6e` | 1998 |
+| [`evidencia/latencia_2026-09-30.csv`](evidencia/latencia_2026-09-30.csv) | **Agregado el 2026-10-02.** Latencia de persistencia por evento (`created_at − timestamp`, en ms) de la tabla `events`, sin columnas de credenciales; SHA-256 `04de79152123fd23659e3c291d2c3ecffbd81958ab8c598a80a7c171c4a71606` | 1998 |
+| [`evidencia/ejecuciones_duracion_2026-09-30.csv`](evidencia/ejecuciones_duracion_2026-09-30.csv) | **Agregado el 2026-10-02.** Las mismas 2035 ejecuciones de `ejecuciones_2026-09-30.csv`, con hora de fin y duración (`execution_entity` de n8n); SHA-256 `f7b52cafec8b68eee907419d2aa0560f8508ce45928757d6a529dc50943613db` | 2035 |
 
 Consultas y resultados crudos en `VERIFICACION_2026-09-30.md`.

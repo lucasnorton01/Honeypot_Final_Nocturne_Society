@@ -290,6 +290,8 @@ NodeOperationError: column "undefined" does not exist
 
 **Hipótesis (no confirmada, no investigada en profundidad por tiempo):** el nodo Postgres corre con `queryBatching: "independently"` (una consulta por ítem de entrada). El Code node (`Extraer IoCs`) no setea explícitamente `pairedItem` en los objetos que devuelve, así que n8n infiere el enlace ítem-a-ítem automáticamente; en tandas grandes (hasta 500 eventos por corrida) esa inferencia automática pudo desalinearse para algún ítem puntual, haciendo que el nodo Postgres evaluara `$json` contra un objeto sin `event_id`. Es una hipótesis, no una causa raíz verificada.
 
+> Nota (2026-10-01): hipótesis descartada. La causa (ítem {"success": true} sin eventos pendientes) y la corrección se documentan en BITACORA.md (Paso 6, 29/09) y en la tesis, §5.2.6.
+
 **Conteo exacto dentro de la ventana declarada (00:57:55–08:30 UTC del 28/09, no "desde el reinicio"):**
 
 ```sql

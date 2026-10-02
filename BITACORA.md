@@ -86,7 +86,7 @@ Cada paso de la reestructuración queda registrado aquí con fecha, archivo afec
 ### [2026-08-11] Workflows n8n — importados, activados y conectados a PostgreSQL
 - Importados los 3 workflows en n8n vía CLI (`n8n import:workflow --input=/tmp/...json`) montando el volumen `n8n-data` en un contenedor temporal.
 - Creada la credencial **PostgreSQL** en n8n con el `POSTGRES_*` del `.env` (host `postgres`, puerto 5432, db `honeypot`).
-  - **Nota técnica:** el tipo de credencial en la base es `postgres` (nombre corto). Al importar vía API con `"type": "postgres"` fallaba porque el 1.8x validaba el tipo completo; se corrigió editando el registro directamente en la BD y reseteando la clave de encriptación (`N8N_ENCRYPTION_KEY=76325d92...`) en el volumen de n8n.
+  - **Nota técnica:** el tipo de credencial en la base es `postgres` (nombre corto). Al importar vía API con `"type": "postgres"` fallaba porque el 1.8x validaba el tipo completo; se corrigió editando el registro directamente en la BD y reseteando la clave de encriptación (`N8N_ENCRYPTION_KEY=(prefijo omitido)`) en el volumen de n8n.
 - Workflows **activados** (`activate`, con ajuste de `n8n.stop-waiting-for-webhook` para permitir activación por CLI).
 - Logs de n8n confirman: `Activated workflow "event-ingest"`, `"ioc-extractor"`, `"report-generator"`.
 - Credencial por defecto de n8n: `athicus81@gmail.com` (owner local de esta máquina).
@@ -436,3 +436,15 @@ Revisión cruzada entre el documento (v17) y el repositorio. No se encontró nin
 - **Corridas del simulador:** se publica `docs/evidencia/attack-runner-cron_2026-09-30.log` (33 corridas). El log del 28/09 no se conservó. Sus 7 corridas quedan transcriptas en `VERIFICACION_2026-09-28.md` y confirmadas por el log de Cowrie.
 - **`docs/figs/`:** se reemplazaron 8 de las 9 figuras por las que usa la tesis. Las del repo eran versiones anteriores; las II-1 a II-3 eran diagramas, no las capturas de n8n.
 - **README:** se agregó una nota sobre el id de credencial `E56uxYa034ezaNIn` que referencian los workflows exportados.
+
+### [2026-10-02] Errata y ajustes para la tesis v26 (tag Honeypot_Final_2026-10-02)
+Los commits previos no se reescriben; se corrige aquí y en los archivos afectados.
+- **Línea 89:** se quitó el fragmento de la clave de cifrado de n8n (`N8N_ENCRYPTION_KEY`). La clave ya había sido rotada (ver la entrada correspondiente más arriba). El fragmento sigue en el historial de git; no se reescribe.
+- **Entrada «Interrupción de infraestructura — ventana anterior descartada» (29/09):** el disparo perdido de `report-generator` fue el de las **23:00 UTC**, no el de las 22:00 UTC. El cron de validación `0 */2 * * *` se evalúa en America/Argentina/Mendoza (UTC−3) y dispara en horas pares ART, es decir, en horas impares UTC (01:00, 03:00, 05:00 y 07:00 UTC en las ventanas de validación).
+- **`docs/VERIFICACION_2026-09-30.md`:** como el 28/09, todas las correcciones se aplicaron antes del primer evento de la ventana (antes decía «a diferencia del 28/09»).
+- **`docs/VERIFICACION_2026-09-28.md`:** nota que da por descartada la hipótesis de `pairedItem`.
+- **`db/schema.sql`:** el comentario de `iocs.type` lista los tipos que genera el extractor (`ip | credential | command | hash`); `url` y `domain` están previstos y no implementados.
+- **`scripts/calculo_p3p4.py`:** marcado como obsoleto (ventana del 16/09, retirada). Se agrega `scripts/wilson_tesis.py`, que recalcula los intervalos de Wilson de la tesis.
+- **`attack-runner/attack_ssh.py`:** `VALID_CREDS` comentada (no se usa; las cuentas válidas están en `SUCCESS_SESSIONS`).
+- **`docs/figs/`:** Figuras 4.1, 4.3 y 4.4 (estímulo: simulador Telnet desde el anfitrión el 25/09; contenedor `attack-runner` el 28/09 y el 30/09), Figura 4.2 (subred asignada por Docker) y Figura III-1 (modelo de datos con las seis tablas de `db/schema.sql`), idénticas a las de la tesis v21.
+- **(2026-10-02) Evidencia nueva de la ventana del 30/09**, extraída de los volúmenes de Docker sobre copias: `docs/evidencia/cowrie_ventana_2026-09-30.json` (1998 eventos = 1998 filas de `events`; sin pérdidas), `latencia_2026-09-30.csv` (media 1608,76 ms) y `ejecuciones_duracion_2026-09-30.csv` (duración de las 2035 ejecuciones). Detalle en `docs/VERIFICACION_2026-09-30.md`, §9; hashes en `docs/EVIDENCIA_HASHES.md`.

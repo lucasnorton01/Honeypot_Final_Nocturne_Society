@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# OBSOLETO: datos fijos de la ventana del 16/09/2026 (N = 37), retirada; no sustenta la tesis.
+# Para los intervalos vigentes usar scripts/wilson_tesis.py.
 """Calculate Wilson confidence intervals for P3 and P4."""
 import math
 import sys

@@ -3,8 +3,8 @@
 Cierre de la segunda ventana de validación completa (la primera fue el
 28/09; ver `docs/VERIFICACION_2026-09-28.md`). Esta corre con los fixes
 de los Pasos 6 (extractor), 7 (`ioc_sessions`) y 9 (geolocalización) de
-`INSTRUCCIONES.md` ya aplicados **antes** del primer evento — a
-diferencia del 28/09, no hubo correcciones a mitad de la ventana.
+`INSTRUCCIONES.md` ya aplicados **antes** del primer evento — como el 28/09, todas las
+correcciones se aplicaron antes del primer evento de la ventana.
 
 Todo lo de abajo es salida literal de consultas SQL y de la base interna
 de n8n (`execution_entity`), no parafraseada.
@@ -370,3 +370,31 @@ fueron en modo trigger, sin intervención manual (sección 3).
 > de la tesis (criterio definido de antemano; `ioc_sessions` como
 > análisis complementario posterior). Las consultas, sus salidas
 > literales y los CSV de evidencia no cambiaron.
+
+---
+
+## 9 — Agregado el 2026-10-02: captura contra persistencia, latencia y duraciones
+
+Datos extraídos de los volúmenes de Docker de esta ventana (`honeypot_final-vers_cowrie-var`, `honeypot_final-vers_pg-data` y `honeypot_final-vers_n8n-data`), sobre copias; los volúmenes originales no se modificaron.
+
+**Captura = persistencia.** El log JSON de Cowrie de la ventana (`docs/evidencia/cowrie_ventana_2026-09-30.json`, eventos con `timestamp` entre 2026-09-29T23:53:57 y 2026-09-30T08:01:00) tiene **1998 eventos**, con las mismas tripletas (sesión, tipo de evento, marca temporal al milisegundo) que las 1998 filas de `events`: ninguna diferencia. 41 sesiones con `cowrie.login.success`. No hubo pérdidas entre la captura y la persistencia.
+
+**Latencia de persistencia por evento** (`created_at − timestamp` de `events`, misma definición que la consulta V1 del lote del 25/09; `docs/evidencia/latencia_2026-09-30.csv`):
+
+| n | media | mediana | mínimo | máximo | desv. estándar muestral |
+|---|---|---|---|---|---|
+| 1998 | 1608,76 ms | 1037,16 ms | 412,20 ms | 4922,22 ms | 984,98 ms |
+
+Ningún evento supera los 15 s del umbral de P1. La media es mayor que la del lote del 25/09 (348,02 ms) porque desde el 29/09 la consulta de país a ip-api.com funciona (antes fallaba de inmediato con `fetch()`) y porque los eventos de cada corrida del simulador llegan en ráfagas que n8n procesa de a uno.
+
+**Duración de las ejecuciones** (`stoppedAt − startedAt` de `execution_entity`; `docs/evidencia/ejecuciones_duracion_2026-09-30.csv`):
+
+| workflow | n | media | mediana | mínimo | máximo |
+|---|---|---|---|---|---|
+| event-ingest | 1998 | 1299,42 ms | 687,50 ms | 382 ms | 3269 ms |
+| ioc-extractor | 33 | 1117,85 ms | 1018,00 ms | 432 ms | 3118 ms |
+| report-generator | 4 | 715,25 ms | 594,50 ms | 265 ms | 1407 ms |
+
+Las 2035 ejecuciones son las mismas de `docs/evidencia/ejecuciones_2026-09-30.csv`.
+
+**Nota sobre `ioc_sessions`:** la base se extrajo después del cierre; n8n siguió encendido hasta ≈08:45 UTC y `ioc-extractor` procesó a las 08:15 los 68 eventos pendientes (22 filas más). Filtrando `created_at <= '2026-09-30 08:01:00+00'` se obtienen las 654 filas de 327 sesiones publicadas, con los mismos ids.
