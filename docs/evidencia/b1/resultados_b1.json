@@ -1,0 +1,117 @@
+{
+ "P1": {
+  "version": "b1-v2",
+  "perfil": "estudiante-seg",
+  "inicio": "2026-10-02T15:45:45.561Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 18.85,
+   "media": 34.26,
+   "min": 12.112,
+   "max": 200.023
+  },
+  "paso2": {
+   "mediana": 12,
+   "media": 56.56
+  },
+  "total": {
+   "mediana": 31.55,
+   "suma_min": 30.3
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 2,
+   "ioc_tipo": 1,
+   "ioc_valor": 7,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 12
+  },
+  "detalle": [
+   "1 iocval «172.19.0.7» vs «admin:test123»",
+   "6 ioc ip vs credential",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest / guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 sev media vs baja (cowrie.login.failed)",
+   "17 iocval «ci / ci» vs «ci:ci»",
+   "20 sev media vs baja (cowrie.login.failed)",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P2": {
+  "version": "b1-v2",
+  "perfil": "estudiante",
+  "inicio": "2026-10-02T15:45:47.610Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 13.54,
+   "media": 25.63,
+   "min": 9.16,
+   "max": 113.355
+  },
+  "paso2": {
+   "mediana": 11.2,
+   "media": 14.91
+  },
+  "total": {
+   "mediana": 26.76,
+   "suma_min": 13.5
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 1,
+   "ioc_valor": 7,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 12
+  },
+  "detalle": [
+   "1 iocval «admin / test123» vs «admin:test123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 ioc ip vs credential",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "linea_base": {
+  "criterio": "mediana por evento del paso 1 (entre participantes), luego mediana de los 20 eventos",
+  "paso1_mediana_s": 18.44,
+  "paso1_media_s": 29.94,
+  "total_mediana_s": 34.46
+ },
+ "independencia": {
+  "dif_fin_s": [
+   -2228,
+   -2227,
+   -2220,
+   -1511,
+   -1484,
+   -2092,
+   -1983,
+   -1971,
+   -1708,
+   -1513,
+   -1436,
+   -1438,
+   -1364,
+   -1361,
+   -1359,
+   -1357,
+   -1476,
+   -1463,
+   -1459,
+   -1455
+  ],
+  "mediana_abs_s": 1480.3285
+ }
+}

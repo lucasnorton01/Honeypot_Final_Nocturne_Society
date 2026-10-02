@@ -1,0 +1,603 @@
+{
+  "actualizado": "2026-10-02T16:25:10.634Z",
+  "codigo": "P1",
+  "inicio": "2026-10-02T15:45:45.561Z",
+  "perfil": "estudiante-seg",
+  "respuestas": [
+    {
+      "evento": {
+        "eventid": "cowrie.login.failed",
+        "session": "1d1f132375ef",
+        "timestamp": "2026-09-30T01:30:24.803947Z"
+      },
+      "fin": "2026-10-02T15:47:48.426Z",
+      "ms_paso1": 78047,
+      "ms_paso2": 40914,
+      "ms_total": 118962,
+      "n": 1,
+      "orden": 1,
+      "practica": true,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "credential",
+        "ioc_valor": "172.19.0.7",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "test",
+        "relevante": "si",
+        "sesion": "1d1f132375ef",
+        "severidad": "baja",
+        "tipo": "cowrie.login.failed",
+        "usuario": "test"
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.command.input",
+        "session": "49f31d37ef4a",
+        "timestamp": "2026-09-30T00:30:22.215027Z"
+      },
+      "fin": "2026-10-02T15:48:41.369Z",
+      "ms_paso1": 38880,
+      "ms_paso2": 12000,
+      "ms_total": 50880,
+      "n": 2,
+      "orden": 2,
+      "practica": true,
+      "respuesta": {
+        "comando": "cat /etc/passwd",
+        "ioc_tipo": "command",
+        "ioc_valor": "172.19.0.7",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "49f31d37ef4a",
+        "severidad": "alta",
+        "tipo": "cowrie.command.input",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.login.success",
+        "session": "89d78abf875c",
+        "timestamp": "2026-09-30T07:30:11.747581Z"
+      },
+      "fin": "2026-10-02T15:49:24.969Z",
+      "ms_paso1": 20873,
+      "ms_paso2": 20960,
+      "ms_total": 41833,
+      "n": 1,
+      "orden": 3,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "credential",
+        "ioc_valor": "172.19.0.7",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "test123",
+        "relevante": "si",
+        "sesion": "89d78abf875c",
+        "severidad": "alta",
+        "tipo": "cowrie.login.success",
+        "usuario": "admin"
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.session.connect",
+        "session": "ecf0cdadcaad",
+        "timestamp": "2026-09-30T08:00:28.874376Z"
+      },
+      "fin": "2026-10-02T15:50:03.985Z",
+      "ms_paso1": 25328,
+      "ms_paso2": 12184,
+      "ms_total": 37512,
+      "n": 2,
+      "orden": 4,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "ip",
+        "ioc_valor": "172.19.0.7",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "ecf0cdadcaad",
+        "severidad": "baja",
+        "tipo": "cowrie.session.connect",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.session.connect",
+        "session": "f77de392ea30",
+        "timestamp": "2026-09-30T00:30:18.642410Z"
+      },
+      "fin": "2026-10-02T15:50:41.577Z",
+      "ms_paso1": 25024,
+      "ms_paso2": 8904,
+      "ms_total": 33928,
+      "n": 3,
+      "orden": 5,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "ip",
+        "ioc_valor": "172.19.0.7",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "f77de392ea30",
+        "severidad": "baja",
+        "tipo": "cowrie.session.connect",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.session.closed",
+        "session": "f2c1f0c35110",
+        "timestamp": "2026-09-30T02:30:26.602210Z"
+      },
+      "fin": "2026-10-02T16:04:13.889Z",
+      "ms_paso1": 22312,
+      "ms_paso2": 788449,
+      "ms_total": 810761,
+      "n": 4,
+      "orden": 6,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "ninguno",
+        "ioc_valor": "ninguno",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "no",
+        "sesion": "f2c1f0c35110",
+        "severidad": "baja",
+        "tipo": "cowrie.session.closed",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.client.version",
+        "session": "7b58ef07064d",
+        "timestamp": "2026-09-30T01:45:20.240323Z"
+      },
+      "fin": "2026-10-02T16:05:12.137Z",
+      "ms_paso1": 17359,
+      "ms_paso2": 11807,
+      "ms_total": 29166,
+      "n": 5,
+      "orden": 7,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "ninguno",
+        "ioc_valor": "ninguno",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "no",
+        "sesion": "7b58ef07064d",
+        "severidad": "baja",
+        "tipo": "cowrie.client.version",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.login.success",
+        "session": "0176df2d684b",
+        "timestamp": "2026-09-30T02:30:13.341412Z"
+      },
+      "fin": "2026-10-02T16:05:42.257Z",
+      "ms_paso1": 19008,
+      "ms_paso2": 9248,
+      "ms_total": 28256,
+      "n": 6,
+      "orden": 8,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "ip",
+        "ioc_valor": "172.19.0.7",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "guest123",
+        "relevante": "si",
+        "sesion": "0176df2d684b",
+        "severidad": "alta",
+        "tipo": "cowrie.login.success",
+        "usuario": "guest"
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.login.failed",
+        "session": "6016e5327863",
+        "timestamp": "2026-09-30T01:15:08.736699Z"
+      },
+      "fin": "2026-10-02T16:08:06.490Z",
+      "ms_paso1": 111735,
+      "ms_paso2": 30377,
+      "ms_total": 142112,
+      "n": 7,
+      "orden": 9,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "credential",
+        "ioc_valor": "oracle /oracle",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "oracle",
+        "relevante": "si",
+        "sesion": "6016e5327863",
+        "severidad": "baja",
+        "tipo": "cowrie.login.failed",
+        "usuario": "oracle"
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.command.input",
+        "session": "cdbcecd46703",
+        "timestamp": "2026-09-30T01:45:18.437940Z"
+      },
+      "fin": "2026-10-02T16:09:14.665Z",
+      "ms_paso1": 31528,
+      "ms_paso2": 34464,
+      "ms_total": 65993,
+      "n": 8,
+      "orden": 10,
+      "practica": false,
+      "respuesta": {
+        "comando": "whoami",
+        "ioc_tipo": "ninguno",
+        "ioc_valor": "ninguno",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "cdbcecd46703",
+        "severidad": "media",
+        "tipo": "cowrie.command.input",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.login.success",
+        "session": "c7cae8df13e8",
+        "timestamp": "2026-09-30T06:00:26.213685Z"
+      },
+      "fin": "2026-10-02T16:14:04.305Z",
+      "ms_paso1": 55208,
+      "ms_paso2": 15560,
+      "ms_total": 70768,
+      "n": 9,
+      "orden": 11,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "credential",
+        "ioc_valor": "guest / guest123",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "guest123",
+        "relevante": "si",
+        "sesion": "c7cae8df13e8",
+        "severidad": "alta",
+        "tipo": "cowrie.login.success",
+        "usuario": "guest"
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.command.input",
+        "session": "58bf11c95e71",
+        "timestamp": "2026-09-30T00:00:07.056727Z"
+      },
+      "fin": "2026-10-02T16:17:59.849Z",
+      "ms_paso1": 200023,
+      "ms_paso2": 13264,
+      "ms_total": 213287,
+      "n": 10,
+      "orden": 12,
+      "practica": false,
+      "respuesta": {
+        "comando": "w",
+        "ioc_tipo": "ninguno",
+        "ioc_valor": "ninguno",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "58bf11c95e71",
+        "severidad": "media",
+        "tipo": "cowrie.command.input",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.session.connect",
+        "session": "b28a78d4fa36",
+        "timestamp": "2026-09-30T01:30:28.881303Z"
+      },
+      "fin": "2026-10-02T16:19:40.674Z",
+      "ms_paso1": 18304,
+      "ms_paso2": 10208,
+      "ms_total": 28512,
+      "n": 11,
+      "orden": 13,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "ip",
+        "ioc_valor": "172.19.0.7",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "b28a78d4fa36",
+        "severidad": "baja",
+        "tipo": "cowrie.session.connect",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.login.failed",
+        "session": "f9e20da22577",
+        "timestamp": "2026-09-30T02:15:07.624029Z"
+      },
+      "fin": "2026-10-02T16:20:09.186Z",
+      "ms_paso1": 16464,
+      "ms_paso2": 10256,
+      "ms_total": 26720,
+      "n": 12,
+      "orden": 14,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "credential",
+        "ioc_valor": "postgres /postgres",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "postgres",
+        "relevante": "si",
+        "sesion": "f9e20da22577",
+        "severidad": "baja",
+        "tipo": "cowrie.login.failed",
+        "usuario": "postgres"
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.command.input",
+        "session": "aed6b0778f02",
+        "timestamp": "2026-09-30T03:45:20.540464Z"
+      },
+      "fin": "2026-10-02T16:22:00.514Z",
+      "ms_paso1": 18688,
+      "ms_paso2": 91584,
+      "ms_total": 110272,
+      "n": 13,
+      "orden": 15,
+      "practica": false,
+      "respuesta": {
+        "comando": "date",
+        "ioc_tipo": "ninguno",
+        "ioc_valor": "ninguno",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "aed6b0778f02",
+        "severidad": "media",
+        "tipo": "cowrie.command.input",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.session.connect",
+        "session": "28a8bd9a5489",
+        "timestamp": "2026-09-30T00:00:18.682510Z"
+      },
+      "fin": "2026-10-02T16:22:25.833Z",
+      "ms_paso1": 15641,
+      "ms_paso2": 6215,
+      "ms_total": 21856,
+      "n": 14,
+      "orden": 16,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "ip",
+        "ioc_valor": "172.19.0.7",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "28a8bd9a5489",
+        "severidad": "baja",
+        "tipo": "cowrie.session.connect",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.command.input",
+        "session": "49f31d37ef4a",
+        "timestamp": "2026-09-30T00:30:24.613873Z"
+      },
+      "fin": "2026-10-02T16:22:45.186Z",
+      "ms_paso1": 12112,
+      "ms_paso2": 5400,
+      "ms_total": 17512,
+      "n": 15,
+      "orden": 17,
+      "practica": false,
+      "respuesta": {
+        "comando": "w",
+        "ioc_tipo": "ninguno",
+        "ioc_valor": "ninguno",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "49f31d37ef4a",
+        "severidad": "media",
+        "tipo": "cowrie.command.input",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.login.failed",
+        "session": "0d6809c7319d",
+        "timestamp": "2026-09-30T03:30:10.643528Z"
+      },
+      "fin": "2026-10-02T16:23:13.538Z",
+      "ms_paso1": 13880,
+      "ms_paso2": 12656,
+      "ms_total": 26536,
+      "n": 16,
+      "orden": 18,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "credential",
+        "ioc_valor": "root /toor",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "toor",
+        "relevante": "si",
+        "sesion": "0d6809c7319d",
+        "severidad": "baja",
+        "tipo": "cowrie.login.failed",
+        "usuario": "root"
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.login.failed",
+        "session": "084537cb17d7",
+        "timestamp": "2026-09-30T06:30:12.522740Z"
+      },
+      "fin": "2026-10-02T16:23:34.370Z",
+      "ms_paso1": 12160,
+      "ms_paso2": 6800,
+      "ms_total": 18960,
+      "n": 17,
+      "orden": 19,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "credential",
+        "ioc_valor": "ci / ci",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "ci",
+        "relevante": "si",
+        "sesion": "084537cb17d7",
+        "severidad": "media",
+        "tipo": "cowrie.login.failed",
+        "usuario": "ci"
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.command.input",
+        "session": "77751d138ec3",
+        "timestamp": "2026-09-30T00:45:21.050201Z"
+      },
+      "fin": "2026-10-02T16:24:26.242Z",
+      "ms_paso1": 19920,
+      "ms_paso2": 30672,
+      "ms_total": 50592,
+      "n": 18,
+      "orden": 20,
+      "practica": false,
+      "respuesta": {
+        "comando": "w",
+        "ioc_tipo": "ninguno",
+        "ioc_valor": "ninguno",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "si",
+        "sesion": "77751d138ec3",
+        "severidad": "media",
+        "tipo": "cowrie.command.input",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.client.version",
+        "session": "3013e6bdc4c1",
+        "timestamp": "2026-09-30T02:45:28.403054Z"
+      },
+      "fin": "2026-10-02T16:24:48.818Z",
+      "ms_paso1": 14432,
+      "ms_paso2": 6896,
+      "ms_total": 21328,
+      "n": 19,
+      "orden": 21,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "ninguno",
+        "ioc_valor": "ninguno",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "",
+        "relevante": "no",
+        "sesion": "3013e6bdc4c1",
+        "severidad": "baja",
+        "tipo": "cowrie.client.version",
+        "usuario": ""
+      }
+    },
+    {
+      "evento": {
+        "eventid": "cowrie.login.failed",
+        "session": "5fc5db47f316",
+        "timestamp": "2026-09-30T05:15:28.567621Z"
+      },
+      "fin": "2026-10-02T16:25:10.634Z",
+      "ms_paso1": 15104,
+      "ms_paso2": 5248,
+      "ms_total": 20352,
+      "n": 20,
+      "orden": 22,
+      "practica": false,
+      "respuesta": {
+        "comando": "",
+        "ioc_tipo": "credential",
+        "ioc_valor": "devops /devops",
+        "ip": "172.19.0.7",
+        "nota": "",
+        "password": "devops",
+        "relevante": "si",
+        "sesion": "5fc5db47f316",
+        "severidad": "media",
+        "tipo": "cowrie.login.failed",
+        "usuario": "devops"
+      }
+    }
+  ],
+  "version": "b1-v2"
+}

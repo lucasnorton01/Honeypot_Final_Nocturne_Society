@@ -1,0 +1,736 @@
+===== vie 02/10/2026 10:55:00,80  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-08ffaf8a0fe0 Creating 
+ Container honeypot-b2-attack-runner-run-08ffaf8a0fe0 Created 
+SSH Attack Runner - 2026-10-02T13:55:01.957826+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 9
+============================================================
+
+[1/9] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[2/9] support:support01 (SUCCESS)
+  + Login OK: support:support01
+  $ which sh 
+    [4l/usr/bin/sh
+    /bin/sh
+    [4hsupport@mail-server-01:~$
+  $ whoami
+    whoami
+    [4lsupport
+    [4hsupport@mail-server-01:~$
+  $ id
+    id
+    [4luid=8903(support) gid=8903(support) groups=8903(support)
+    [4hsupport@mail-server-01:~$
+  $ date
+    date
+    [4lFri Oct 02 13:55:07 UTC 2026
+    [4hsupport@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hsupport@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hsupport@mail-server-01:~$
+  -> SESSION OK
+
+[3/9] oracle:oracle2024 (SUCCESS)
+  + Login OK: oracle:oracle2024
+  $ ls /bin
+    nawk                    newgrp                  nice
+    nisdomainname           nl                      nohup
+    nproc
+  $ free -m
+    zcmp                    zdiff                   zdump
+    zegrep                  zfgrep                  zforce
+    zgrep                   zless
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    oracle   pts/0    172.18.0.7        13:55    0.00s  0.00s  0.00s w
+    [4horacle@mail-server-01:~$
+  $ whoami
+    whoami
+    [4loracle
+    [4horacle@mail-server-01:~$
+  $ ls -la /tmp
+    [4ldrwxrwxrwt 1 root root 4096 2026-05-04 14:46 .
+    drwxr-xr-x 1 root root    0 2024-06-12 00:00 ..
+    [4horacle@mail-server-01:~$
+  $ cat /etc/os-release
+    cat /etc/os-release
+    [4l[4horacle@mail-server-01:~$
+  $ last
+    [4loracle   pts/0        172.18.0.7       Fri Oct 02 13:55   still logged in
+    wtmp begins Fri Oct 02 00:01:03 2026
+    [4horacle@mail-server-01:~$
+  -> SESSION OK
+
+[4/9] root:password (fail)
+  - Login FAIL: root:password
+
+[5/9] root:toor (fail)
+  - Login FAIL: root:toor
+^C===== vie 02/10/2026 11:00:01,72  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-4e757a987ff7 Creating 
+ Container honeypot-b2-attack-runner-run-4e757a987ff7 Created 
+SSH Attack Runner - 2026-10-02T14:00:02.900027+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 7
+============================================================
+
+[1/7] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[2/7] root:toor (fail)
+  - Login FAIL: root:toor
+
+[3/7] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[4/7] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[5/7] test:test (fail)
+  - Login FAIL: test:test
+
+[6/7] monitor:m0nitor (SUCCESS)
+  + Login OK: monitor:m0nitor
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    monitor  pts/0    172.18.0.7        14:00    0.00s  0.00s  0.00s w
+    [4hmonitor@mail-server-01:~$
+  $ last
+    [4lmonitor  pts/0        172.18.0.7       Fri Oct 02 14:00   still logged in
+    wtmp begins Fri Oct 02 00:01:03 2026
+    [4hmonitor@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/monitor
+    [4hmonitor@mail-server-01:~$
+  $ crontab -l
+    crontab -l
+    [4lno crontab for monitor
+    [4hmonitor@mail-server-01:~$
+  -> SESSION OK
+
+[7/7] root:password (fail)
+  - Login FAIL: root:password
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 7
+Succeeded (login OK): 1
+Auth failed (expected): 6
+Errors: 0
+===== vie 02/10/2026 11:05:01,71  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-1cbe27a49b61 Creating 
+ Container honeypot-b2-attack-runner-run-1cbe27a49b61 Created 
+SSH Attack Runner - 2026-10-02T14:05:02.827189+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 7
+============================================================
+
+[1/7] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[2/7] root:password (fail)
+  - Login FAIL: root:password
+
+[3/7] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[4/7] monitor:m0nitor (SUCCESS)
+  + Login OK: monitor:m0nitor
+  $ uptime
+    uptime
+    [4l14:05:10  up 33 min,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hmonitor@mail-server-01:~$
+  $ whoami
+    whoami
+    [4lmonitor
+    [4hmonitor@mail-server-01:~$
+  $ ifconfig
+    collisions:0 txqueuelen:0
+    RX bytes:70802999 (70.8 MB)  TX bytes:70802999 (70.8 MB)
+    [4hmonitor@mail-server-01:~$
+  $ ls -la /usr/bin
+    -rwxr-xr-x 1 root root     170512 2023-05-11 02:04 dpkg-deb
+    -rwxr-xr-x 1 root root     158264 2023-05-11 02:04 dpkg-divert
+    -rwxr-xr-x 1 root root      21206 2023-05-11 0
+  -> SESSION OK
+
+[5/7] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[6/7] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[7/7] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 7
+Succeeded (login OK): 1
+Auth failed (expected): 6
+Errors: 0
+===== vie 02/10/2026 11:10:01,72  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-aa9653c6994d Creating 
+ Container honeypot-b2-attack-runner-run-aa9653c6994d Created 
+SSH Attack Runner - 2026-10-02T14:10:02.858518+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 15
+============================================================
+
+[1/15] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[2/15] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[3/15] backup:backupsvc99 (SUCCESS)
+  + Login OK: backup:backupsvc99
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hbackup@mail-server-01:~$
+  $ netstat -an
+    unix  2      [ ]         DGRAM                    9570
+    unix  3      [ ]         STREAM     CONNECTED     8619     @/com/ubuntu/upstart
+    [4hbackup@mail-server-01:~$
+  $ free -m
+    Mem:           8012        1470        5988          20         554        6611
+    Swap:          2097           0        2097
+    [4hbackup@mail-server-01:~$
+  $ date
+    date
+    [4lFri Oct 02 14:10:10 UTC 2026
+    [4hbackup@mail-server-01:~$
+  -> SESSION OK
+
+[4/15] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[5/15] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[6/15] root:toor (fail)
+  - Login FAIL: root:toor
+
+[7/15] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[8/15] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[9/15] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[10/15] test:test (fail)
+  - Login FAIL: test:test
+
+[11/15] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[12/15] root:password (fail)
+  - Login FAIL: root:password
+
+[13/15] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[14/15] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[15/15] monitor:m0nitor (SUCCESS)
+  + Login OK: monitor:m0nitor
+  $ ls -la /tmp
+    [4ldrwxrwxrwt 1 root root 4096 2026-05-04 14:46 .
+    drwxr-xr-x 1 root root    0 2024-06-12 00:00 ..
+    [4hmonitor@mail-server-01:~$
+  $ crontab -l
+    crontab -l
+    [4lno crontab for monitor
+    [4hmonitor@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hmonitor@mail-server-01:~$
+  -> SESSION OK
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 15
+Succeeded (login OK): 2
+Auth failed (expected): 13
+Errors: 0
+===== vie 02/10/2026 11:15:01,75  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-4ea2ef2b00a3 Creating 
+ Container honeypot-b2-attack-runner-run-4ea2ef2b00a3 Created 
+SSH Attack Runner - 2026-10-02T14:15:02.878750+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 15
+============================================================
+
+[1/15] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[2/15] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[3/15] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[4/15] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[5/15] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[6/15] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[7/15] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[8/15] root:toor (fail)
+  - Login FAIL: root:toor
+
+[9/15] root:password (fail)
+  - Login FAIL: root:password
+
+[10/15] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[11/15] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[12/15] test:test (fail)
+  - Login FAIL: test:test
+
+[13/15] backup:backupsvc99 (SUCCESS)
+  + Login OK: backup:backupsvc99
+  $ cat /etc/os-release
+    cat /etc/os-release
+    [4l[4hbackup@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hbackup@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hbackup@mail-server-01:~$
+  -> SESSION OK
+
+[14/15] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[15/15] dev:devpass22 (SUCCESS)
+  + Login OK: dev:devpass22
+  $ ls -la /tmp
+    [4ldrwxrwxrwt 1 root root 4096 2026-05-04 14:46 .
+    drwxr-xr-x 1 root root    0 2024-06-12 00:00 ..
+    [4hdev@mail-server-01:~$
+  $ id
+    id
+    [4luid=7773(dev) gid=7773(dev) groups=7773(dev)
+    [4hdev@mail-server-01:~$
+  $ pwd
+    pwd
+    [4l/home/dev
+    [4hdev@mail-server-01:~$
+  -> SESSION OK
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 15
+Succeeded (login OK): 2
+Auth failed (expected): 13
+Errors: 0
+===== vie 02/10/2026 11:20:01,72  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-56199928f095 Creating 
+ Container honeypot-b2-attack-runner-run-56199928f095 Created 
+SSH Attack Runner - 2026-10-02T14:20:02.868934+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 6
+============================================================
+
+[1/6] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[2/6] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[3/6] dev:devpass22 (SUCCESS)
+  + Login OK: dev:devpass22
+  $ cat /etc/os-release
+    cat /etc/os-release
+    [4l[4hdev@mail-server-01:~$
+  $ ls -la /home
+    drwxr-xr-x 1 7773 7773 4096 2026-10-02 14:20 dev
+    drwxr-xr-x 1 phil phil 4096 2026-06-23 00:55 phil
+    [4hdev@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hdev@mail-server-01:~$
+  $ python3 -V
+    python3 -V
+    [4l-bash: /usr/bin/python3: cannot execute binary file: Exec format error
+    [4hdev@mail-server-01:~$
+  $ ps aux
+    root         413   0.0        0.31       19480576  1597440   ?       Ss    Jul22
+    root         414   0.0        0.51       28135424  2641920   ?       Ss    Jul22
+    root         417   0.0        0.34       20332544  1757184   ?
+  -> SESSION OK
+
+[4/6] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[5/6] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[6/6] root:password (fail)
+  - Login FAIL: root:password
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 6
+Succeeded (login OK): 1
+Auth failed (expected): 5
+Errors: 0
+===== vie 02/10/2026 11:25:01,75  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-2e27a471660c Creating 
+ Container honeypot-b2-attack-runner-run-2e27a471660c Created 
+SSH Attack Runner - 2026-10-02T14:25:03.207833+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 10
+============================================================
+
+[1/10] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[2/10] root:toor (fail)
+  - Login FAIL: root:toor
+
+[3/10] dev:devpass22 (SUCCESS)
+  + Login OK: dev:devpass22
+  $ python3 -V
+    python3 -V
+    [4l-bash: /usr/bin/python3: cannot execute binary file: Exec format error
+    [4hdev@mail-server-01:~$
+  $ cat /proc/version
+    cat /proc/version
+    [4lLinux version 6.1.0-21-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03)
+    [4hdev@mail-server-01:~$
+  $ crontab -l
+    crontab -l
+    [4lno crontab for dev
+    [4hdev@mail-server-01:~$
+  $ ps aux
+    root         413   0.0        0.31       19480576  1597440   ?       Ss    Jul22
+    root         414   0.0        0.51       28135424  2641920   ?       Ss    Jul22
+    root         417   0.0        0.34       20332544  1757184   ?
+  $ uptime
+    [4hdev@mail-server-01:~$ uptime
+    [4l14:25:11  up 53 min,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hdev@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hdev@mail-server-01:~$
+  $ ifconfig
+    collisions:0 txqueuelen:0
+    RX bytes:70803073 (70.8 MB)  TX bytes:70803073 (70.8 MB)
+    [4hdev@mail-server-01:~$
+  -> SESSION OK
+
+[4/10] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[5/10] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[6/10] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[7/10] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[8/10] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[9/10] test:test (fail)
+  - Login FAIL: test:test
+
+[10/10] root:password (fail)
+  - Login FAIL: root:password
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 10
+Succeeded (login OK): 1
+Auth failed (expected): 9
+Errors: 0
+===== vie 02/10/2026 11:30:01,78  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-9c03a2f151ed Creating 
+ Container honeypot-b2-attack-runner-run-9c03a2f151ed Created 
+SSH Attack Runner - 2026-10-02T14:30:05.554136+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 12
+============================================================
+
+[1/12] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[2/12] pi:raspberry (SUCCESS)
+  + Login OK: pi:raspberry
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hpi@mail-server-01:~$
+  $ cat /proc/version
+    cat /proc/version
+    [4lLinux version 6.1.0-21-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03)
+    [4hpi@mail-server-01:~$
+  $ free -m
+    Mem:           8012        1491        6009          20         512        6590
+    Swap:          2097           0        2097
+    [4hpi@mail-server-01:~$
+  $ crontab -l
+    crontab -l
+    [4lno crontab for pi
+    [4hpi@mail-server-01:~$
+  $ ps aux
+    root         413   0.0        0.31       19480576  1597440   ?       Ss    Jul22
+    root         414   0.0        0.51       28135424  2641920   ?       Ss    Jul22
+    root         417   0.0        0.34       20332544  1757184   ?
+  -> SESSION OK
+
+[3/12] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+[4/12] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[5/12] test:test (fail)
+  - Login FAIL: test:test
+
+[6/12] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[7/12] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[8/12] root:toor (fail)
+  - Login FAIL: root:toor
+
+[9/12] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[10/12] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+[11/12] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[12/12] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 12
+Succeeded (login OK): 1
+Auth failed (expected): 11
+Errors: 0
+===== vie 02/10/2026 11:35:01,83  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-baa39de65468 Creating 
+ Container honeypot-b2-attack-runner-run-baa39de65468 Created 
+SSH Attack Runner - 2026-10-02T14:35:03.028811+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 15
+============================================================
+
+[1/15] test:test (fail)
+  - Login FAIL: test:test
+
+[2/15] ftpuser:ftpPass321 (SUCCESS)
+  + Login OK: ftpuser:ftpPass321
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4hftpuser@mail-server-01:~$
+  $ crontab -l
+    crontab -l
+    [4lno crontab for ftpuser
+    [4hftpuser@mail-server-01:~$
+  $ hostname
+    hostname
+    [4lmail-server-01
+    [4hftpuser@mail-server-01:~$
+  $ netstat -an
+    unix  2      [ ]         DGRAM                    9570
+    unix  3      [ ]         STREAM     CONNECTED     8619     @/com/ubuntu/upstart
+    [4hftpuser@mail-server-01:~$
+  $ id
+    id
+    [4luid=9141(ftpuser) gid=9141(ftpuser) groups=9141(ftpuser)
+    [4hftpuser@mail-server-01:~$
+  -> SESSION OK
+
+[3/15] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[4/15] root:password (fail)
+  - Login FAIL: root:password
+
+[5/15] ci:ci (fail)
+  - Login FAIL: ci:ci
+
+[6/15] root:toor (fail)
+  - Login FAIL: root:toor
+
+[7/15] devops:devops (fail)
+  - Login FAIL: devops:devops
+
+[8/15] jenkins:jenkins (fail)
+  - Login FAIL: jenkins:jenkins
+
+[9/15] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[10/15] admin:admin (fail)
+  - Login FAIL: admin:admin
+
+[11/15] postgres:postgres (fail)
+  - Login FAIL: postgres:postgres
+
+[12/15] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[13/15] pi:raspberry (SUCCESS)
+  + Login OK: pi:raspberry
+  $ uptime
+    uptime
+    [4l14:35:32  up  1:03,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hpi@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    pi       pts/0    172.18.0.7        14:35    0.00s  0.00s  0.00s w
+    [4hpi@mail-server-01:~$
+  $ cat /etc/passwd
+    sshd:x:101:65534::/var/run/sshd:/usr/sbin/nologin
+    phil:x:1000:1000:Phil California,,,:/home/phil:/bin/bash
+    [4hpi@mail-server-01:~$
+  -> SESSION OK
+
+[14/15] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[15/15] oracle:oracle (fail)
+  - Login FAIL: oracle:oracle
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 15
+Succeeded (login OK): 2
+Auth failed (expected): 13
+Errors: 0
+===== vie 02/10/2026 11:40:01,77  
+ Container cowrie Running 
+ Container honeypot-b2-attack-runner-run-2aa61c94bf84 Creating 
+ Container honeypot-b2-attack-runner-run-2aa61c94bf84 Created 
+SSH Attack Runner - 2026-10-02T14:40:02.936127+00:00 - b3-2026-10-02
+Target: cowrie:2222
+Sessions: 7
+============================================================
+
+[1/7] backup:backup2024 (fail)
+  - Login FAIL: backup:backup2024
+
+[2/7] git:git123 (fail)
+  - Login FAIL: git:git123
+
+[3/7] ubuntu:ubuntu123 (fail)
+  - Login FAIL: ubuntu:ubuntu123
+
+[4/7] pi:raspberry (SUCCESS)
+  + Login OK: pi:raspberry
+  $ uptime
+    uptime
+    [4l14:40:10  up  1:08,  1 user,  load average: 0.00, 0.00, 0.00
+    [4hpi@mail-server-01:~$
+  $ netstat -an
+    unix  2      [ ]         DGRAM                    9570
+    unix  3      [ ]         STREAM     CONNECTED     8619     @/com/ubuntu/upstart
+    [4hpi@mail-server-01:~$
+  $ cat /etc/os-release
+    cat /etc/os-release
+    [4l[4hpi@mail-server-01:~$
+  $ free -m
+    Mem:           8012        1474        5980          20         557        6606
+    Swap:          2097           0        2097
+    [4hpi@mail-server-01:~$
+  -> SESSION OK
+
+[5/7] oracle:oracle2024 (SUCCESS)
+  + Login OK: oracle:oracle2024
+  $ ls -la /tmp
+    [4ldrwxrwxrwt 1 root root 4096 2026-05-04 14:46 .
+    drwxr-xr-x 1 root root    0 2024-06-12 00:00 ..
+    [4horacle@mail-server-01:~$
+  $ date
+    date
+    [4lFri Oct 02 14:40:16 UTC 2026
+    [4horacle@mail-server-01:~$
+  $ ifconfig
+    collisions:0 txqueuelen:0
+    RX bytes:70802999 (70.8 MB)  TX bytes:70802999 (70.8 MB)
+    [4horacle@mail-server-01:~$
+  $ free -m
+    Mem:           8012        1477        5976          20         558        6603
+    Swap:          2097           0        2097
+    [4horacle@mail-server-01:~$
+  $ df -h
+    df -h
+    [4l-bash: /usr/bin/df: cannot execute binary file: Exec format error
+    [4horacle@mail-server-01:~$
+  $ w
+    USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+    oracle   pts/0    172.18.0.7        14:40    0.00s  0.00s  0.00s w
+    [4horacle@mail-server-01:~$
+  -> SESSION OK
+
+[6/7] admin:123456 (fail)
+  - Login FAIL: admin:123456
+
+[7/7] deploy:deploy (fail)
+  - Login FAIL: deploy:deploy
+
+============================================================
+SUMMARY
+============================================================
+Total sessions: 7
+Succeeded (login OK): 2
+Auth failed (expected): 5
+Errors: 0

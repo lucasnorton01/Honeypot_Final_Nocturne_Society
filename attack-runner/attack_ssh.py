@@ -44,8 +44,16 @@ FAIL_POOL = [
 # orden), con un subconjunto de comandos elegido al azar de un pool mas amplio.
 # Nota: mas cuentas validas = mas diversidad de IoCs tipo "credential" nuevos
 # por sesion exitosa (UNIQUE(type,value) en iocs descarta repetidos).
-SUCCESS_CMD_POOL = ["whoami", "uname -a", "cat /etc/passwd", "ls -la /home", "w", "id",
-                     "pwd", "hostname", "date", "uptime", "df -h", "free -m"]
+SIM_VERSION = "b3-2026-10-02"
+
+# Comandos de reconocimiento (no generan IoC de tipo comando).
+RECON_CMD_POOL = ["whoami", "uname -a", "cat /etc/passwd", "ls -la /home", "w", "id",
+                  "pwd", "hostname", "date", "uptime", "df -h", "free -m",
+                  "cat /etc/os-release", "ps aux", "last", "ifconfig", "netstat -an",
+                  "crontab -l", "ls -la /tmp", "cat /proc/version"]
+# Comandos benignos que coinciden con el patron de IoC de tipo comando del
+# extractor (/bin, bash, sh, python): no descargan ni ejecutan nada externo.
+IOC_CMD_POOL = ["ls /bin", "bash --version", "python3 -V", "which sh ", "ls -la /usr/bin"]
 SUCCESS_SESSIONS = [
     {"user": "guest", "pass": "guest123", "desc": "guest:guest123 (SUCCESS)"},
     {"user": "admin", "pass": "test123", "desc": "admin:test123 (SUCCESS)"},
@@ -53,6 +61,12 @@ SUCCESS_SESSIONS = [
     {"user": "backup", "pass": "backupsvc99", "desc": "backup:backupsvc99 (SUCCESS)"},
     {"user": "deploy", "pass": "deployKey7", "desc": "deploy:deployKey7 (SUCCESS)"},
     {"user": "ftpuser", "pass": "ftpPass321", "desc": "ftpuser:ftpPass321 (SUCCESS)"},
+    {"user": "webadmin", "pass": "Web2026!", "desc": "webadmin:Web2026! (SUCCESS)"},
+    {"user": "support", "pass": "support01", "desc": "support:support01 (SUCCESS)"},
+    {"user": "monitor", "pass": "m0nitor", "desc": "monitor:m0nitor (SUCCESS)"},
+    {"user": "dev", "pass": "devpass22", "desc": "dev:devpass22 (SUCCESS)"},
+    {"user": "pi", "pass": "raspberry", "desc": "pi:raspberry (SUCCESS)"},
+    {"user": "user", "pass": "user1234", "desc": "user:user1234 (SUCCESS)"},
 ]
 
 
@@ -69,8 +83,10 @@ def build_sessions():
     n_fail = random.randint(4, len(FAIL_POOL))
     fails = random.sample(FAIL_POOL, k=n_fail)
 
-    hour_index = int(time.time() // 3600)
-    primary = SUCCESS_SESSIONS[hour_index % len(SUCCESS_SESSIONS)]
+    # Rotacion por franja de 15 minutos (una corrida por franja) sobre las 12
+    # cuentas validas: cada cuenta vuelve a usarse cada 3 horas.
+    slot_index = int(time.time() // 900)
+    primary = SUCCESS_SESSIONS[slot_index % len(SUCCESS_SESSIONS)]
     chosen_success = [primary]
     if random.random() < 0.3:
         others = [s for s in SUCCESS_SESSIONS if s is not primary]
@@ -79,7 +95,11 @@ def build_sessions():
     successes = []
     for s in chosen_success:
         n_cmds = random.randint(3, 6)
-        cmds = random.sample(SUCCESS_CMD_POOL, k=n_cmds) + ["exit"]
+        cmds = random.sample(RECON_CMD_POOL, k=n_cmds)
+        # En la mitad de las sesiones exitosas se agrega un comando del pool de IoC.
+        if random.random() < 0.5:
+            cmds.insert(random.randint(0, len(cmds)), random.choice(IOC_CMD_POOL))
+        cmds = cmds + ["exit"]
         successes.append({**s, "cmds": cmds})
 
     sessions = fails + successes
@@ -147,7 +167,7 @@ def run_ssh_session(i, sess):
         return {"session": i+1, "status": "error", "user": sess["user"], "error": str(e)}
 
 
-print(f"SSH Attack Runner - {datetime.now(timezone.utc).isoformat()}")
+print(f"SSH Attack Runner - {datetime.now(timezone.utc).isoformat()} - {SIM_VERSION}")
 print(f"Target: {HOST}:{SSH_PORT}")
 print(f"Sessions: {len(SESSIONS)}")
 print("=" * 60)

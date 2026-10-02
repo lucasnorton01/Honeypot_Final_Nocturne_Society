@@ -1,0 +1,66 @@
+id,eventid,session,src_ip,src_port,username,password,input,message,timestamp,processed,created_at,country
+2,cowrie.session.connect,e355bc9ba0d1,172.18.0.1,49896,,,,New connection: 172.18.0.1:49896 (172.18.0.3:2223) [session: e355bc9ba0d1],2026-09-25 04:59:58.113564+00,t,2026-09-25 04:59:58.269276+00,Desconocido
+3,cowrie.login.failed,e355bc9ba0d1,172.18.0.1,49896,admin,123456,,login attempt [admin/123456] failed,2026-09-25 04:59:58.424676+00,t,2026-09-25 04:59:58.587679+00,Desconocido
+4,cowrie.login.failed,e355bc9ba0d1,172.18.0.1,49896,admin,admin,,login attempt [admin/admin] failed,2026-09-25 05:00:20.341914+00,t,2026-09-25 05:00:20.639639+00,Desconocido
+5,cowrie.login.success,e355bc9ba0d1,172.18.0.1,49896,admin,test123,,login attempt [admin/test123] succeeded,2026-09-25 05:00:42.248069+00,t,2026-09-25 05:00:42.622638+00,Desconocido
+6,cowrie.session.params,e355bc9ba0d1,172.18.0.1,49896,,,,,2026-09-25 05:00:42.250353+00,f,2026-09-25 05:00:42.796448+00,Desconocido
+7,cowrie.command.input,e355bc9ba0d1,172.18.0.1,49896,,,whoami,CMD: whoami,2026-09-25 05:01:14.376831+00,f,2026-09-25 05:01:14.62755+00,Desconocido
+8,cowrie.command.input,e355bc9ba0d1,172.18.0.1,49896,,,uname -a,CMD: uname -a,2026-09-25 05:01:25.194463+00,f,2026-09-25 05:01:25.494768+00,Desconocido
+9,cowrie.command.input,e355bc9ba0d1,172.18.0.1,49896,,,cat /etc/passwd,CMD: cat /etc/passwd,2026-09-25 05:01:36.014597+00,f,2026-09-25 05:01:36.345476+00,Desconocido
+10,cowrie.command.input,e355bc9ba0d1,172.18.0.1,49896,,,ls -la /home,CMD: ls -la /home,2026-09-25 05:01:46.826693+00,f,2026-09-25 05:01:47.234927+00,Desconocido
+11,cowrie.command.input,e355bc9ba0d1,172.18.0.1,49896,,,w,CMD: w,2026-09-25 05:01:57.632315+00,f,2026-09-25 05:01:57.789391+00,Desconocido
+12,cowrie.command.input,e355bc9ba0d1,172.18.0.1,49896,,,exit,CMD: exit,2026-09-25 05:02:08.444138+00,f,2026-09-25 05:02:08.706209+00,Desconocido
+13,cowrie.log.closed,e355bc9ba0d1,172.18.0.1,49896,,,,Closing TTY Log: var/lib/cowrie/tty/2be18403777c0d1e73ff0f3c2851f550350c1d0fc8ca7a25b52d6b658f561a3c after 86200 milliseconds,2026-09-25 05:02:08.449478+00,f,2026-09-25 05:02:09.211664+00,Desconocido
+14,cowrie.session.closed,e355bc9ba0d1,172.18.0.1,49896,,,,Connection lost after 130337 milliseconds,2026-09-25 05:02:08.45026+00,f,2026-09-25 05:02:09.248598+00,Desconocido
+15,cowrie.session.connect,54cf066a37cd,172.18.0.1,54896,,,,New connection: 172.18.0.1:54896 (172.18.0.3:2223) [session: 54cf066a37cd],2026-09-25 05:03:01.241454+00,t,2026-09-25 05:03:01.567898+00,Desconocido
+16,cowrie.login.failed,54cf066a37cd,172.18.0.1,54896,admin,123456,,login attempt [admin/123456] failed,2026-09-25 05:03:01.571152+00,t,2026-09-25 05:03:01.901709+00,Desconocido
+17,cowrie.login.failed,54cf066a37cd,172.18.0.1,54896,admin,admin,,login attempt [admin/admin] failed,2026-09-25 05:03:23.477566+00,t,2026-09-25 05:03:23.627731+00,Desconocido
+18,cowrie.login.success,54cf066a37cd,172.18.0.1,54896,admin,test123,,login attempt [admin/test123] succeeded,2026-09-25 05:03:45.397765+00,t,2026-09-25 05:03:45.601482+00,Desconocido
+19,cowrie.session.params,54cf066a37cd,172.18.0.1,54896,,,,,2026-09-25 05:03:45.40002+00,f,2026-09-25 05:03:45.784085+00,Desconocido
+20,cowrie.command.input,54cf066a37cd,172.18.0.1,54896,,,whoami,CMD: whoami,2026-09-25 05:04:17.516026+00,f,2026-09-25 05:04:17.872888+00,Desconocido
+21,cowrie.command.input,54cf066a37cd,172.18.0.1,54896,,,uname -a,CMD: uname -a,2026-09-25 05:04:28.342255+00,f,2026-09-25 05:04:29.005986+00,Desconocido
+22,cowrie.command.input,54cf066a37cd,172.18.0.1,54896,,,cat /etc/passwd,CMD: cat /etc/passwd,2026-09-25 05:04:39.152585+00,f,2026-09-25 05:04:39.567122+00,Desconocido
+23,cowrie.command.input,54cf066a37cd,172.18.0.1,54896,,,ls -la /home,CMD: ls -la /home,2026-09-25 05:04:49.961366+00,f,2026-09-25 05:04:50.150828+00,Desconocido
+24,cowrie.command.input,54cf066a37cd,172.18.0.1,54896,,,w,CMD: w,2026-09-25 05:05:00.773005+00,f,2026-09-25 05:05:01.106026+00,Desconocido
+25,cowrie.command.input,54cf066a37cd,172.18.0.1,54896,,,exit,CMD: exit,2026-09-25 05:05:11.595441+00,f,2026-09-25 05:05:11.956099+00,Desconocido
+26,cowrie.session.closed,54cf066a37cd,172.18.0.1,54896,,,,Connection lost after 130360 milliseconds,2026-09-25 05:05:11.601035+00,f,2026-09-25 05:05:12.177373+00,Desconocido
+27,cowrie.log.closed,54cf066a37cd,172.18.0.1,54896,,,,Closing TTY Log: var/lib/cowrie/tty/2be18403777c0d1e73ff0f3c2851f550350c1d0fc8ca7a25b52d6b658f561a3c after 86201 milliseconds,2026-09-25 05:05:11.600676+00,f,2026-09-25 05:05:12.255358+00,Desconocido
+28,cowrie.session.connect,5e6fe1c13050,172.18.0.1,40440,,,,New connection: 172.18.0.1:40440 (172.18.0.3:2223) [session: 5e6fe1c13050],2026-09-25 05:05:59.177549+00,t,2026-09-25 05:05:59.411018+00,Desconocido
+29,cowrie.login.failed,5e6fe1c13050,172.18.0.1,40440,admin,123456,,login attempt [admin/123456] failed,2026-09-25 05:05:59.490222+00,t,2026-09-25 05:05:59.758622+00,Desconocido
+30,cowrie.login.failed,5e6fe1c13050,172.18.0.1,40440,admin,admin,,login attempt [admin/admin] failed,2026-09-25 05:06:21.424298+00,t,2026-09-25 05:06:21.796783+00,Desconocido
+31,cowrie.login.success,5e6fe1c13050,172.18.0.1,40440,admin,test123,,login attempt [admin/test123] succeeded,2026-09-25 05:06:43.323128+00,t,2026-09-25 05:06:43.487628+00,Desconocido
+32,cowrie.session.params,5e6fe1c13050,172.18.0.1,40440,,,,,2026-09-25 05:06:43.325485+00,f,2026-09-25 05:06:43.750224+00,Desconocido
+33,cowrie.command.input,5e6fe1c13050,172.18.0.1,40440,,,whoami,CMD: whoami,2026-09-25 05:07:15.456049+00,f,2026-09-25 05:07:15.841423+00,Desconocido
+34,cowrie.command.input,5e6fe1c13050,172.18.0.1,40440,,,uname -a,CMD: uname -a,2026-09-25 05:07:26.271413+00,f,2026-09-25 05:07:26.486768+00,Desconocido
+35,cowrie.command.input,5e6fe1c13050,172.18.0.1,40440,,,cat /etc/passwd,CMD: cat /etc/passwd,2026-09-25 05:07:37.079636+00,f,2026-09-25 05:07:37.328957+00,Desconocido
+36,cowrie.command.input,5e6fe1c13050,172.18.0.1,40440,,,ls -la /home,CMD: ls -la /home,2026-09-25 05:07:47.902021+00,f,2026-09-25 05:07:48.207541+00,Desconocido
+37,cowrie.command.input,5e6fe1c13050,172.18.0.1,40440,,,w,CMD: w,2026-09-25 05:07:58.705825+00,f,2026-09-25 05:07:59.077891+00,Desconocido
+38,cowrie.command.input,5e6fe1c13050,172.18.0.1,40440,,,exit,CMD: exit,2026-09-25 05:08:09.520936+00,f,2026-09-25 05:08:09.694728+00,Desconocido
+39,cowrie.session.closed,5e6fe1c13050,172.18.0.1,40440,,,,Connection lost after 130349 milliseconds,2026-09-25 05:08:09.526671+00,f,2026-09-25 05:08:09.913687+00,Desconocido
+40,cowrie.log.closed,5e6fe1c13050,172.18.0.1,40440,,,,Closing TTY Log: var/lib/cowrie/tty/2be18403777c0d1e73ff0f3c2851f550350c1d0fc8ca7a25b52d6b658f561a3c after 86201 milliseconds,2026-09-25 05:08:09.526329+00,f,2026-09-25 05:08:09.978867+00,Desconocido
+41,cowrie.session.connect,d1e20e2ea9b9,172.18.0.1,56660,,,,New connection: 172.18.0.1:56660 (172.18.0.3:2223) [session: d1e20e2ea9b9],2026-09-25 05:09:15.299433+00,t,2026-09-25 05:09:15.430261+00,Desconocido
+42,cowrie.login.failed,d1e20e2ea9b9,172.18.0.1,56660,admin,123456,,login attempt [admin/123456] failed,2026-09-25 05:09:15.609038+00,t,2026-09-25 05:09:15.76275+00,Desconocido
+43,cowrie.login.failed,d1e20e2ea9b9,172.18.0.1,56660,admin,admin,,login attempt [admin/admin] failed,2026-09-25 05:09:37.520719+00,t,2026-09-25 05:09:37.7785+00,Desconocido
+44,cowrie.login.success,d1e20e2ea9b9,172.18.0.1,56660,admin,test123,,login attempt [admin/test123] succeeded,2026-09-25 05:09:59.432132+00,t,2026-09-25 05:09:59.821239+00,Desconocido
+45,cowrie.session.params,d1e20e2ea9b9,172.18.0.1,56660,,,,,2026-09-25 05:09:59.43437+00,f,2026-09-25 05:10:00.041561+00,Desconocido
+46,cowrie.command.input,d1e20e2ea9b9,172.18.0.1,56660,,,whoami,CMD: whoami,2026-09-25 05:10:31.55442+00,f,2026-09-25 05:10:31.868603+00,Desconocido
+47,cowrie.command.input,d1e20e2ea9b9,172.18.0.1,56660,,,uname -a,CMD: uname -a,2026-09-25 05:10:42.363283+00,f,2026-09-25 05:10:42.732501+00,Desconocido
+48,cowrie.command.input,d1e20e2ea9b9,172.18.0.1,56660,,,cat /etc/passwd,CMD: cat /etc/passwd,2026-09-25 05:10:53.176753+00,f,2026-09-25 05:10:53.276916+00,Desconocido
+49,cowrie.command.input,d1e20e2ea9b9,172.18.0.1,56660,,,ls -la /home,CMD: ls -la /home,2026-09-25 05:11:03.986217+00,f,2026-09-25 05:11:04.198413+00,Desconocido
+50,cowrie.command.input,d1e20e2ea9b9,172.18.0.1,56660,,,w,CMD: w,2026-09-25 05:11:14.812727+00,f,2026-09-25 05:11:15.032545+00,Desconocido
+51,cowrie.command.input,d1e20e2ea9b9,172.18.0.1,56660,,,exit,CMD: exit,2026-09-25 05:11:25.615186+00,f,2026-09-25 05:11:25.921687+00,Desconocido
+52,cowrie.session.closed,d1e20e2ea9b9,172.18.0.1,56660,,,,Connection lost after 130322 milliseconds,2026-09-25 05:11:25.621091+00,f,2026-09-25 05:11:26.162924+00,Desconocido
+53,cowrie.log.closed,d1e20e2ea9b9,172.18.0.1,56660,,,,Closing TTY Log: var/lib/cowrie/tty/2be18403777c0d1e73ff0f3c2851f550350c1d0fc8ca7a25b52d6b658f561a3c after 86187 milliseconds,2026-09-25 05:11:25.620712+00,f,2026-09-25 05:11:26.225969+00,Desconocido
+54,cowrie.session.connect,a3f0aaaa0cca,172.18.0.1,44924,,,,New connection: 172.18.0.1:44924 (172.18.0.3:2223) [session: a3f0aaaa0cca],2026-09-25 05:12:14.804728+00,t,2026-09-25 05:12:15.211461+00,Desconocido
+55,cowrie.login.failed,a3f0aaaa0cca,172.18.0.1,44924,admin,123456,,login attempt [admin/123456] failed,2026-09-25 05:12:15.160751+00,t,2026-09-25 05:12:15.512004+00,Desconocido
+56,cowrie.login.failed,a3f0aaaa0cca,172.18.0.1,44924,admin,admin,,login attempt [admin/admin] failed,2026-09-25 05:12:37.035945+00,t,2026-09-25 05:12:37.218937+00,Desconocido
+57,cowrie.login.success,a3f0aaaa0cca,172.18.0.1,44924,admin,test123,,login attempt [admin/test123] succeeded,2026-09-25 05:12:58.959867+00,t,2026-09-25 05:12:59.191741+00,Desconocido
+58,cowrie.session.params,a3f0aaaa0cca,172.18.0.1,44924,,,,,2026-09-25 05:12:58.961953+00,f,2026-09-25 05:12:59.426499+00,Desconocido
+59,cowrie.command.input,a3f0aaaa0cca,172.18.0.1,44924,,,whoami,CMD: whoami,2026-09-25 05:13:31.085098+00,f,2026-09-25 05:13:31.30882+00,Desconocido
+60,cowrie.command.input,a3f0aaaa0cca,172.18.0.1,44924,,,uname -a,CMD: uname -a,2026-09-25 05:13:41.899769+00,f,2026-09-25 05:13:42.185799+00,Desconocido
+61,cowrie.command.input,a3f0aaaa0cca,172.18.0.1,44924,,,cat /etc/passwd,CMD: cat /etc/passwd,2026-09-25 05:13:52.707093+00,f,2026-09-25 05:13:53.096657+00,Desconocido
+62,cowrie.command.input,a3f0aaaa0cca,172.18.0.1,44924,,,ls -la /home,CMD: ls -la /home,2026-09-25 05:14:03.52149+00,f,2026-09-25 05:14:03.961232+00,Desconocido
+63,cowrie.command.input,a3f0aaaa0cca,172.18.0.1,44924,,,w,CMD: w,2026-09-25 05:14:14.345687+00,f,2026-09-25 05:14:14.548977+00,Desconocido
+64,cowrie.command.input,a3f0aaaa0cca,172.18.0.1,44924,,,exit,CMD: exit,2026-09-25 05:14:25.177151+00,f,2026-09-25 05:14:25.448215+00,Desconocido
+65,cowrie.log.closed,a3f0aaaa0cca,172.18.0.1,44924,,,,Closing TTY Log: var/lib/cowrie/tty/2be18403777c0d1e73ff0f3c2851f550350c1d0fc8ca7a25b52d6b658f561a3c after 86222 milliseconds,2026-09-25 05:14:25.183358+00,f,2026-09-25 05:14:25.712124+00,Desconocido
+66,cowrie.session.closed,a3f0aaaa0cca,172.18.0.1,44924,,,,Connection lost after 130379 milliseconds,2026-09-25 05:14:25.184052+00,f,2026-09-25 05:14:25.8622+00,Desconocido

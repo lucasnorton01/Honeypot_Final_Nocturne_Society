@@ -1,0 +1,27 @@
+id,type,value,confidence,event_id,source,created_at
+1,ip,172.18.0.7,BAJO,2,cowrie,2026-10-02 14:00:00.302523+00
+2,credential,git:git123,BAJO,3,cowrie,2026-10-02 14:00:00.308202+00
+4,credential,support:support01,BAJO,9,cowrie,2026-10-02 14:00:00.327012+00
+5,command,which sh ,BAJO,11,cowrie,2026-10-02 14:00:00.333687+00
+7,credential,oracle:oracle2024,BAJO,23,cowrie,2026-10-02 14:00:00.379392+00
+8,command,ls /bin,BAJO,25,cowrie,2026-10-02 14:00:00.383518+00
+10,credential,root:password,BAJO,37,cowrie,2026-10-02 14:00:00.405722+00
+12,credential,root:toor,BAJO,41,cowrie,2026-10-02 14:00:00.41343+00
+14,credential,admin:admin,BAJO,45,cowrie,2026-10-02 14:00:00.421492+00
+16,credential,jenkins:jenkins,BAJO,49,cowrie,2026-10-02 14:00:00.429765+00
+18,credential,postgres:postgres,BAJO,53,cowrie,2026-10-02 14:00:00.437451+00
+20,credential,backup:backup2024,BAJO,57,cowrie,2026-10-02 14:00:00.445268+00
+30,credential,test:test,BAJO,84,cowrie,2026-10-02 14:15:00.591525+00
+32,credential,monitor:m0nitor,BAJO,89,cowrie,2026-10-02 14:15:00.602027+00
+36,credential,oracle:oracle,BAJO,110,cowrie,2026-10-02 14:15:00.64488+00
+40,credential,deploy:deploy,BAJO,118,cowrie,2026-10-02 14:15:00.663589+00
+43,command,ls -la /usr/bin,BAJO,128,cowrie,2026-10-02 14:15:00.682952+00
+45,credential,admin:123456,BAJO,134,cowrie,2026-10-02 14:15:00.695297+00
+49,credential,ubuntu:ubuntu123,BAJO,142,cowrie,2026-10-02 14:15:00.711686+00
+55,credential,backup:backupsvc99,BAJO,161,cowrie,2026-10-02 14:15:00.751127+00
+59,credential,devops:devops,BAJO,176,cowrie,2026-10-02 14:15:00.781175+00
+87,credential,ci:ci,BAJO,252,cowrie,2026-10-02 14:30:00.712578+00
+109,credential,dev:devpass22,BAJO,304,cowrie,2026-10-02 14:30:00.838795+00
+116,command,python3 -V,BAJO,341,cowrie,2026-10-02 14:30:00.914189+00
+147,credential,pi:raspberry,BAJO,429,cowrie,2026-10-02 14:45:00.66436+00
+171,credential,ftpuser:ftpPass321,BAJO,498,cowrie,2026-10-02 14:45:00.809765+00

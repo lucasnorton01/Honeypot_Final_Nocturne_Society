@@ -1,0 +1,66 @@
+{
+  "ventana": {
+    "cierre": "2026-10-02 14:55:10",
+    "inicio": "2026-10-02 13:47:30"
+  },
+  "conteos": {
+    "eventos_cowrie": 629,
+    "eventos_events": 629,
+    "claves_distintas": 0,
+    "iocs": 26,
+    "ioc_sessions": 211,
+    "reportes": 1,
+    "error_log": 0
+  },
+  "P1": {
+    "latencia_ms": {
+      "n": 629,
+      "media": 1453.16,
+      "mediana": 795.64,
+      "min": 356.34,
+      "max": 4418.98,
+      "de": 938.12
+    },
+    "eventos_sobre_15s": 0
+  },
+  "P2": {
+    "criterio_estricto": "629/629 = 100.0 % (IC 95 % [99.4; 100.0])",
+    "fidelidad_con_cowrie": "628/629 = 99.8 % (IC 95 % [99.1; 100.0])",
+    "umbral": "80 %",
+    "cumple": true
+  },
+  "P3": {
+    "sesiones_exitosas": 15,
+    "completitud": "15/15 = 100.0 % (IC 95 % [79.6; 100.0])",
+    "umbral": "70 %",
+    "cumple": true,
+    "sesiones_con_comando_ioc": 5,
+    "incompletas": [],
+    "continuidad_event_id": "9/15 = 60.0 % (IC 95 % [35.7; 80.2])"
+  },
+  "P4": {
+    "ejecuciones_report_generator": [
+      "2026-10-02 14:50:00.032 trigger success"
+    ],
+    "reportes_trigger": 1,
+    "cobertura": "15/15 = 100.0 % (IC 95 % [79.6; 100.0])",
+    "umbral": "90 %",
+    "cumple": true
+  },
+  "ejecuciones": {
+    "total": 634,
+    "manuales_extractor_o_reportes": 0,
+    "extractor": {
+      "n": 4,
+      "error": 0,
+      "duracion_ms": {
+        "n": 4,
+        "media": 857.75,
+        "mediana": 965,
+        "min": 426,
+        "max": 1075,
+        "de": 300.59
+      }
+    }
+  }
+}

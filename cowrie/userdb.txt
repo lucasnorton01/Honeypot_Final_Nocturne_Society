@@ -6,3 +6,9 @@ oracle:x:oracle2024
 backup:x:backupsvc99
 deploy:x:deployKey7
 ftpuser:x:ftpPass321
+webadmin:x:Web2026!
+support:x:support01
+monitor:x:m0nitor
+dev:x:devpass22
+pi:x:raspberry
+user:x:user1234
