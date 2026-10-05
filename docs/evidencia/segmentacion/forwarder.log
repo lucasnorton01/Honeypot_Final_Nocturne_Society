@@ -1,0 +1,315 @@
+[2026-10-05T18:27:52] [*] Cowrie -> n8n forwarder started
+[2026-10-05T18:27:52] [*] Watching: /cowrie/var/log/cowrie/cowrie.json
+[2026-10-05T18:27:52] [*] Target:   http://n8n:5678/webhook/cowrie
+[2026-10-05T18:27:52] [*] Telegram alerts: disabled (sin TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID)
+[2026-10-05T18:27:52] [*] Max session duration: 1800s (30 min)
+[2026-10-05T18:27:53] [!] n8n not reachable, retrying in 5.0s...
+[2026-10-05T18:27:58] [ERR] no entregado a n8n: cowrie.session.connect from 10.0.1.3
+[2026-10-05T18:27:58] [!] n8n not reachable, retrying in 5.0s...
+[2026-10-05T18:28:03] [ERR] no entregado a n8n: cowrie.client.version from 10.0.1.3
+[2026-10-05T18:28:03] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:28:03] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:28:04] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:05] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:28:05] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:28:05] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:28:05] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:07] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:28:07] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:28:07] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:28:07] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:10] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:10] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:28:10] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:29:21] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:29:21] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:29:47] [OK] cowrie.session.connect from 10.0.1.1 -> n8n
+[2026-10-05T18:29:47] [OK] cowrie.session.closed from 10.0.1.1 -> n8n
+[2026-10-05T18:29:47] [OK] cowrie.session.connect from 10.0.1.1 -> n8n
+[2026-10-05T18:29:47] [OK] cowrie.session.closed from 10.0.1.1 -> n8n
+[2026-10-05T18:30:11] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:30:11] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:30:11] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:30:11] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:13] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:30:13] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:30:13] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:30:13] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:15] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:30:15] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:30:15] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:30:15] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:17] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:30:17] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:30:17] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:30:17] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:19] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:30:19] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:30:19] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:30:19] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:21] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:30:21] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:30:21] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:30:21] [OK] cowrie.login.success from 10.0.1.3 -> n8n
+[2026-10-05T18:30:21] [OK] cowrie.client.size from 10.0.1.3 -> n8n
+[2026-10-05T18:30:21] [OK] cowrie.session.params from 10.0.1.3 -> n8n
+[2026-10-05T18:30:22] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T18:30:23] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T18:30:24] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T18:30:25] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T18:30:26] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T18:30:26] [OK] cowrie.log.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:27] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:27] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:30:27] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:30:27] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:30:28] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:30] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T18:30:30] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T18:30:30] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T18:30:30] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:32] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:32] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:32] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:32] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:32] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:32] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:30:32] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T18:57:04] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:04] [ERR] no entregado a n8n: cowrie.session.connect from 10.0.1.3
+[2026-10-05T18:57:04] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:04] [ERR] no entregado a n8n: cowrie.client.version from 10.0.1.3
+[2026-10-05T18:57:04] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:04] [ERR] no entregado a n8n: cowrie.client.kex from 10.0.1.3
+[2026-10-05T18:57:05] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:05] [ERR] no entregado a n8n: cowrie.login.failed from 10.0.1.3
+[2026-10-05T18:57:06] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:06] [ERR] no entregado a n8n: cowrie.session.connect from 10.0.1.3
+[2026-10-05T18:57:06] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:06] [ERR] no entregado a n8n: cowrie.client.version from 10.0.1.3
+[2026-10-05T18:57:06] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:06] [ERR] no entregado a n8n: cowrie.client.kex from 10.0.1.3
+[2026-10-05T18:57:06] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:06] [ERR] no entregado a n8n: cowrie.login.failed from 10.0.1.3
+[2026-10-05T18:57:09] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:09] [ERR] no entregado a n8n: cowrie.session.connect from 10.0.1.3
+[2026-10-05T18:57:09] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:09] [ERR] no entregado a n8n: cowrie.client.version from 10.0.1.3
+[2026-10-05T18:57:09] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:09] [ERR] no entregado a n8n: cowrie.client.kex from 10.0.1.3
+[2026-10-05T18:57:09] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:09] [ERR] no entregado a n8n: cowrie.login.failed from 10.0.1.3
+[2026-10-05T18:57:11] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:11] [ERR] no entregado a n8n: cowrie.session.connect from 10.0.1.3
+[2026-10-05T18:57:11] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:11] [ERR] no entregado a n8n: cowrie.client.version from 10.0.1.3
+[2026-10-05T18:57:11] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:11] [ERR] no entregado a n8n: cowrie.client.kex from 10.0.1.3
+[2026-10-05T18:57:11] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:11] [ERR] no entregado a n8n: cowrie.login.failed from 10.0.1.3
+[2026-10-05T18:57:13] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:13] [ERR] no entregado a n8n: cowrie.session.connect from 10.0.1.3
+[2026-10-05T18:57:13] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:13] [ERR] no entregado a n8n: cowrie.client.version from 10.0.1.3
+[2026-10-05T18:57:13] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:13] [ERR] no entregado a n8n: cowrie.client.kex from 10.0.1.3
+[2026-10-05T18:57:13] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:13] [ERR] no entregado a n8n: cowrie.login.success from 10.0.1.3
+[2026-10-05T18:57:13] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:13] [ERR] no entregado a n8n: cowrie.client.size from 10.0.1.3
+[2026-10-05T18:57:13] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:13] [ERR] no entregado a n8n: cowrie.session.params from 10.0.1.3
+[2026-10-05T18:57:14] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:14] [ERR] no entregado a n8n: cowrie.command.input from 10.0.1.3
+[2026-10-05T18:57:15] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:15] [ERR] no entregado a n8n: cowrie.command.input from 10.0.1.3
+[2026-10-05T18:57:15] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:15] [ERR] no entregado a n8n: cowrie.command.input from 10.0.1.3
+[2026-10-05T18:57:16] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:16] [ERR] no entregado a n8n: cowrie.command.input from 10.0.1.3
+[2026-10-05T18:57:17] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:17] [ERR] no entregado a n8n: cowrie.command.input from 10.0.1.3
+[2026-10-05T18:57:18] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:18] [ERR] no entregado a n8n: cowrie.log.closed from 10.0.1.3
+[2026-10-05T18:57:18] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:18] [ERR] no entregado a n8n: cowrie.session.closed from 10.0.1.3
+[2026-10-05T18:57:19] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:19] [ERR] no entregado a n8n: cowrie.session.closed from 10.0.1.3
+[2026-10-05T18:57:19] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:19] [ERR] no entregado a n8n: cowrie.session.closed from 10.0.1.3
+[2026-10-05T18:57:19] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:19] [ERR] no entregado a n8n: cowrie.session.closed from 10.0.1.3
+[2026-10-05T18:57:19] [ERR] n8n HTTP 404: {"code":404,"message":"Active version not found for workflow with id \"wf-event-ingest-0001\""}
+[2026-10-05T18:57:19] [ERR] no entregado a n8n: cowrie.session.closed from 10.0.1.3
+[2026-10-05T19:06:12] [*] Cowrie -> n8n forwarder started
+[2026-10-05T19:06:12] [*] Watching: /cowrie/var/log/cowrie/cowrie.json
+[2026-10-05T19:06:12] [*] Target:   http://n8n:5678/webhook/cowrie
+[2026-10-05T19:06:12] [*] Telegram alerts: disabled (sin TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID)
+[2026-10-05T19:06:12] [*] Max session duration: 1800s (30 min)
+[2026-10-05T19:06:31] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:06:31] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:06:31] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:06:31] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:33] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:06:33] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:06:33] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:06:33] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:35] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:06:35] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:06:35] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:06:35] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:37] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:06:37] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:06:37] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:06:37] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:39] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:06:39] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:06:39] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:06:39] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:41] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:06:41] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:06:41] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:06:42] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:43] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:06:43] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:06:43] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:06:44] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:45] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:06:45] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:06:45] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:06:45] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:48] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:06:48] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:06:48] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:06:48] [OK] cowrie.login.success from 10.0.1.3 -> n8n
+[2026-10-05T19:06:48] [OK] cowrie.client.size from 10.0.1.3 -> n8n
+[2026-10-05T19:06:48] [OK] cowrie.session.params from 10.0.1.3 -> n8n
+[2026-10-05T19:06:49] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:06:49] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:06:50] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:06:51] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:06:52] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:06:53] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:06:53] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:06:54] [OK] cowrie.log.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:54] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:55] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:55] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:55] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:55] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:55] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:56] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:56] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:06:56] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:06] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:08:06] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:08:06] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:08:06] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:08] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:08:08] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:08:08] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:08:08] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:10] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:08:10] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:08:10] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:08:10] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:12] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:08:12] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:08:12] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:08:12] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:14] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:08:14] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:08:14] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:08:14] [OK] cowrie.login.success from 10.0.1.3 -> n8n
+[2026-10-05T19:08:14] [OK] cowrie.client.size from 10.0.1.3 -> n8n
+[2026-10-05T19:08:14] [OK] cowrie.session.params from 10.0.1.3 -> n8n
+[2026-10-05T19:08:15] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:08:16] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:08:17] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:08:17] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:08:18] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:08:19] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:08:20] [OK] cowrie.log.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:20] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:21] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:21] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:21] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:08:21] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:16:48] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:16:48] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:16:48] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:16:48] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:16:50] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:16:50] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:16:50] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:16:50] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:16:52] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:16:52] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:16:52] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:16:52] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:16:54] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:16:54] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:16:54] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:16:54] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:16:56] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:16:56] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:16:56] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:16:56] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:16:58] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:16:58] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:16:58] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:16:58] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:00] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:17:00] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:17:00] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:17:00] [OK] cowrie.login.success from 10.0.1.3 -> n8n
+[2026-10-05T19:17:00] [OK] cowrie.client.size from 10.0.1.3 -> n8n
+[2026-10-05T19:17:00] [OK] cowrie.session.params from 10.0.1.3 -> n8n
+[2026-10-05T19:17:01] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:17:02] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:17:03] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:17:04] [OK] cowrie.command.input from 10.0.1.3 -> n8n
+[2026-10-05T19:17:04] [OK] cowrie.log.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:04] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:05] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:17:05] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:17:05] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:17:05] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:07] [OK] cowrie.session.connect from 10.0.1.3 -> n8n
+[2026-10-05T19:17:08] [OK] cowrie.client.version from 10.0.1.3 -> n8n
+[2026-10-05T19:17:08] [OK] cowrie.client.kex from 10.0.1.3 -> n8n
+[2026-10-05T19:17:08] [OK] cowrie.login.failed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:09] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:10] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:10] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:10] [OK] cowrie.session.closed from 10.0.1.3 -> n8n
+[2026-10-05T19:17:10] [OK] cowrie.session.closed from 10.0.1.3 -> n8n

@@ -1,0 +1,152 @@
+{
+  "id": "wf-health-monitor-0004",
+  "name": "health-monitor",
+  "nodes": [
+    {
+      "id": "wf-hm-schedule",
+      "name": "Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "*/5 * * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "wf-hm-leer",
+      "name": "Leer log de Cowrie",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "// Control de ingesta: cuenta los eventos de Cowrie (vía log-reader) en un intervalo cerrado,\n// con 2 minutos de margen para que el pipeline termine de persistirlos.\nconst ahora = Date.now();\nconst desde = new Date(ahora - 20 * 60 * 1000), hasta = new Date(ahora - 2 * 60 * 1000);\nconst ev = await this.helpers.httpRequest({ method: 'GET', url: 'http://log-reader:9000/events?n=50000', json: true, timeout: 15000 });\nif (!Array.isArray(ev)) throw new Error('log-reader no devolvió una lista de eventos');\nconst cowrie = ev.filter(e => e && e.timestamp && Date.parse(e.timestamp) >= +desde && Date.parse(e.timestamp) < +hasta).length;\nreturn [{ json: { desde: desde.toISOString(), hasta: hasta.toISOString(), cowrie } }];"
+      }
+    },
+    {
+      "id": "wf-hm-contar",
+      "name": "Postgres: Contar en la base",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [
+        520,
+        300
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT (SELECT count(*) FROM events WHERE timestamp >= '{{ $json.desde }}'::timestamptz AND timestamp < '{{ $json.hasta }}'::timestamptz) AS base, (SELECT count(*) FROM events WHERE processed = FALSE AND created_at < now() - interval '35 minutes') AS sin_procesar_viejos"
+      },
+      "credentials": {
+        "postgres": {
+          "name": "Postgres",
+          "id": "E56uxYa034ezaNIn"
+        }
+      }
+    },
+    {
+      "id": "wf-hm-evaluar",
+      "name": "Evaluar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const c = $('Leer log de Cowrie').first().json;\nconst b = $input.first().json;\nconst base = Number(b.base), viejos = Number(b.sin_procesar_viejos);\nconst alertas = [];\nif (c.cowrie > base) alertas.push(`ingesta: ${c.cowrie} eventos en Cowrie y ${base} en la base entre ${c.desde} y ${c.hasta}`);\nif (viejos > 0) alertas.push(`extracción: ${viejos} eventos sin procesar creados hace más de 35 minutos`);\nreturn alertas.map(error => ({ json: { error } }));"
+      }
+    },
+    {
+      "id": "wf-hm-alerta",
+      "name": "Postgres: Registrar alerta",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        300
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO error_log (workflow, node, error) VALUES ('health-monitor', 'Evaluar', '{{ String($json.error).replace(/'/g, \"''\").slice(0, 1000) }}')",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "name": "Postgres",
+          "id": "E56uxYa034ezaNIn"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule": {
+      "main": [
+        [
+          {
+            "node": "Leer log de Cowrie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer log de Cowrie": {
+      "main": [
+        [
+          {
+            "node": "Postgres: Contar en la base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres: Contar en la base": {
+      "main": [
+        [
+          {
+            "node": "Evaluar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluar": {
+      "main": [
+        [
+          {
+            "node": "Postgres: Registrar alerta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

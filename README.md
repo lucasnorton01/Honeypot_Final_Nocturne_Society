@@ -36,9 +36,19 @@ Servicios definidos en `docker-compose.yml`:
 | cowrie       | `cowrie/cowrie`    | 127.0.0.1:2222 (SSH), 127.0.0.1:2323 (Telnet) | Honeypot SSH/Telnet de media interacción |
 | forwarder    | build `./forwarder`| —            | Lee `cowrie.json` y lo reenvía a n8n    |
 | log-reader   | build `./log-reader`| 127.0.0.1:9000 | Expone `/events` y `/report` del log  |
-| postgres     | `postgres:16`      | 127.0.0.1:5433 | Persistencia estructurada            |
+| postgres     | `postgres:16`      | — (desde el tag Honeypot_Final_2026-10-05e; administración con `docker exec`) | Persistencia estructurada            |
 | n8n          | `n8nio/n8n`        | 127.0.0.1:5678 | Automatización de workflows           |
 | attack-runner | build `./attack-runner` | —       | Ejecuta `attack_ssh.py` (paramiko) contra `cowrie:2222` por la red interna de Docker y termina; el contenedor no tiene cron propio: cada corrida se dispara desde el anfitrión (`docker compose run --rm attack-runner`), en las validaciones con una tarea programada de Windows |
+
+Segmentación de red (diseño de la Figura 4.2 de la tesis; plan y resultados en `docs/PRUEBAS_SEGMENTACION_MONITOREO.md` y `docs/evidencia/segmentacion/`):
+
+| Red | Subred | Servicios | Nota |
+|---|---|---|---|
+| `captura` | 10.0.1.0/24 | cowrie, attack-runner | Sin ruta hacia `proceso` ni `datos` |
+| `proceso` | 10.0.2.0/24 | forwarder, log-reader, n8n | Sin ruta hacia `datos`, salvo n8n |
+| `datos` | 10.0.3.0/24 | n8n, postgres | `internal`: sin salida al exterior ni puertos publicados |
+
+El forwarder y el log-reader leen el log de Cowrie desde el volumen `cowrie-var`, en solo lectura.
 
 Workflows de n8n (`n8n/workflows/`):
 
@@ -47,6 +57,7 @@ Workflows de n8n (`n8n/workflows/`):
 | `event-ingest.json`      | Recibe eventos del forwarder, enriquece con el país de la IP (consulta a `ip-api.com` dentro del nodo Code, verificada con IP públicas en prueba) y persiste en `events` |
 | `ioc-extractor.json`     | Extrae indicadores de compromiso (`ip`, `credential`, `command`, `hash`) desde `events` hacia `iocs` y registra en `ioc_sessions` cada aparición por sesión   |
 | `report-generator.json`  | Genera reportes agregados de inteligencia en `reports` sobre una ventana de 24h, disparado por cron, sin intervención manual |
+| `health-monitor.json`    | Cada 5 minutos compara los eventos de Cowrie (vía `log-reader`) con los de `events` en el intervalo de hace 20 a hace 2 minutos y busca eventos sin procesar de más de 35 minutos; registra las alertas en `error_log`. Si no puede consultar la base, su ejecución queda en error en el historial de n8n |
 
 ---
 

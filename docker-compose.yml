@@ -18,7 +18,7 @@ services:
       - ./cowrie/userdb.txt:/cowrie/cowrie-git/etc/userdb.txt:ro
       - ./cowrie/moduli:/cowrie/cowrie-git/etc/moduli:ro
     networks:
-      - honeypot-net
+      - captura
 
   # ─────────────────────────────────────────
   # Forwarder - tails cowrie.json → POST to n8n
@@ -41,7 +41,7 @@ services:
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
       TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
     networks:
-      - honeypot-net
+      - proceso
 
   # ─────────────────────────────────────────
   # Log-reader - HTTP endpoint para leer cowrie.json
@@ -60,7 +60,7 @@ services:
       COWRIE_LOG: "/cowrie/var/log/cowrie/cowrie.json"
       PORT: "9000"
     networks:
-      - honeypot-net
+      - proceso
 
   # ─────────────────────────────────────────
   # PostgreSQL - Persistencia estructurada
@@ -69,8 +69,8 @@ services:
     image: postgres:16
     container_name: postgres
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:5433:5432"
+    # Sin puerto publicado: la red datos es internal y no admite publicar puertos.
+    # Administración con docker exec postgres psql ...
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-honeypot}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definir POSTGRES_PASSWORD en .env}
@@ -84,7 +84,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - honeypot-net
+      - datos
 
   # ─────────────────────────────────────────
   # n8n - Workflow Automation Engine
@@ -109,7 +109,8 @@ services:
       # DB_* removed: n8n uses SQLite for its own storage.
       # Workflow PostgreSQL nodes connect via credential "Postgres" (host: postgres)
     networks:
-      - honeypot-net
+      - proceso
+      - datos
 
   # ─────────────────────────────────────────
   # Attack Runner - SSH attacks from inside Docker
@@ -120,13 +121,29 @@ services:
     depends_on:
       - cowrie
     networks:
-      - honeypot-net
+      - captura
 
 volumes:
   cowrie-var:
   n8n-data:
   pg-data:
 
+# Segmentación de la Figura 4.2: Docker no enruta entre redes bridge distintas,
+# y la red internal (datos) no tiene salida al exterior.
 networks:
-  honeypot-net:
+  captura:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.1.0/24
+  proceso:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24
+  datos:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.0.3.0/24

@@ -1,0 +1,23 @@
+# Pruebas de conectividad S1 a S10 — 2026-10-05T18:29:20Z
+postgres IP: 10.0.3.2
+S1  attack-runner -> cowrie:2222 : CONECTA
+S2  attack-runner -> n8n:5678    : NO CONECTA (gaierror: [Errno -5] No address associated with hostname)
+S3  attack-runner -> postgres:5432 (nombre) : NO CONECTA (gaierror: [Errno -5] No address associated with hostname)
+S4  attack-runner -> 10.0.3.2:5432 (IP) : NO CONECTA (TimeoutError: timed out)
+S5  forwarder -> n8n:5678 : CONECTA
+S6a forwarder -> postgres:5432 (nombre) : NO CONECTA (gaierror: [Errno -2] Name or service not known)
+S6b forwarder -> 10.0.3.2:5432 (IP) : NO CONECTA (TimeoutError: timed out)
+S7  n8n -> postgres:5432 : CONECTA
+S8  postgres -> 1.1.1.1:443 : NO CONECTA
+S9  anfitrión -> 127.0.0.1:2222 : CONECTA
+S9  anfitrión -> 127.0.0.1:2323 : CONECTA
+S9  anfitrión -> 127.0.0.1:5678 : CONECTA
+S9  anfitrión -> 127.0.0.1:9000 : CONECTA
+S10 anfitrión -> 127.0.0.1:5433 : NO CONECTA
+
+# Redes
+honeypot-b2_captura subred=10.0.1.0/24 internal=false contenedores=cowrie 
+honeypot-b2_proceso subred=10.0.2.0/24 internal=false contenedores=log-reader forwarder n8n 
+honeypot-b2_datos subred=10.0.3.0/24 internal=true contenedores=postgres n8n 
+S8c (control) forwarder (proceso, con salida) -> 1.1.1.1:443 : CONECTA
+S8d (control) postgres -> localhost:5432 con la misma herramienta : CONECTA
