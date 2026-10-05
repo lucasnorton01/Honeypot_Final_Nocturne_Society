@@ -42,5 +42,5 @@ R(`    if (!$('f-tipo').value || !$('f-relevante').value) { $('err-1').textConte
 R('<title>Línea de base manual</title>','<title>Línea de base __CODIGO__</title>');
 R('    t1 = performance.now();',"    t1 = performance.now(); $('err-1').textContent = '';");
 R('__MUESTRA__', muestra);
-for (const c of ['P1','P2']) fs.writeFileSync((process.argv[2]||'.')+`/linea-base-${c}.html`, t.split('__CODIGO__').join(c));
+for (const c of (process.argv[3]||'P1,P2').split(',')) fs.writeFileSync((process.argv[2]||'.')+`/linea-base-${c}.html`, t.split('__CODIGO__').join(c));
 console.log('ok');
