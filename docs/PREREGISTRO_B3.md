@@ -103,7 +103,7 @@ Pruebas previas:
 |---|---|
 | `scripts/b3_analisis.js` | `0aed9757daac627fa92d8f65a7d663874085a28229bb4068fdd4c12faac4f4f5` |
 | `scripts/b3_exportar.js` | `1c03ce98bc72a798f4ebac8e404e95ae6e17e1434054c3130895b5fda8678608` |
-| `scripts/b3_iniciar.ps1` | `f256c54b57b105a4ba021fc376517731b615d083ef4a440621d3c1d91d87f0b1` |
+| `scripts/b3_iniciar.ps1` | `12dbb96f0018ef3a733e6bf9e1d55b5ce4ef4597a4a7000c1f5a66a023055d27` |
 | `scripts/b3_cerrar.ps1` | `88f5a0c82d3e75def140a16fe17eba323f5d44f0d08d0e57770cb2c1b8e46aba` |
 | `attack-runner/attack_ssh.py` | `431935f641c115b97af2e562f88b706874bc62b0aa8231e0380b0e10f3f7b95e` |
 | `cowrie/userdb.txt` | `7f33cfeac97bc8e245af949a30e1e70f76a34e43e274dde11a53e3129973486a` |

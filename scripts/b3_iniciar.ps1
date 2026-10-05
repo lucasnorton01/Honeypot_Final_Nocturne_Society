@@ -10,6 +10,8 @@ $ultimo = Get-Date "2026-10-06 07:45"
 $sinBom = New-Object System.Text.UTF8Encoding($false)
 
 function Psql($sql) { docker exec postgres psql -U honeypot -d honeypot -tA -c $sql }
+# n8n escribe avisos en stderr: se descartan sin que PowerShell 5.1 los convierta en un error fatal
+function N8n { $ErrorActionPreference = "Continue"; docker exec n8n n8n @args 2>$null }
 
 Write-Host "[0] Comprobando hora y equipo..."
 if ((Get-Date) -ge $primero.AddMinutes(-5)) { throw "Ya son las 19:25 o mas: no se inicia una ventana distinta de la registrada." }
@@ -32,9 +34,9 @@ Write-Host "[2] Comprobando servicios y workflows..."
 $up = docker compose ps --services --filter status=running
 foreach ($s in "cowrie","forwarder","log-reader","postgres","n8n") { if ($up -notcontains $s) { throw "El servicio $s no esta corriendo." } }
 if ($up -contains "attack-runner") { throw "attack-runner esta corriendo: esperar a que termine." }
-$act = docker exec n8n n8n list:workflow --active=true 2>$null
+$act = N8n list:workflow --active=true
 foreach ($w in "event-ingest","ioc-extractor","report-generator","health-monitor") { if (-not ($act -match "\|$w$")) { throw "El workflow $w no esta activo." } }
-docker exec n8n n8n export:workflow --id=wf-report-generator-0003 --output=/tmp/rg.json 2>$null | Out-Null
+N8n export:workflow --id=wf-report-generator-0003 --output=/tmp/rg.json | Out-Null
 $rg = (docker exec n8n cat /tmp/rg.json) -join "`n" | ConvertFrom-Json
 docker exec -u root n8n rm /tmp/rg.json
 $cron = @($rg)[0].nodes | Where-Object { $_.type -like "*scheduleTrigger" } | ForEach-Object { $_.parameters.rule.interval[0].expression }
