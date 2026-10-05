@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Arquitectura de honeypots de baja y media interacción (Cowrie y Dionaea) con automatización analítica en n8n. Tablero de análisis sobre corpus sintético de validación, evidencia real en dos entornos y verificación de las hipótesis operativas P1-P4. Trabajo de tesis.">
+<meta name="description" content="Arquitectura con un honeypot de media interacción (Cowrie; Dionaea figura solo como diseño objetivo no desplegado) con automatización analítica en n8n. Tablero de análisis sobre corpus sintético de validación, evidencia real en dos entornos y verificación de las hipótesis operativas P1-P4. Trabajo de tesis.">
 <title>Arquitectura de Honeypots con Automatización Analítica en n8n — Tablero de análisis</title>
 <style>
   :root {
@@ -362,7 +362,6 @@
       </p>
       <div class="badges" aria-label="Tecnologías utilizadas">
         <span class="badge"><b>Cowrie</b> SSH / Telnet</span>
-        <span class="badge b-green"><b>Dionaea</b> SMB / HTTP</span>
         <span class="badge b-violet"><b>n8n</b> Automatización</span>
         <span class="badge b-amber"><b>PostgreSQL</b> Persistencia</span>
         <span class="badge"><b>Docker</b> Contenedores</span>
@@ -383,9 +382,10 @@
       <div class="desc-grid">
         <div class="desc-text">
           <p>
-            Este trabajo final presenta el diseño y la implementación de una arquitectura de honeypots de baja y media
-            interacción integrada con un pipeline automatizado de análisis. Los honeypots <strong>Cowrie</strong>
-            (SSH y Telnet) y <strong>Dionaea</strong> (SMB y HTTP) capturan el tráfico de ataque en un entorno aislado;
+            Este trabajo final presenta el diseño y la implementación de una arquitectura con un honeypot de media
+            interacción (<strong>Cowrie</strong>, SSH y Telnet) integrada con un pipeline automatizado de análisis.
+            Cowrie captura el tráfico de ataque en un entorno aislado; <strong>Dionaea</strong> (SMB y HTTP) figura solo
+            en el diseño objetivo y no está desplegado;
             un servicio <strong>forwarder</strong> reenvía los eventos a la plataforma de automatización
             <strong>n8n</strong>, que se encarga de la ingesta, la normalización, el enriquecimiento, la extracción de
             indicadores de compromiso (IoCs) y la generación de reportes.
@@ -398,7 +398,7 @@
           </p>
         </div>
         <ul class="desc-list">
-          <li><strong>Captura</strong><span>Honeypots de baja y media interacción en contenedores Docker, sin exposición a Internet.</span></li>
+          <li><strong>Captura</strong><span>Honeypot de media interacción (Cowrie) en un contenedor Docker, sin exposición a Internet.</span></li>
           <li><strong>Análisis automatizado</strong><span>Workflows de n8n: ingesta, extracción de IoCs y generación de reportes.</span></li>
           <li><strong>Persistencia y evidencia</strong><span>PostgreSQL como fuente canónica y evidencia fechada y reproducible.</span></li>
         </ul>
@@ -418,7 +418,7 @@
         <li>
           <span class="flow-step" aria-hidden="true">1</span>
           <strong>Honeypots</strong>
-          <span>Cowrie (SSH/Telnet) y Dionaea (SMB/HTTP) registran cada interacción en formato JSON.</span>
+          <span>Cowrie (SSH/Telnet) registra cada interacción en formato JSON (Dionaea, previsto en el diseño objetivo, no está desplegado).</span>
         </li>
         <li>
           <span class="flow-step" aria-hidden="true">2</span>
@@ -489,6 +489,8 @@
             Ataque controlado contra el honeypot Cowrie en el laboratorio aislado (11/08/2026) con
             credenciales válidas (admin:test123), más nueve sesiones adicionales ejecutadas el
             11/09/2026 para reforzar la muestra de las hipótesis P3 y P4 sobre datos reales.
+            Sus cifras de P3 y P4 corresponden a ventanas anteriores al 25/09/2026 y fueron retiradas en la tesis
+            (§5.2.5, Anexo V); se conservan como registro histórico.
           </p>
           <ul>
             <li>Extracción de IoCs: 9 de 9 sesiones con IoC de comando (100 %, IC 95 % Wilson [70,1 %, 100 %]).</li>
@@ -500,14 +502,15 @@
           <span class="datos-badge">Segundo entorno — portabilidad</span>
           <h3>5 sesiones reales tras redespliegue completo desde cero</h3>
           <p>
-            Stack completo (Cowrie, Dionaea, n8n, PostgreSQL) redesplegado en una segunda estación de
+            Stack del prototipo (Cowrie, n8n, PostgreSQL y servicios auxiliares) redesplegado en una segunda estación de
             trabajo siguiendo la documentación del repositorio, sin exposición previa del entorno.
-            Valida la portabilidad de la arquitectura y aporta una segunda medición de P4.
+            Valida la portabilidad de la arquitectura y aporta una segunda medición de P4. Estas cifras corresponden a
+            una ventana anterior al 25/09/2026 y fueron retiradas en la tesis (Anexo V); se conservan como registro histórico.
           </p>
           <ul>
             <li>4 de 5 sesiones con IoC de comando (80 %, IC 95 % Wilson [37,6 %, 96,4 %]).</li>
             <li>Reportes automatizados: 4 de 4 ataques de interés cubiertos (100 %, IC 95 % Wilson [71,2 %, 100 %]), tras corregir el disparador a modo Schedule y auditar el modo de ejecución (<code>trigger</code>, no manual).</li>
-            <li>Defecto de agregación de IPs detectado y documentado como limitación técnica (§6.7.2).</li>
+            <li>Defecto de agregación de IPs detectado y documentado como limitación técnica (§6.6.2).</li>
           </ul>
         </div>
       </div>
@@ -645,7 +648,7 @@
         <!-- 3. Sesiones por protocolo -->
         <article class="chart-card">
           <h3 class="chart-title">Sesiones por protocolo</h3>
-          <p class="chart-note">Distribución de las 6.730 sesiones · SSH concentra la mayoría</p>
+          <p class="chart-note">Distribución de las 6.730 sesiones del corpus sintético · SSH concentra la mayoría; las de SMB y HTTP son simuladas (Dionaea no está desplegado)</p>
           <div class="chart-box">
             <canvas id="chSesionesProto" role="img" aria-label="Gráfico de anillo: sesiones por protocolo, SSH mayoritario"></canvas>
           </div>
@@ -655,7 +658,7 @@
         <!-- 4. Eventos por protocolo -->
         <article class="chart-card">
           <h3 class="chart-title">Eventos por protocolo</h3>
-          <p class="chart-note">Volumen capturado por protocolo y honeypot</p>
+          <p class="chart-note">Volumen por protocolo y honeypot · Corpus sintético: los eventos de Dionaea son simulados; Dionaea no está desplegado</p>
           <div class="chart-box">
             <canvas id="chEventosProto" role="img" aria-label="Gráfico de barras horizontales: eventos por protocolo, SSH dominante"></canvas>
           </div>
