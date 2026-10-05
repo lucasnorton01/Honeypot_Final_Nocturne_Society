@@ -33,11 +33,12 @@ Servicios definidos en `docker-compose.yml`:
 
 | Servicio     | Imagen             | Puertos      | Rol                                     |
 |--------------|--------------------|--------------|-----------------------------------------|
-| cowrie       | `cowrie/cowrie`    | 127.0.0.1:2222 (SSH), 127.0.0.1:2323 (Telnet) | Honeypot de baja interacción |
+| cowrie       | `cowrie/cowrie`    | 127.0.0.1:2222 (SSH), 127.0.0.1:2323 (Telnet) | Honeypot SSH/Telnet de media interacción |
 | forwarder    | build `./forwarder`| —            | Lee `cowrie.json` y lo reenvía a n8n    |
 | log-reader   | build `./log-reader`| 127.0.0.1:9000 | Expone `/events` y `/report` del log  |
 | postgres     | `postgres:16`      | 127.0.0.1:5433 | Persistencia estructurada            |
 | n8n          | `n8nio/n8n`        | 127.0.0.1:5678 | Automatización de workflows           |
+| attack-runner | build `./attack-runner` | —       | Ejecuta `attack_ssh.py` (paramiko) contra `cowrie:2222` por la red interna de Docker y termina; el contenedor no tiene cron propio: cada corrida se dispara desde el anfitrión (`docker compose run --rm attack-runner`), en las validaciones con una tarea programada de Windows |
 
 Workflows de n8n (`n8n/workflows/`):
 
@@ -232,12 +233,19 @@ rastreo de citas) se declaran explícitamente en esa sección.
 
 ## Estructura del repositorio
 
+Refleja `git ls-files` en el commit `17d0a51` (se omiten los archivos individuales de las
+carpetas de skills y de los logs).
+
 ```
 ├─ docker-compose.yml
 ├─ .env.example
+├─ .gitattributes           ← solo protege docs/evidencia/b2/** (sin conversión de saltos de línea)
 ├─ .gitignore
 ├─ README.md
 ├─ BITACORA.md              ← registro de los cambios realizados
+├─ EVIDENCIA_REAL.md
+├─ Reestructuracion.md
+├─ postgres-cred.example.json
 ├─ cowrie/
 │  ├─ cowrie.cfg
 │  ├─ moduli
@@ -249,33 +257,54 @@ rastreo de citas) se declaran explícitamente en esa sección.
 ├─ log-reader/
 │  ├─ Dockerfile
 │  └─ server.py
+├─ attack-runner/           ← simulador SSH del servicio attack-runner
+│  ├─ Dockerfile
+│  ├─ attack.py
+│  └─ attack_ssh.py
 ├─ n8n/
+│  ├─ check_db.js
 │  └─ workflows/
 │     ├─ event-ingest.json          ← canónico
 │     ├─ ioc-extractor.json         ← canónico
 │     ├─ report-generator.json      ← canónico
-│     ├─ report-generator-fixed.json
-│     ├─ report-generator-manual.json
-│     ├─ test-geo-enrichment.json
 │     └─ postgres-credential.example.json
 ├─ db/
 │  └─ schema.sql
-├─ scripts/
+├─ scripts/                 ← simulación, análisis (B1/B2, Wilson), verificación y utilidades
 │  ├─ attack_simulator.py
-│  ├─ check_executions.js
-│  └─ ... (scripts de simulación y verificación)
+│  ├─ b2_iniciar.ps1, b2_cerrar.ps1, b2_analisis.js, b1_analisis.js
+│  ├─ historicos/           ← scripts puntuales de diagnóstico (ver su README)
+│  └─ ... (ver scripts/README.md)
+├─ script_entorno/          ← instalación del entorno (setup.sh, setup.ps1, import-n8n.js)
+├─ agent/                   ← skills de asistente de código (no forma parte del pipeline)
 ├─ datasets-sinteticos/     ← datos sintéticos (NO son evidencia)
 │  ├─ generar_dataset.js
 │  ├─ dataset_m5.json
 │  └─ README.md
-├─ experimentos/            ← variantes locales (NO son evidencia)
-├─ evidencia/               ← logs y dumps generados (no versionados)
+├─ analitica/               ← solo README: derivados del dataset sintético (el resto no está versionado)
+├─ experimentos/            ← variantes locales de workflows y archivos de prueba (NO son evidencia)
+│  ├─ report-generator-b2-2026-10-02.json     ← flujo de la ventana B2
+│  ├─ report-generator-fixed.json
+│  ├─ report-generator-manual.json
+│  ├─ test-geo-enrichment.json
+│  └─ ... (ver experimentos/README.md)
 ├─ docs/
-│  ├─ INVENTARIO_RONDA4.md
+│  ├─ EVIDENCIA_HASHES.md
+│  ├─ PREREGISTRO_B2.md
 │  ├─ M4-PRISMA-template.md
-│  └─ M5-protocolo-evaluadores.md
-├─ API/                     ← servidor Node.js (dashboard, no parte del pipeline)
-└─ Landing page/            ← landing HTML estática
+│  ├─ M5-protocolo-evaluadores.md
+│  ├─ VERIFICACION_2026-09-28.md
+│  ├─ VERIFICACION_2026-09-30.md
+│  ├─ figs/                 ← figuras de la tesis
+│  └─ evidencia/            ← evidencia publicada (CSV/JSON de las ventanas del 25/09, 28/09 y 30/09)
+│     ├─ b1/                ← línea de base manual (02/10/2026)
+│     └─ b2/                ← validación con registro previo (02/10/2026), con SHA256SUMS.txt
+├─ Logs/                    ← scripts y logs sueltos de la etapa inicial (histórico)
+├─ logs 10 septiembre/      ← logs de ataque del 10/09/2026
+├─ API/                     ← servidor Node.js (dashboard); FUERA DEL PIPELINE
+├─ Landing page/            ← landing HTML estática; FUERA DEL PIPELINE
+├─ .agents/, .atl/          ← configuración de herramientas de asistente de código
+└─ evidencia/               ← logs y dumps generados (no versionados)
 ```
 
 ## Historia del repositorio
@@ -293,6 +322,44 @@ b6697266650cb2ee2c42860d4ab5b983c440567d
 $ git merge-base main Honeypot_Cowrie
 (no output — sin ancestro común)
 ```
+
+## Verificar los hashes del registro previo
+
+`docs/PREREGISTRO_B2.md` (§6) fija los SHA-256 de nueve archivos, calculados sobre los
+archivos tal como estaban en el equipo del autor (Windows). Los fuentes de ese registro
+quedaron en el tag `Honeypot_Final_2026-10-02-B2` (y no cambian en `Honeypot_Final_2026-10-05`).
+Los bytes de un archivo dependen de los finales de línea, y el repositorio guarda LF en el
+índice; por eso el hash depende del archivo:
+
+```bash
+# Archivos registrados con LF: scripts/b2_analisis.js, scripts/b2_iniciar.ps1, scripts/b2_cerrar.ps1
+git show Honeypot_Final_2026-10-02-B2:scripts/b2_analisis.js | sha256sum
+
+# Archivos registrados con CRLF: attack-runner/attack_ssh.py, cowrie/userdb.txt,
+# n8n/workflows/{event-ingest,ioc-extractor,report-generator}.json,
+# experimentos/report-generator-b2-2026-10-02.json
+git show Honeypot_Final_2026-10-02-B2:attack-runner/attack_ssh.py | perl -pe 's/\n/\r\n/' | sha256sum
+```
+
+Notas:
+- La conversión a CRLF debe aplicarse solo a los saltos de línea reales (`perl` como arriba).
+  `sed 's/$/\r/'` agrega además un `\r` al final de un archivo sin salto de línea final, y con
+  `event-ingest.json` y `ioc-extractor.json` (que no terminan en salto de línea) da un hash
+  distinto del registrado.
+- Sin conversión se obtiene el hash LF, que no es el registrado para esos seis archivos.
+- En un checkout de Windows con `core.autocrlf=true`, `sha256sum` sobre el archivo del
+  árbol de trabajo da directamente el hash CRLF registrado.
+- No se fuerza `eol=lf` en `.gitattributes` (cambiaría los bytes del checkout en Windows);
+  `docs/evidencia/b2/**` sí se guarda byte a byte (`-text`) para coincidir con `SHA256SUMS.txt`.
+
+## Evolución de `cowrie/userdb.txt`
+
+El archivo solo conserva en el árbol su estado final (12 cuentas). Los commits donde tuvo
+2, 6 y 12 cuentas (sin contar comentarios) son: `2147ad4` (15/09/2026, 2 cuentas),
+`7882a30` (28/09/2026, 6 cuentas) y `1378677` (02/10/2026, 12 cuentas; vigente en
+`Honeypot_Final_2026-10-05`). Los tres pertenecen a la historia de `main`; el commit raíz
+`b669726`, de la otra historia (tag `Honeypot_Cowrie`), tenía 1 cuenta. Se verifica con
+`git show <commit>:cowrie/userdb.txt`.
 
 ## Dónde está la evidencia
 
