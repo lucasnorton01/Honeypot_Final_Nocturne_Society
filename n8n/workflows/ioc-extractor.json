@@ -65,23 +65,24 @@
             "parameters": {
                 "mode": "runOnceForAllItems",
                 "language": "javaScript",
-                "jsCode": "// Sin eventos pendientes el nodo anterior entrega un ítem vacío: no hay nada que procesar.\nconst valid = items.filter(i => i.json && i.json.id !== undefined && i.json.id !== null);\nif (valid.length === 0) return [];\nconst out = [];\nfor (const item of valid) {\n  const e = item.json;\n  const eventId = e.id;\n  const found = [];\n  if (e.src_ip && e.eventid === 'cowrie.session.connect') {\n    found.push({ type: 'ip', value: String(e.src_ip) });\n  }\n  if (e.username && e.password) {\n    found.push({ type: 'credential', value: `${e.username}:${e.password}` });\n  }\n  if (e.input && e.input.match(/wget|curl|nc |python|\\/bin|sh |bash|chmod|tftp/i)) {\n    found.push({ type: 'command', value: String(e.input).slice(0, 500) });\n  }\n  if (e.message && e.message.includes('sha256')) {\n    const m = e.message.match(/[a-f0-9]{64}/);\n    if (m) found.push({ type: 'hash', value: m[0] });\n  }\n  const valuesSql = found.length\n    ? found.map(f => `('${f.type}', '${String(f.value).replace(/'/g, \"''\")}', ${eventId}, 'cowrie')`).join(',')\n    : '(NULL,NULL,NULL,NULL)';\n  const sessionSql = e.session ? `'${String(e.session).replace(/'/g, \"''\")}'` : 'NULL';\n  out.push({ json: { event_id: eventId, produced_ioc: found.length > 0, values_sql: valuesSql, session_sql: sessionSql }, pairedItem: { item: items.indexOf(item) } });\n}\nreturn out;"
+                "jsCode": "// Sin eventos pendientes el nodo anterior entrega un ítem vacío: no hay nada que procesar.\nconst valid = items.filter(i => i.json && i.json.id !== undefined && i.json.id !== null);\nif (valid.length === 0) return [];\nconst out = [];\nfor (const item of valid) {\n  const e = item.json;\n  const eventId = e.id;\n  const found = [];\n  if (e.src_ip && e.eventid === 'cowrie.session.connect') {\n    found.push({ type: 'ip', value: String(e.src_ip) });\n  }\n  if (e.username && e.password) {\n    found.push({ type: 'credential', value: `${e.username}:${e.password}` });\n  }\n  if (e.input && e.input.match(/wget|curl|nc |python|\\/bin|sh |bash|chmod|tftp/i)) {\n    found.push({ type: 'command', value: String(e.input).slice(0, 500) });\n  }\n  if (e.message && e.message.includes('sha256')) {\n    const m = e.message.match(/[a-f0-9]{64}/);\n    if (m) found.push({ type: 'hash', value: m[0] });\n  }\n  // Los indicadores viajan como un único parámetro JSON ($1); no se concatenan en el SQL.\n  out.push({ json: { event_id: eventId, produced_ioc: found.length > 0, iocs_json: JSON.stringify(found), session: e.session || null }, pairedItem: { item: items.indexOf(item) } });\n}\nreturn out;"
             }
         },
         {
             "id": "wf-ioc-upsert",
             "name": "Postgres: Upsert IoCs",
             "type": "n8n-nodes-base.postgres",
-            "typeVersion": 2,
+            "typeVersion": 2.5,
             "position": [
                 780,
                 300
             ],
             "parameters": {
                 "operation": "executeQuery",
-                "query": "WITH ins AS (\n  INSERT INTO iocs (type, value, event_id, source)\n  SELECT type, value, event_id::bigint, source FROM (VALUES {{ $json.values_sql }}) AS v(type, value, event_id, source)\n  WHERE type IS NOT NULL\n  ON CONFLICT (type, value) DO UPDATE SET type = EXCLUDED.type\n  RETURNING id\n), sess AS (\n  INSERT INTO ioc_sessions (ioc_id, event_id, session)\n  SELECT ins.id, {{ $json.event_id }}, {{ $json.session_sql }} FROM ins\n), obs AS (\n  INSERT INTO ioc_observations (event_id, produced_ioc) VALUES ({{ $json.event_id }}, {{ $json.produced_ioc }})\n)\nUPDATE events SET processed = TRUE WHERE id = {{ $json.event_id }}",
+                "query": "WITH v AS (\n  SELECT type, value FROM json_to_recordset($1::json) AS r(type text, value text)\n), ins AS (\n  INSERT INTO iocs (type, value, event_id, source)\n  SELECT type, value, $2::bigint, 'cowrie' FROM v\n  ON CONFLICT (type, value) DO UPDATE SET type = EXCLUDED.type\n  RETURNING id\n), sess AS (\n  INSERT INTO ioc_sessions (ioc_id, event_id, session)\n  SELECT ins.id, $2::bigint, $3 FROM ins\n), obs AS (\n  INSERT INTO ioc_observations (event_id, produced_ioc) VALUES ($2::bigint, $4::boolean)\n)\nUPDATE events SET processed = TRUE WHERE id = $2::bigint",
                 "options": {
-                    "queryBatching": "independently"
+                    "queryBatching": "independently",
+                    "queryReplacement": "={{ [$json.iocs_json, $json.event_id, $json.session, $json.produced_ioc] }}"
                 }
             },
             "credentials": {
@@ -96,14 +97,17 @@
             "id": "wf-ioc-error-log",
             "name": "Postgres: Registrar error",
             "type": "n8n-nodes-base.postgres",
-            "typeVersion": 2,
+            "typeVersion": 2.5,
             "position": [
                 1040,
                 460
             ],
             "parameters": {
                 "operation": "executeQuery",
-                "query": "INSERT INTO error_log (workflow, node, error) VALUES ('ioc-extractor', 'Postgres: Upsert IoCs', '{{ String($json.error && $json.error.message ? $json.error.message : $json.error).replace(/'/g, \"''\").slice(0, 1000) }}')"
+                "query": "INSERT INTO error_log (workflow, node, error) VALUES ('ioc-extractor', 'Postgres: Upsert IoCs', $1)",
+                "options": {
+                    "queryReplacement": "={{ [String($json.error && $json.error.message ? $json.error.message : $json.error).slice(0, 1000)] }}"
+                }
             },
             "credentials": {
                 "postgres": {

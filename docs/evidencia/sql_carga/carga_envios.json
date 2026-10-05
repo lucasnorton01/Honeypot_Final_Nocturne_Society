@@ -1,0 +1,56 @@
+[
+  {
+    "tasa": 1,
+    "enviados": 120,
+    "aceptados": 120,
+    "rechazados": 0,
+    "inicio": "2026-10-05T20:46:51.845Z",
+    "fin": "2026-10-05T20:48:50.872Z",
+    "duracion_s": 119.027
+  },
+  {
+    "tasa": 2,
+    "enviados": 120,
+    "aceptados": 120,
+    "rechazados": 0,
+    "inicio": "2026-10-05T20:49:20.874Z",
+    "fin": "2026-10-05T20:50:20.409Z",
+    "duracion_s": 59.535
+  },
+  {
+    "tasa": 5,
+    "enviados": 120,
+    "aceptados": 120,
+    "rechazados": 0,
+    "inicio": "2026-10-05T20:50:50.414Z",
+    "fin": "2026-10-05T20:51:14.242Z",
+    "duracion_s": 23.828
+  },
+  {
+    "tasa": 10,
+    "enviados": 120,
+    "aceptados": 120,
+    "rechazados": 0,
+    "inicio": "2026-10-05T20:51:44.252Z",
+    "fin": "2026-10-05T20:51:56.182Z",
+    "duracion_s": 11.93
+  },
+  {
+    "tasa": 20,
+    "enviados": 120,
+    "aceptados": 120,
+    "rechazados": 0,
+    "inicio": "2026-10-05T20:52:26.197Z",
+    "fin": "2026-10-05T20:52:32.169Z",
+    "duracion_s": 5.972
+  },
+  {
+    "tasa": 50,
+    "enviados": 120,
+    "aceptados": 120,
+    "rechazados": 0,
+    "inicio": "2026-10-05T20:53:02.183Z",
+    "fin": "2026-10-05T20:53:06.452Z",
+    "duracion_s": 4.269
+  }
+]

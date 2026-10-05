@@ -1,3 +1,4 @@
 # Evidencia de la validacion B2: se guarda byte a byte para que coincida con SHA256SUMS.txt
 docs/evidencia/b2/** -text
 docs/evidencia/segmentacion/** -text
+docs/evidencia/sql_carga/** -text

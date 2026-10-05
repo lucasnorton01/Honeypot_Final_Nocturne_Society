@@ -41,14 +41,17 @@
       "id": "wf-hm-contar",
       "name": "Postgres: Contar en la base",
       "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2,
+      "typeVersion": 2.5,
       "position": [
         520,
         300
       ],
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT (SELECT count(*) FROM events WHERE timestamp >= '{{ $json.desde }}'::timestamptz AND timestamp < '{{ $json.hasta }}'::timestamptz) AS base, (SELECT count(*) FROM events WHERE processed = FALSE AND created_at < now() - interval '35 minutes') AS sin_procesar_viejos"
+        "query": "SELECT (SELECT count(*) FROM events WHERE timestamp >= $1::timestamptz AND timestamp < $2::timestamptz) AS base, (SELECT count(*) FROM events WHERE processed = FALSE AND created_at < now() - interval '35 minutes') AS sin_procesar_viejos",
+        "options": {
+          "queryReplacement": "={{ [$json.desde, $json.hasta] }}"
+        }
       },
       "credentials": {
         "postgres": {
@@ -76,16 +79,17 @@
       "id": "wf-hm-alerta",
       "name": "Postgres: Registrar alerta",
       "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2,
+      "typeVersion": 2.5,
       "position": [
         1040,
         300
       ],
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO error_log (workflow, node, error) VALUES ('health-monitor', 'Evaluar', '{{ String($json.error).replace(/'/g, \"''\").slice(0, 1000) }}')",
+        "query": "INSERT INTO error_log (workflow, node, error) VALUES ('health-monitor', 'Evaluar', $1)",
         "options": {
-          "queryBatching": "independently"
+          "queryBatching": "independently",
+          "queryReplacement": "={{ [String($json.error).slice(0, 1000)] }}"
         }
       },
       "credentials": {

@@ -1,0 +1,10 @@
+# Solo para la prueba de carga (docs/PRUEBAS_SQL_CARGA.md): ip-api.com se resuelve a 127.0.0.1
+# dentro de n8n, de modo que la consulta de país falla en el acto y no se envían cientos de
+# consultas a un servicio externo gratuito. Uso:
+#   docker compose -f docker-compose.yml -f docker-compose.carga.yml up -d n8n
+# y al terminar, para volver a la configuración normal:
+#   docker compose up -d n8n
+services:
+  n8n:
+    extra_hosts:
+      - "ip-api.com:127.0.0.1"

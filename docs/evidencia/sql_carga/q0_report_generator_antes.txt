@@ -1,0 +1,431 @@
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+[runner:js] (node:322) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Registered runner "JS Task Runner" (FJ8APxwY3cIypvXn-HzTM) 
+Syntax error at line 1 near "brien"
+Syntax error at line 1 near "brien"
+error: Syntax error at line 1 near "brien"
+    at parseErrorMessage (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/parser.js:305:11)
+    at Parser.handlePacket (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/parser.js:143:27)
+    at Parser.parse (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/parser.js:37:38)
+    at Socket.<anonymous> (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/index.js:12:42)
+    at Socket.emit (node:events:514:20)
+    at addChunk (node:internal/streams/readable:568:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:519:3)
+    at Socket.Readable.push (node:internal/streams/readable:399:5)
+    at TCP.onStreamRead (node:internal/stream_base_commons:189:23)
+
+Execution was NOT successful. See log message for details.
+Execution error:
+====================================
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "error": {
+        "level": "warning",
+        "shouldReport": true,
+        "description": "Failed query: INSERT INTO reports (period_start, period_end, content) VALUES (now() - interval '24 hours', now(), '{\"generated_at\":\"2026-10-05T20:17:33.910Z\",\"total_eventos\":\"306\",\"top_ips\":[{\"src_ip\":\"10.0.1.3\",\"eventos\":302,\"sesiones\":52},{\"src_ip\":\"10.0.1.1\",\"eventos\":4,\"sesiones\":2}],\"ips_por_pais\":[{\"pais\":\"Desconocido\",\"ips\":2,\"eventos\":306}],\"distribucion_eventid\":[{\"eventid\":\"cowrie.session.closed\",\"cantidad\":54},{\"eventid\":\"cowrie.session.connect\",\"cantidad\":51},{\"eventid\":\"cowrie.client.kex\",\"cantidad\":49},{\"eventid\":\"cowrie.client.version\",\"cantidad\":48},{\"eventid\":\"cowrie.login.failed\",\"cantidad\":41},{\"eventid\":\"cowrie.command.input\",\"cantidad\":31},{\"eventid\":\"cowrie.session.params\",\"cantidad\":8},{\"eventid\":\"cowrie.log.closed\",\"cantidad\":8},{\"eventid\":\"cowrie.login.success\",\"cantidad\":8},{\"eventid\":\"cowrie.client.size\",\"cantidad\":8}],\"credenciales\":[{\"username\":\"o'brien\",\"password\":\"it's-a-test\",\"intentos\":5},{\"username\":\"admin\",\"password\":\"test123\",\"intentos\":5},{\"username\":\"d'angelo\",\"password\":\"back\\\\\\\\slash\\\"quote\",\"intentos\":5},{\"username\":\"root\",\"password\":\"toor\",\"intentos\":4},{\"username\":\"backup\",\"password\":\"backup2024\",\"intentos\":4},{\"username\":\"jenkins\",\"password\":\"jenkins\",\"intentos\":3},{\"username\":\"root\",\"password\":\"password\",\"intentos\":3},{\"username\":\"ci\",\"password\":\"ci\",\"intentos\":3},{\"username\":\"git\",\"password\":\"git123\",\"intentos\":3},{\"username\":\"ubuntu\",\"password\":\"ubuntu123\",\"intentos\":2}],\"iocs_24h\":[{\"type\":\"ip\",\"cantidad\":2},{\"type\":\"credential\",\"cantidad\":1},{\"type\":\"command\",\"cantidad\":1}],\"sesiones_cubiertas\":[\"13989342d1c0\",\"56e8aa204ec7\",\"743838017ee9\",\"845c596a6e77\",\"bbe6dde09264\",\"d47e37c0ba3b\",\"df074f5f657c\",\"f6b2703871f0\"]}'::jsonb)",
+        "tags": {},
+        "timestamp": 1791231453956,
+        "context": {
+          "itemIndex": 0
+        },
+        "functionality": "regular",
+        "name": "NodeOperationError",
+        "node": {
+          "id": "wf-report-insert",
+          "name": "Postgres: Guardar Reporte",
+          "type": "n8n-nodes-base.postgres",
+          "typeVersion": 2,
+          "position": [
+            780,
+            300
+          ],
+          "parameters": {
+            "resource": "database",
+            "operation": "executeQuery",
+            "query": "INSERT INTO reports (period_start, period_end, content) VALUES (now() - interval '24 hours', now(), '{{ $json.content }}'::jsonb)",
+            "options": {}
+          },
+          "credentials": {
+            "postgres": {
+              "id": "E56uxYa034ezaNIn",
+              "name": "Postgres"
+            }
+          }
+        },
+        "messages": [],
+        "message": "Syntax error at line 1 near \"brien\"",
+        "stack": "NodeOperationError: Syntax error at line 1 near \"brien\"\n    at parsePostgresError (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/helpers/utils.ts:123:9)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/helpers/utils.ts:398:19\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/actions/database/executeQuery.operation.ts:160:9)\n    at ExecuteContext.router (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/actions/router.ts:45:17)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/PostgresV2.node.ts:26:10)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1125:8)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1427:11)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2329:27\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2810:11"
+      },
+      "runData": {
+        "Schedule": [
+          {
+            "startTime": 1791231452825,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Postgres: Datos del reporte": [
+          {
+            "startTime": 1791231452827,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Schedule",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 65,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "total_eventos": "306",
+                      "top_ips": [
+                        {
+                          "src_ip": "10.0.1.3",
+                          "eventos": 302,
+                          "sesiones": 52
+                        },
+                        {
+                          "src_ip": "10.0.1.1",
+                          "eventos": 4,
+                          "sesiones": 2
+                        }
+                      ],
+                      "distribucion_eventid": [
+                        {
+                          "eventid": "cowrie.session.closed",
+                          "cantidad": 54
+                        },
+                        {
+                          "eventid": "cowrie.session.connect",
+                          "cantidad": 51
+                        },
+                        {
+                          "eventid": "cowrie.client.kex",
+                          "cantidad": 49
+                        },
+                        {
+                          "eventid": "cowrie.client.version",
+                          "cantidad": 48
+                        },
+                        {
+                          "eventid": "cowrie.login.failed",
+                          "cantidad": 41
+                        },
+                        {
+                          "eventid": "cowrie.command.input",
+                          "cantidad": 31
+                        },
+                        {
+                          "eventid": "cowrie.session.params",
+                          "cantidad": 8
+                        },
+                        {
+                          "eventid": "cowrie.log.closed",
+                          "cantidad": 8
+                        },
+                        {
+                          "eventid": "cowrie.login.success",
+                          "cantidad": 8
+                        },
+                        {
+                          "eventid": "cowrie.client.size",
+                          "cantidad": 8
+                        }
+                      ],
+                      "credenciales": [
+                        {
+                          "username": "o'brien",
+                          "password": "it's-a-test",
+                          "intentos": 5
+                        },
+                        {
+                          "username": "admin",
+                          "password": "test123",
+                          "intentos": 5
+                        },
+                        {
+                          "username": "d'angelo",
+                          "password": "back\\\\slash\"quote",
+                          "intentos": 5
+                        },
+                        {
+                          "username": "root",
+                          "password": "toor",
+                          "intentos": 4
+                        },
+                        {
+                          "username": "backup",
+                          "password": "backup2024",
+                          "intentos": 4
+                        },
+                        {
+                          "username": "jenkins",
+                          "password": "jenkins",
+                          "intentos": 3
+                        },
+                        {
+                          "username": "root",
+                          "password": "password",
+                          "intentos": 3
+                        },
+                        {
+                          "username": "ci",
+                          "password": "ci",
+                          "intentos": 3
+                        },
+                        {
+                          "username": "git",
+                          "password": "git123",
+                          "intentos": 3
+                        },
+                        {
+                          "username": "ubuntu",
+                          "password": "ubuntu123",
+                          "intentos": 2
+                        }
+                      ],
+                      "iocs_24h": [
+                        {
+                          "type": "ip",
+                          "cantidad": 2
+                        },
+                        {
+                          "type": "credential",
+                          "cantidad": 1
+                        },
+                        {
+                          "type": "command",
+                          "cantidad": 1
+                        }
+                      ],
+                      "ips_por_pais": [
+                        {
+                          "pais": "Desconocido",
+                          "ips": 2,
+                          "eventos": 306
+                        }
+                      ],
+                      "sesiones_cubiertas": [
+                        "13989342d1c0",
+                        "56e8aa204ec7",
+                        "743838017ee9",
+                        "845c596a6e77",
+                        "bbe6dde09264",
+                        "d47e37c0ba3b",
+                        "df074f5f657c",
+                        "f6b2703871f0"
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Ensamblar Reporte": [
+          {
+            "startTime": 1791231452892,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Postgres: Datos del reporte",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1019,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "content": "{\"generated_at\":\"2026-10-05T20:17:33.910Z\",\"total_eventos\":\"306\",\"top_ips\":[{\"src_ip\":\"10.0.1.3\",\"eventos\":302,\"sesiones\":52},{\"src_ip\":\"10.0.1.1\",\"eventos\":4,\"sesiones\":2}],\"ips_por_pais\":[{\"pais\":\"Desconocido\",\"ips\":2,\"eventos\":306}],\"distribucion_eventid\":[{\"eventid\":\"cowrie.session.closed\",\"cantidad\":54},{\"eventid\":\"cowrie.session.connect\",\"cantidad\":51},{\"eventid\":\"cowrie.client.kex\",\"cantidad\":49},{\"eventid\":\"cowrie.client.version\",\"cantidad\":48},{\"eventid\":\"cowrie.login.failed\",\"cantidad\":41},{\"eventid\":\"cowrie.command.input\",\"cantidad\":31},{\"eventid\":\"cowrie.session.params\",\"cantidad\":8},{\"eventid\":\"cowrie.log.closed\",\"cantidad\":8},{\"eventid\":\"cowrie.login.success\",\"cantidad\":8},{\"eventid\":\"cowrie.client.size\",\"cantidad\":8}],\"credenciales\":[{\"username\":\"o'brien\",\"password\":\"it's-a-test\",\"intentos\":5},{\"username\":\"admin\",\"password\":\"test123\",\"intentos\":5},{\"username\":\"d'angelo\",\"password\":\"back\\\\\\\\slash\\\"quote\",\"intentos\":5},{\"username\":\"root\",\"password\":\"toor\",\"intentos\":4},{\"username\":\"backup\",\"password\":\"backup2024\",\"intentos\":4},{\"username\":\"jenkins\",\"password\":\"jenkins\",\"intentos\":3},{\"username\":\"root\",\"password\":\"password\",\"intentos\":3},{\"username\":\"ci\",\"password\":\"ci\",\"intentos\":3},{\"username\":\"git\",\"password\":\"git123\",\"intentos\":3},{\"username\":\"ubuntu\",\"password\":\"ubuntu123\",\"intentos\":2}],\"iocs_24h\":[{\"type\":\"ip\",\"cantidad\":2},{\"type\":\"credential\",\"cantidad\":1},{\"type\":\"command\",\"cantidad\":1}],\"sesiones_cubiertas\":[\"13989342d1c0\",\"56e8aa204ec7\",\"743838017ee9\",\"845c596a6e77\",\"bbe6dde09264\",\"d47e37c0ba3b\",\"df074f5f657c\",\"f6b2703871f0\"]}"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Postgres: Guardar Reporte": [
+          {
+            "startTime": 1791231453911,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Ensamblar Reporte",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 66,
+            "executionStatus": "error",
+            "error": {
+              "level": "warning",
+              "shouldReport": true,
+              "description": "Failed query: INSERT INTO reports (period_start, period_end, content) VALUES (now() - interval '24 hours', now(), '{\"generated_at\":\"2026-10-05T20:17:33.910Z\",\"total_eventos\":\"306\",\"top_ips\":[{\"src_ip\":\"10.0.1.3\",\"eventos\":302,\"sesiones\":52},{\"src_ip\":\"10.0.1.1\",\"eventos\":4,\"sesiones\":2}],\"ips_por_pais\":[{\"pais\":\"Desconocido\",\"ips\":2,\"eventos\":306}],\"distribucion_eventid\":[{\"eventid\":\"cowrie.session.closed\",\"cantidad\":54},{\"eventid\":\"cowrie.session.connect\",\"cantidad\":51},{\"eventid\":\"cowrie.client.kex\",\"cantidad\":49},{\"eventid\":\"cowrie.client.version\",\"cantidad\":48},{\"eventid\":\"cowrie.login.failed\",\"cantidad\":41},{\"eventid\":\"cowrie.command.input\",\"cantidad\":31},{\"eventid\":\"cowrie.session.params\",\"cantidad\":8},{\"eventid\":\"cowrie.log.closed\",\"cantidad\":8},{\"eventid\":\"cowrie.login.success\",\"cantidad\":8},{\"eventid\":\"cowrie.client.size\",\"cantidad\":8}],\"credenciales\":[{\"username\":\"o'brien\",\"password\":\"it's-a-test\",\"intentos\":5},{\"username\":\"admin\",\"password\":\"test123\",\"intentos\":5},{\"username\":\"d'angelo\",\"password\":\"back\\\\\\\\slash\\\"quote\",\"intentos\":5},{\"username\":\"root\",\"password\":\"toor\",\"intentos\":4},{\"username\":\"backup\",\"password\":\"backup2024\",\"intentos\":4},{\"username\":\"jenkins\",\"password\":\"jenkins\",\"intentos\":3},{\"username\":\"root\",\"password\":\"password\",\"intentos\":3},{\"username\":\"ci\",\"password\":\"ci\",\"intentos\":3},{\"username\":\"git\",\"password\":\"git123\",\"intentos\":3},{\"username\":\"ubuntu\",\"password\":\"ubuntu123\",\"intentos\":2}],\"iocs_24h\":[{\"type\":\"ip\",\"cantidad\":2},{\"type\":\"credential\",\"cantidad\":1},{\"type\":\"command\",\"cantidad\":1}],\"sesiones_cubiertas\":[\"13989342d1c0\",\"56e8aa204ec7\",\"743838017ee9\",\"845c596a6e77\",\"bbe6dde09264\",\"d47e37c0ba3b\",\"df074f5f657c\",\"f6b2703871f0\"]}'::jsonb)",
+              "tags": {},
+              "timestamp": 1791231453956,
+              "context": {
+                "itemIndex": 0
+              },
+              "functionality": "regular",
+              "name": "NodeOperationError",
+              "node": {
+                "id": "wf-report-insert",
+                "name": "Postgres: Guardar Reporte",
+                "type": "n8n-nodes-base.postgres",
+                "typeVersion": 2,
+                "position": [
+                  780,
+                  300
+                ],
+                "parameters": {
+                  "resource": "database",
+                  "operation": "executeQuery",
+                  "query": "INSERT INTO reports (period_start, period_end, content) VALUES (now() - interval '24 hours', now(), '{{ $json.content }}'::jsonb)",
+                  "options": {}
+                },
+                "credentials": {
+                  "postgres": {
+                    "id": "E56uxYa034ezaNIn",
+                    "name": "Postgres"
+                  }
+                }
+              },
+              "messages": [],
+              "message": "Syntax error at line 1 near \"brien\"",
+              "stack": "NodeOperationError: Syntax error at line 1 near \"brien\"\n    at parsePostgresError (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/helpers/utils.ts:123:9)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/helpers/utils.ts:398:19\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/actions/database/executeQuery.operation.ts:160:9)\n    at ExecuteContext.router (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/actions/router.ts:45:17)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/PostgresV2.node.ts:26:10)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1125:8)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1427:11)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2329:27\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2810:11"
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Postgres: Guardar Reporte"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [
+        {
+          "node": {
+            "id": "wf-report-insert",
+            "name": "Postgres: Guardar Reporte",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2,
+            "position": [
+              780,
+              300
+            ],
+            "parameters": {
+              "resource": "database",
+              "operation": "executeQuery",
+              "query": "INSERT INTO reports (period_start, period_end, content) VALUES (now() - interval '24 hours', now(), '{{ $json.content }}'::jsonb)",
+              "options": {}
+            },
+            "credentials": {
+              "postgres": {
+                "id": "E56uxYa034ezaNIn",
+                "name": "Postgres"
+              }
+            }
+          },
+          "data": {
+            "main": [
+              [
+                {
+                  "json": {
+                    "content": "{\"generated_at\":\"2026-10-05T20:17:33.910Z\",\"total_eventos\":\"306\",\"top_ips\":[{\"src_ip\":\"10.0.1.3\",\"eventos\":302,\"sesiones\":52},{\"src_ip\":\"10.0.1.1\",\"eventos\":4,\"sesiones\":2}],\"ips_por_pais\":[{\"pais\":\"Desconocido\",\"ips\":2,\"eventos\":306}],\"distribucion_eventid\":[{\"eventid\":\"cowrie.session.closed\",\"cantidad\":54},{\"eventid\":\"cowrie.session.connect\",\"cantidad\":51},{\"eventid\":\"cowrie.client.kex\",\"cantidad\":49},{\"eventid\":\"cowrie.client.version\",\"cantidad\":48},{\"eventid\":\"cowrie.login.failed\",\"cantidad\":41},{\"eventid\":\"cowrie.command.input\",\"cantidad\":31},{\"eventid\":\"cowrie.session.params\",\"cantidad\":8},{\"eventid\":\"cowrie.log.closed\",\"cantidad\":8},{\"eventid\":\"cowrie.login.success\",\"cantidad\":8},{\"eventid\":\"cowrie.client.size\",\"cantidad\":8}],\"credenciales\":[{\"username\":\"o'brien\",\"password\":\"it's-a-test\",\"intentos\":5},{\"username\":\"admin\",\"password\":\"test123\",\"intentos\":5},{\"username\":\"d'angelo\",\"password\":\"back\\\\\\\\slash\\\"quote\",\"intentos\":5},{\"username\":\"root\",\"password\":\"toor\",\"intentos\":4},{\"username\":\"backup\",\"password\":\"backup2024\",\"intentos\":4},{\"username\":\"jenkins\",\"password\":\"jenkins\",\"intentos\":3},{\"username\":\"root\",\"password\":\"password\",\"intentos\":3},{\"username\":\"ci\",\"password\":\"ci\",\"intentos\":3},{\"username\":\"git\",\"password\":\"git123\",\"intentos\":3},{\"username\":\"ubuntu\",\"password\":\"ubuntu123\",\"intentos\":2}],\"iocs_24h\":[{\"type\":\"ip\",\"cantidad\":2},{\"type\":\"credential\",\"cantidad\":1},{\"type\":\"command\",\"cantidad\":1}],\"sesiones_cubiertas\":[\"13989342d1c0\",\"56e8aa204ec7\",\"743838017ee9\",\"845c596a6e77\",\"bbe6dde09264\",\"d47e37c0ba3b\",\"df074f5f657c\",\"f6b2703871f0\"]}"
+                  },
+                  "pairedItem": {
+                    "item": 0
+                  }
+                }
+              ]
+            ]
+          },
+          "source": {
+            "main": [
+              {
+                "previousNode": "Ensamblar Reporte",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ]
+          }
+        }
+      ],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1791231452824,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Schedule",
+          "type": "n8n-nodes-base.scheduleTrigger"
+        }
+      }
+    },
+    "resumeToken": "aeddba7350291e9ec4132602cf6f4d82c79d878e2b71832684a30fb32827ed9b"
+  },
+  "mode": "cli",
+  "startedAt": "2026-10-05T20:17:32.815Z",
+  "stoppedAt": "2026-10-05T20:17:33.978Z",
+  "storedAt": "db",
+  "status": "error"
+}
+Error executing workflow. See log messages for details.
+
+Execution error:
+====================================
+Syntax error at line 1 near "brien"
+NodeOperationError: Syntax error at line 1 near "brien"
+    at parsePostgresError (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/helpers/utils.ts:123:9)
+    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/helpers/utils.ts:398:19
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/actions/database/executeQuery.operation.ts:160:9)
+    at ExecuteContext.router (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/actions/router.ts:45:17)
+    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Postgres/v2/PostgresV2.node.ts:26:10)
+    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1125:8)
+    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1427:11)
+    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2329:27
+    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2810:11
+Syntax error at line 1 near "brien"
