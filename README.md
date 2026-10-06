@@ -76,7 +76,8 @@ Workflows de n8n (`n8n/workflows/`):
 ```bash
 # 1. Crear variables de entorno
 cp .env.example .env
-#    - Definir N8N_ENCRYPTION_KEY (clave fija aleatoria)
+#    - Definir N8N_ENCRYPTION_KEY (clave fija aleatoria), POSTGRES_PASSWORD y LOG_READER_TOKEN
+#      (el compose no arranca si falta alguna de las tres)
 #    - (Opcional) TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID para alertas
 
 # 2. Levantar el stack
@@ -114,6 +115,11 @@ docker compose exec postgres psql -U honeypot -d honeypot -f /docker-entrypoint-
 4. Activar los tres workflows (toggle **Active**), dejando el cron de `report-generator`
    en su configuración estándar (`0 8 * * *`, una vez por día). El webhook de
    `event-ingest` quedará disponible en `http://localhost:5678/webhook/cowrie`.
+5. Cargar `health-monitor` con `powershell -ExecutionPolicy Bypass -File scripts\configurar_alertas.ps1`.
+   El script toma `LOG_READER_TOKEN`, `TELEGRAM_BOT_TOKEN` y `TELEGRAM_CHAT_ID` de `.env`, crea
+   en n8n las credenciales cifradas, importa y activa el workflow y reinicia n8n; no escribe
+   ningún valor en el repositorio. Usa la credencial `Postgres` del paso 3 (si su id no coincide con el del workflow, hay que reasignarla en sus nodos PostgreSQL). Sin las variables de
+   Telegram, las alertas quedan solo en `error_log`.
 
 > **Nota sobre `ioc-extractor.json`:** el nodo de extracción de IoCs de tipo `ip` debe
 > filtrar exclusivamente por `eventid = 'cowrie.session.connect'`. Una versión anterior
@@ -146,7 +152,9 @@ El simulador:
 > (`docker compose logs -f forwarder`). En una validación con 39 sesiones consecutivas se
 > detectaron dos interrupciones del forwarder que impidieron persistir 29 de las sesiones
 > en PostgreSQL; el problema no vuelve a ocurrir si se supervisa el proceso en vivo, pero
-> permanece como una limitación de robustez del componente.
+> permanecía como una limitación de robustez del componente. Desde el tag
+> `Honeypot_Final_2026-10-06c` el forwarder reintenta y retoma el log tras un reinicio (ver
+> [Limitaciones conocidas](#limitaciones-conocidas)).
 
 ### Credenciales válidas del honeypot
 
@@ -186,7 +194,13 @@ docker compose exec log-reader python -c "import os,urllib.request as u;print(u.
 - **Cron de `report-generator`**: la expresión estándar es `0 8 * * *` (una vez por día,
   a las 08:00). Las validaciones del 28/09 y del 30/09/2026 usaron un cron de validación de
   2 horas y la del 02/10/2026 una expresión diaria adelantada (`50 11 * * *`); el disparo
-  de producción de las 08:00 no se observó (tesis, §5.10).
+  de producción de las 08:00 se observó el 06/10/2026, en la validación B3 (`docs/evidencia/b3/`;
+  tesis, §5.10).
+- **`docs/evidencia/`** (versionada, cada carpeta con su `SHA256SUMS.txt`): `b1/` (línea de base
+  manual), `b2/` y `b3/` (validaciones con registro previo), `segmentacion/`, `sql_carga/`,
+  `telegram/`, `correcciones/` (corrección de defectos y endurecimiento) y `evaluacion/`
+  (evaluación del reporte con participantes externos). Cada una tiene su plan de pruebas
+  en `docs/`, fijado antes de ejecutarla.
 
 ---
 
@@ -207,10 +221,21 @@ docker compose exec log-reader python -c "import os,urllib.request as u;print(u.
   retoma el log desde la última posición reenviada tras un reinicio; `health-monitor` avisa por
   Telegram ante cualquier diferencia que persista. Sigue pendiente una cola persistente para
   interrupciones de n8n de más de 5 minutos.
-- **Línea de base manual de tamaño mínimo.** El 02/10/2026 se midió con dos integrantes del
-  equipo autor (N = 2, 20 eventos; mediana de 18,44 s por evento para triaje y extracción;
-  `docs/evidencia/b1/`). Es descriptiva y no admite inferencia; queda como trabajo futuro
-  repetirla con analistas ajenos al equipo.
+- **Línea de base manual de tamaño mínimo.** Se midió el 02/10/2026 con dos integrantes del
+  equipo autor (N = 2, 20 eventos; mediana de 18,44 s por evento para triaje y extracción) y
+  el 05/10/2026 con cinco participantes ajenos al equipo (10,36 s), que usaron el equipo de
+  un autor tras una explicación verbal (`docs/evidencia/b1/`). Son valores descriptivos y no
+  admiten inferencia; queda como trabajo futuro repetirla con analistas en sus propios equipos.
+- **Evaluación del reporte (06/10/2026).** Cinco participantes ajenos al equipo, no analistas,
+  contestaron preguntas sobre el reporte real de B3: 25 de 30 correctas (umbral 80 %), mediana
+  de 11,8 s (umbral 60 s) y 10 de 10 reconocen lo que el reporte no dice (umbral 80 %); la
+  utilidad percibida fue de 3,0 sobre 5 (umbral 4,0, **no se cumple**) y las preguntas sobre un
+  fragmento de log dieron 0 de 10 con el criterio registrado. El reporte se presentó como
+  JSON, sin interfaz (`docs/evidencia/evaluacion/`).
+- **Endurecimiento parcial.** Los contenedores corren sin privilegios y con límites, y las
+  redes están segmentadas (`docs/evidencia/correcciones/`), pero siguen pendientes el TLS hacia
+  PostgreSQL (`PGSSLMODE=disable`), el sistema de archivos de solo lectura y los secretos
+  fuera de `.env`. No se evaluó frente a tráfico hostil real ni está pensado para exponerse.
 - **Objetivo específico 5 (enriquecimiento geo/reputación) no ejercido con tráfico real.**
   Todas las sesiones observadas en el laboratorio corresponden a direcciones IP internas;
   el nodo de enriquecimiento nunca procesó una IP pública real, más allá de la verificación
@@ -252,13 +277,15 @@ rastreo de citas) se declaran explícitamente en esa sección.
 
 ## Estructura del repositorio
 
-Refleja `git ls-files` en el commit `17d0a51` (se omiten los archivos individuales de las
-carpetas de skills y de los logs).
+Refleja `git ls-files` en el tag `Honeypot_Final_2026-10-06d` (se omiten los archivos individuales
+de las carpetas de skills, de los logs y de la evidencia).
 
 ```
 ├─ docker-compose.yml
+├─ docker-compose.carga.yml          ← solo para la prueba de carga
+├─ docker-compose.telegram-caido.yml ← solo para la prueba con Telegram inalcanzable
 ├─ .env.example
-├─ .gitattributes           ← solo protege docs/evidencia/b2/** (sin conversión de saltos de línea)
+├─ .gitattributes           ← guarda sin conversión de saltos de línea la evidencia de b2, b3, segmentacion, sql_carga, telegram, correcciones y evaluacion, y experimentos/evaluacion_reporte/**
 ├─ .gitignore
 ├─ README.md
 ├─ BITACORA.md              ← registro de los cambios realizados
@@ -286,12 +313,15 @@ carpetas de skills y de los logs).
 │     ├─ event-ingest.json          ← canónico
 │     ├─ ioc-extractor.json         ← canónico
 │     ├─ report-generator.json      ← canónico
+│     ├─ health-monitor.json        ← canónico (se carga con scripts/configurar_alertas.ps1)
 │     └─ postgres-credential.example.json
 ├─ db/
 │  └─ schema.sql
 ├─ scripts/                 ← simulación, análisis (B1/B2, Wilson), verificación y utilidades
 │  ├─ attack_simulator.py
 │  ├─ b2_iniciar.ps1, b2_cerrar.ps1, b2_analisis.js, b1_analisis.js
+│  ├─ b3_iniciar.ps1, b3_exportar.js, b3_cerrar.ps1, b3_analisis.js
+│  ├─ conectividad.sh, configurar_alertas.ps1
 │  ├─ historicos/           ← scripts puntuales de diagnóstico (ver su README)
 │  └─ ... (ver scripts/README.md)
 ├─ script_entorno/          ← instalación del entorno (setup.sh, setup.ps1, import-n8n.js)
@@ -306,18 +336,23 @@ carpetas de skills y de los logs).
 │  ├─ report-generator-fixed.json
 │  ├─ report-generator-manual.json
 │  ├─ test-geo-enrichment.json
+│  ├─ prueba_carga.js, sesiones_caracteres_especiales.py, sesion_telegram_html.py
+│  ├─ evaluacion_reporte/   ← plantilla, constructor y corrector de la evaluación del reporte
 │  └─ ... (ver experimentos/README.md)
 ├─ docs/
 │  ├─ EVIDENCIA_HASHES.md
-│  ├─ PREREGISTRO_B2.md
+│  ├─ PREREGISTRO_B2.md, PREREGISTRO_B3.md
+│  ├─ PRUEBAS_SEGMENTACION_MONITOREO.md, PRUEBAS_SQL_CARGA.md, PRUEBAS_TELEGRAM.md
+│  ├─ PRUEBAS_CORRECCIONES_ENDURECIMIENTO.md (y su adenda), PRUEBAS_EVALUACION_REPORTE.md
 │  ├─ M4-PRISMA-template.md
 │  ├─ M5-protocolo-evaluadores.md
 │  ├─ VERIFICACION_2026-09-28.md
 │  ├─ VERIFICACION_2026-09-30.md
 │  ├─ figs/                 ← figuras de la tesis
 │  └─ evidencia/            ← evidencia publicada (CSV/JSON de las ventanas del 25/09, 28/09 y 30/09)
-│     ├─ b1/                ← línea de base manual (02/10/2026)
-│     └─ b2/                ← validación con registro previo (02/10/2026), con SHA256SUMS.txt
+│     ├─ b1/                ← línea de base manual (02/10/2026; externos 05/10/2026)
+│     ├─ b2/, b3/           ← validaciones con registro previo (02/10 y 05–06/10/2026), con SHA256SUMS.txt
+│     └─ segmentacion/, sql_carga/, telegram/, correcciones/, evaluacion/   ← pruebas del 05 y 06/10/2026
 ├─ Logs/                    ← scripts y logs sueltos de la etapa inicial (histórico)
 ├─ logs 10 septiembre/      ← logs de ataque del 10/09/2026
 ├─ API/                     ← servidor Node.js (dashboard); FUERA DEL PIPELINE
@@ -371,6 +406,16 @@ Notas:
 - No se fuerza `eol=lf` en `.gitattributes` (cambiaría los bytes del checkout en Windows);
   `docs/evidencia/b2/**` sí se guarda byte a byte (`-text`) para coincidir con `SHA256SUMS.txt`.
 
+`docs/PREREGISTRO_B3.md` (§6) fija los SHA-256 de once archivos, y sus fuentes están en el tag
+`Honeypot_Final_2026-10-06` (después cambiaron `docker-compose.yml` y `health-monitor.json`, en `06c`). Se verifican con el mismo método: los cuatro scripts `b3_*` y
+`health-monitor.json` coinciden con el contenido LF de git, y `attack_ssh.py`, `userdb.txt`,
+`docker-compose.yml` y los tres workflows canónicos de B2, con CRLF:
+
+```bash
+git show Honeypot_Final_2026-10-06:scripts/b3_analisis.js | sha256sum
+git show Honeypot_Final_2026-10-06:docker-compose.yml | perl -pe 's/\n/\r\n/' | sha256sum
+```
+
 ## Evolución de `cowrie/userdb.txt`
 
 El archivo solo conserva en el árbol su estado final (12 cuentas). Los commits donde tuvo
@@ -384,13 +429,16 @@ El archivo solo conserva en el árbol su estado final (12 cuentas). Los commits 
 
 - `evidencia/` **no está versionada** por diseño: contiene logs y dumps generados durante los experimentos.
 - `datasets-sinteticos/` **no es evidencia**: son datos sintéticos generados para pruebas.
-- Los hashes SHA-256 de los archivos de evidencia reales se publican en [`docs/EVIDENCIA_HASHES.md`](docs/EVIDENCIA_HASHES.md).
+- Los hashes SHA-256 de los archivos de evidencia reales se publican en [`docs/EVIDENCIA_HASHES.md`](docs/EVIDENCIA_HASHES.md) (ventanas anteriores al 02/10/2026) y en el `SHA256SUMS.txt` de cada carpeta de `docs/evidencia/`.
 
 ## Seguridad
 
-- El entorno **expone puertos solo en localhost** (`127.0.0.1`). Cowrie escucha en
-  `127.0.0.1:2222`/`127.0.0.1:2323` y el resto de servicios se comunican por la red
-  interna de Docker.
+- El entorno **expone puertos solo en localhost** (`127.0.0.1`): Cowrie en `2222` y `2323`
+  (mediante `cowrie-proxy`) y el editor de n8n en `5678`. PostgreSQL y `log-reader` no publican
+  ningún puerto. Las redes `captura`, `proceso` y `datos` son `internal` (sin salida a Internet);
+  solo n8n y el forwarder se conectan además a la red `salida`.
+- Los contenedores corren con `cap_drop: ALL` y `no-new-privileges`, con límites de recursos y
+  healthcheck. `log-reader` exige un token y `N8N_ENCRYPTION_KEY` es obligatoria.
 - **No subir al repositorio**: `.env`, tokens, `evidencia/`, ni bases de datos locales.
   Ver `.gitignore`.
 - Los archivos `postgres-cred.json` y `n8n/workflows/postgres-credential.json` contienen
