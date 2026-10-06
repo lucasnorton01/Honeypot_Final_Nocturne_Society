@@ -519,3 +519,6 @@ Ventana del 02/10/2026, de 13:47:30 a 14:55:10 UTC (10:47:30 a 11:55:10 ART), ce
 
 ### [2026-10-06] Plan de pruebas: correcciones y endurecimiento (antes de ejecutarlas)
 - Se fijó `docs/PRUEBAS_CORRECCIONES_ENDURECIMIENTO.md` (SHA-256 `967435cec829e7031577b152cd864836890a5b332e25aa585087cdfe21b6a7ef`) antes de modificar el código. Correcciones C1 a C4 (HTML de Telegram, envío sin bloqueo, posición del forwarder, notificación de `health-monitor`) y endurecimiento H1 a H6 (capacidades, límites, salida a Internet, token de `log-reader`, `N8N_ENCRYPTION_KEY` obligatoria y healthchecks), con las pruebas PC1 a PC4b y PE1 a PE6.
+
+### [2026-10-06] Adenda al plan de correcciones: reintentos del forwarder ante n8n caído (antes de corregirlo)
+- Al probar PC1 se perdieron 12 de 33 eventos porque se reinició n8n y el webhook respondió HTTP 404 durante su arranque; el forwarder descartaba el evento. Se fijó `docs/PRUEBAS_CORRECCIONES_ENDURECIMIENTO_ADENDA.md` (SHA-256 `43375281fce9dfd9f2857d57571b7b3b2ce86b503716046658425b1017c68861`) con la corrección C5 (reintentos del mismo evento, hasta 60 veces cada 5 s) y la prueba PC5, antes de modificar el código.
