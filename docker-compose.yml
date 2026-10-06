@@ -2,14 +2,12 @@ services:
 
   # ─────────────────────────────────────────
   # Cowrie - SSH/Telnet Honeypot
+  # Red captura (internal): sin salida a Internet. Los puertos del anfitrión los publica cowrie-proxy.
   # ─────────────────────────────────────────
   cowrie:
     image: cowrie/cowrie@sha256:fc57120d88c2bfb5817f63f6c132ce5c2969b641c2f1ac67887652b6f294148d
     container_name: cowrie
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:2222:2222"
-      - "127.0.0.1:2323:2223"
     environment:
       COWRIE_TELNET_ENABLED: "yes"
     volumes:
@@ -17,11 +15,51 @@ services:
       - ./cowrie/cowrie.cfg:/cowrie/cowrie-git/etc/cowrie.cfg:ro
       - ./cowrie/userdb.txt:/cowrie/cowrie-git/etc/userdb.txt:ro
       - ./cowrie/moduli:/cowrie/cowrie-git/etc/moduli:ro
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 512m
+    cpus: 1.0
+    pids_limit: 256
+    healthcheck:
+      # Lee /proc/net/tcp en lugar de conectarse: una conexión de prueba quedaría registrada como sesión
+      test: ["CMD", "python3", "-c", "import sys; sys.exit(0 if any(l.split()[1].endswith(':08AE') and l.split()[3] == '0A' for l in open('/proc/net/tcp').read().splitlines()[1:]) else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     networks:
       - captura
 
   # ─────────────────────────────────────────
+  # cowrie-proxy - reenvío TCP del anfitrión a Cowrie (Docker no publica puertos de redes internal)
+  # ─────────────────────────────────────────
+  cowrie-proxy:
+    image: alpine/socat@sha256:beb4a68d9e4fe6b0f21ea774a0fde6c31f580dde6368939ed70100c5385b015e
+    container_name: cowrie-proxy
+    restart: unless-stopped
+    depends_on:
+      - cowrie
+    entrypoint: ["sh", "-c", "socat TCP-LISTEN:2222,fork,reuseaddr TCP:cowrie:2222 & exec socat TCP-LISTEN:2223,fork,reuseaddr TCP:cowrie:2223"]
+    ports:
+      - "127.0.0.1:2222:2222"
+      - "127.0.0.1:2323:2223"
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 64m
+    cpus: 0.25
+    pids_limit: 128
+    healthcheck:
+      test: ["CMD-SHELL", "grep -q ':08AE 00000000:0000 0A' /proc/net/tcp && grep -q ':08AF 00000000:0000 0A' /proc/net/tcp"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - captura
+      - entrada
+
+  # ─────────────────────────────────────────
   # Forwarder - tails cowrie.json → POST to n8n
+  # Redes proceso (internal) y salida (solo para las alertas de Telegram).
   # ─────────────────────────────────────────
   forwarder:
     build: ./forwarder
@@ -32,19 +70,34 @@ services:
       - n8n
     volumes:
       - cowrie-var:/cowrie/var:ro
+      - forwarder-state:/state
     environment:
       N8N_URL: "http://n8n:5678/webhook/cowrie"
       COWRIE_LOG: "/cowrie/var/log/cowrie/cowrie.json"
+      STATE_FILE: "/state/posicion.json"
       POLL_INTERVAL: "0.3"
       RETRY_DELAY: "5"
+      MAX_REINTENTOS: ${MAX_REINTENTOS:-60}
       SESSION_MAX_DURATION: "1800"
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
       TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 128m
+    cpus: 0.5
+    pids_limit: 64
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os, time, sys; sys.exit(0 if time.time() - os.stat('/tmp/latido').st_mtime < 30 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     networks:
       - proceso
+      - salida
 
   # ─────────────────────────────────────────
-  # Log-reader - HTTP endpoint para leer cowrie.json
+  # Log-reader - HTTP endpoint para leer cowrie.json (exige el token LOG_READER_TOKEN; sin puerto publicado)
   # ─────────────────────────────────────────
   log-reader:
     build: ./log-reader
@@ -52,13 +105,22 @@ services:
     restart: unless-stopped
     depends_on:
       - cowrie
-    ports:
-      - "127.0.0.1:9000:9000"
     volumes:
       - cowrie-var:/cowrie/var:ro
     environment:
       COWRIE_LOG: "/cowrie/var/log/cowrie/cowrie.json"
       PORT: "9000"
+      LOG_READER_TOKEN: ${LOG_READER_TOKEN:?Definir LOG_READER_TOKEN en .env}
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 512m
+    cpus: 0.5
+    pids_limit: 64
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os, urllib.request; urllib.request.urlopen(urllib.request.Request('http://127.0.0.1:9000/events?n=1', headers={'X-Token': os.environ['LOG_READER_TOKEN']}), timeout=4)"]
+      interval: 30s
+      timeout: 6s
+      retries: 3
     networks:
       - proceso
 
@@ -78,6 +140,13 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
       - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    # La imagen arranca como root y baja a postgres con gosu: necesita estas cinco capacidades y ninguna más
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER, SETGID, SETUID]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 1g
+    cpus: 1.0
+    pids_limit: 200
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-honeypot} -d ${POSTGRES_DB:-honeypot}"]
       interval: 10s
@@ -88,6 +157,7 @@ services:
 
   # ─────────────────────────────────────────
   # n8n - Workflow Automation Engine
+  # Redes proceso y datos (internal) y salida (ip-api.com, Telegram y el puerto publicado del editor).
   # ─────────────────────────────────────────
   n8n:
     image: n8nio/n8n@sha256:94d70bcbc868123de206d6f89786bb90f753c26b8f28889f8ddc5e224b230247
@@ -101,16 +171,29 @@ services:
     volumes:
       - n8n-data:/home/node/.n8n
     environment:
-      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:-}
+      # Obligatoria: sin ella n8n generaría una clave propia y las credenciales guardadas no serían portables
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:?Definir N8N_ENCRYPTION_KEY en .env}
       GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-America/Argentina/Mendoza}
       ALERT_WEBHOOK_URL: ${ALERT_WEBHOOK_URL:-}
       PGSSLMODE: disable
       NODE_TLS_REJECT_UNAUTHORIZED: "0"
       # DB_* removed: n8n uses SQLite for its own storage.
       # Workflow PostgreSQL nodes connect via credential "Postgres" (host: postgres)
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 1536m
+    cpus: 1.5
+    pids_limit: 512
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:5678/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
     networks:
       - proceso
       - datos
+      - salida
 
   # ─────────────────────────────────────────
   # Attack Runner - SSH attacks from inside Docker
@@ -120,6 +203,11 @@ services:
     container_name: attack-runner
     depends_on:
       - cowrie
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 256m
+    cpus: 0.5
+    pids_limit: 64
     networks:
       - captura
 
@@ -127,17 +215,21 @@ volumes:
   cowrie-var:
   n8n-data:
   pg-data:
+  forwarder-state:
 
-# Segmentación de la Figura 4.2: Docker no enruta entre redes bridge distintas,
-# y la red internal (datos) no tiene salida al exterior.
+# Segmentación de la Figura 4.2: Docker no enruta entre redes bridge distintas, y las redes
+# internal (captura, proceso y datos) no tienen salida al exterior. Solo n8n y el forwarder
+# están también en salida; cowrie-proxy está en entrada, que solo sirve para publicar los puertos.
 networks:
   captura:
     driver: bridge
+    internal: true
     ipam:
       config:
         - subnet: 10.0.1.0/24
   proceso:
     driver: bridge
+    internal: true
     ipam:
       config:
         - subnet: 10.0.2.0/24
@@ -147,3 +239,13 @@ networks:
     ipam:
       config:
         - subnet: 10.0.3.0/24
+  salida:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.4.0/24
+  entrada:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.5.0/24

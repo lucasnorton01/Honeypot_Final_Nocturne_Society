@@ -1,0 +1,10 @@
+id,workflow,node,error,created_at
+1,health-monitor,Evaluar,ingesta: 6 eventos en Cowrie y 4 en la base entre 2026-10-06T12:05:00.123Z y 2026-10-06T12:23:00.123Z,2026-10-06 12:25:00.296691+00
+2,health-monitor,Evaluar,ingesta: 8 eventos en Cowrie y 6 en la base entre 2026-10-06T12:10:00.365Z y 2026-10-06T12:28:00.365Z,2026-10-06 12:30:00.4509+00
+3,health-monitor,Evaluar,ingesta: 118 eventos en Cowrie y 104 en la base entre 2026-10-06T12:15:00.183Z y 2026-10-06T12:33:00.183Z,2026-10-06 12:35:02.663374+00
+4,health-monitor,Evaluar,ingesta: 297 eventos en Cowrie y 285 en la base entre 2026-10-06T12:20:00.082Z y 2026-10-06T12:38:00.082Z,2026-10-06 12:40:01.028793+00
+5,health-monitor,Evaluar,ingesta: 514 eventos en Cowrie y 502 en la base entre 2026-10-06T12:25:00.235Z y 2026-10-06T12:43:00.235Z,2026-10-06 12:45:01.842644+00
+6,health-monitor,Evaluar,ingesta: 520 eventos en Cowrie y 423 en la base entre 2026-10-06T12:30:00.117Z y 2026-10-06T12:48:00.117Z,2026-10-06 12:50:01.10233+00
+7,health-monitor,Evaluar,ingesta: 326 eventos en Cowrie y 188 en la base entre 2026-10-06T12:40:00.146Z y 2026-10-06T12:58:00.146Z,2026-10-06 13:00:01.126901+00
+8,health-monitor,Evaluar,ingesta: 154 eventos en Cowrie y 59 en la base entre 2026-10-06T12:45:00.059Z y 2026-10-06T13:03:00.059Z,2026-10-06 13:05:01.009489+00
+9,health-monitor,Evaluar,ingesta: 112 eventos en Cowrie y 59 en la base entre 2026-10-06T12:50:00.068Z y 2026-10-06T13:08:00.068Z,2026-10-06 13:10:01.036217+00

@@ -23,18 +23,57 @@
       }
     },
     {
-      "id": "wf-hm-leer",
-      "name": "Leer log de Cowrie",
+      "id": "wf-hm-ventana",
+      "name": "Ventana",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        260,
+        220,
         300
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "language": "javaScript",
-        "jsCode": "// Control de ingesta: cuenta los eventos de Cowrie (vía log-reader) en un intervalo cerrado,\n// con 2 minutos de margen para que el pipeline termine de persistirlos.\nconst ahora = Date.now();\nconst desde = new Date(ahora - 20 * 60 * 1000), hasta = new Date(ahora - 2 * 60 * 1000);\nconst ev = await this.helpers.httpRequest({ method: 'GET', url: 'http://log-reader:9000/events?n=50000', json: true, timeout: 15000 });\nif (!Array.isArray(ev)) throw new Error('log-reader no devolvió una lista de eventos');\nconst cowrie = ev.filter(e => e && e.timestamp && Date.parse(e.timestamp) >= +desde && Date.parse(e.timestamp) < +hasta).length;\nreturn [{ json: { desde: desde.toISOString(), hasta: hasta.toISOString(), cowrie } }];"
+        "jsCode": "// Intervalo cerrado de control: de hace 20 minutos a hace 2 (margen para que el pipeline termine de persistir).\nconst ahora = Date.now();\nreturn [{ json: { desde: new Date(ahora - 20 * 60 * 1000).toISOString(), hasta: new Date(ahora - 2 * 60 * 1000).toISOString() } }];"
+      }
+    },
+    {
+      "id": "wf-hm-leer",
+      "name": "Leer log de Cowrie",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        300
+      ],
+      "onError": "continueErrorOutput",
+      "parameters": {
+        "method": "GET",
+        "url": "http://log-reader:9000/count",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "desde",
+              "value": "={{ $('Ventana').first().json.desde }}"
+            },
+            {
+              "name": "hasta",
+              "value": "={{ $('Ventana').first().json.hasta }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cred-logreader-hm",
+          "name": "log-reader token"
+        }
       }
     },
     {
@@ -43,14 +82,15 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        520,
-        300
+        660,
+        200
       ],
+      "onError": "continueErrorOutput",
       "parameters": {
         "operation": "executeQuery",
         "query": "SELECT (SELECT count(*) FROM events WHERE timestamp >= $1::timestamptz AND timestamp < $2::timestamptz) AS base, (SELECT count(*) FROM events WHERE processed = FALSE AND created_at < now() - interval '35 minutes') AS sin_procesar_viejos",
         "options": {
-          "queryReplacement": "={{ [$json.desde, $json.hasta] }}"
+          "queryReplacement": "={{ [$('Ventana').first().json.desde, $('Ventana').first().json.hasta] }}"
         }
       },
       "credentials": {
@@ -66,23 +106,79 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        780,
-        300
+        880,
+        200
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "language": "javaScript",
-        "jsCode": "const c = $('Leer log de Cowrie').first().json;\nconst b = $input.first().json;\nconst base = Number(b.base), viejos = Number(b.sin_procesar_viejos);\nconst alertas = [];\nif (c.cowrie > base) alertas.push(`ingesta: ${c.cowrie} eventos en Cowrie y ${base} en la base entre ${c.desde} y ${c.hasta}`);\nif (viejos > 0) alertas.push(`extracción: ${viejos} eventos sin procesar creados hace más de 35 minutos`);\nreturn alertas.map(error => ({ json: { error } }));"
+        "jsCode": "const c = $('Leer log de Cowrie').first().json;\nconst v = $('Ventana').first().json;\nconst b = $input.first().json;\nconst base = Number(b.base), viejos = Number(b.sin_procesar_viejos);\nconst alertas = [];\nif (c.cowrie > base) alertas.push(`ingesta: ${c.cowrie} eventos en Cowrie y ${base} en la base entre ${v.desde} y ${v.hasta}`);\nif (viejos > 0) alertas.push(`extracción: ${viejos} eventos sin procesar creados hace más de 35 minutos`);\nreturn alertas.map(error => ({ json: { error } }));"
       }
     },
     {
-      "id": "wf-hm-alerta",
+      "id": "wf-hm-alerta-base",
+      "name": "Alerta: base inaccesible",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        360
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "// La consulta a PostgreSQL falló (credencial inválida, base caída o sin red): se avisa igual, por Telegram.\nconst e = $input.first().json;\nconst causa = String((e.error && e.error.message) || e.message || e.error || 'sin detalle').slice(0, 300);\nreturn [{ json: { error: `base inaccesible: no se pudo consultar PostgreSQL (${causa})` } }];"
+      }
+    },
+    {
+      "id": "wf-hm-alerta-logreader",
+      "name": "Alerta: log-reader inaccesible",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        420
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "// No se pudo leer el log de Cowrie por log-reader.\nconst e = $input.first().json;\nconst causa = String((e.error && e.error.message) || e.message || e.error || 'sin detalle').slice(0, 300);\nreturn [{ json: { error: `log-reader inaccesible: no se pudo contar los eventos de Cowrie (${causa})` } }];"
+      }
+    },
+    {
+      "id": "wf-hm-tg-eval",
+      "name": "Telegram: alerta de ingesta",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1100,
+        120
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "__TELEGRAM_CHAT_ID__",
+        "text": "={{ 'health-monitor: ' + $json.error }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "cred-telegram-hm",
+          "name": "Telegram health-monitor"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "wf-hm-reg-eval",
       "name": "Postgres: Registrar alerta",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1040,
-        300
+        1100,
+        260
       ],
       "parameters": {
         "operation": "executeQuery",
@@ -97,11 +193,100 @@
           "name": "Postgres",
           "id": "E56uxYa034ezaNIn"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "wf-hm-tg-base",
+      "name": "Telegram: base inaccesible",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1100,
+        380
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "__TELEGRAM_CHAT_ID__",
+        "text": "={{ 'health-monitor: ' + $json.error }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "cred-telegram-hm",
+          "name": "Telegram health-monitor"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "wf-hm-tg-lr",
+      "name": "Telegram: log-reader inaccesible",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1100,
+        500
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "__TELEGRAM_CHAT_ID__",
+        "text": "={{ 'health-monitor: ' + $json.error }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "cred-telegram-hm",
+          "name": "Telegram health-monitor"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "wf-hm-reg-lr",
+      "name": "Postgres: Registrar alerta de log-reader",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1100,
+        620
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO error_log (workflow, node, error) VALUES ('health-monitor', 'Evaluar', $1)",
+        "options": {
+          "queryBatching": "independently",
+          "queryReplacement": "={{ [String($json.error).slice(0, 1000)] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "name": "Postgres",
+          "id": "E56uxYa034ezaNIn"
+        }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "connections": {
     "Schedule": {
+      "main": [
+        [
+          {
+            "node": "Ventana",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ventana": {
       "main": [
         [
           {
@@ -120,6 +305,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Alerta: log-reader inaccesible",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -131,6 +323,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Alerta: base inaccesible",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -138,7 +337,39 @@
       "main": [
         [
           {
+            "node": "Telegram: alerta de ingesta",
+            "type": "main",
+            "index": 0
+          },
+          {
             "node": "Postgres: Registrar alerta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alerta: base inaccesible": {
+      "main": [
+        [
+          {
+            "node": "Telegram: base inaccesible",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alerta: log-reader inaccesible": {
+      "main": [
+        [
+          {
+            "node": "Telegram: log-reader inaccesible",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres: Registrar alerta de log-reader",
             "type": "main",
             "index": 0
           }

@@ -1,0 +1,23 @@
+# PE1: docker inspect de cada servicio — 2026-10-06T12:28:21Z
+/cowrie | CapDrop=["ALL"] CapAdd=null | SecurityOpt=["no-new-privileges:true"] | Memoria=536870912 B | CPU=1000000000 nanoCPU | Procesos=256 | Salud=healthy
+/cowrie-proxy | CapDrop=["ALL"] CapAdd=null | SecurityOpt=["no-new-privileges:true"] | Memoria=67108864 B | CPU=250000000 nanoCPU | Procesos=128 | Salud=healthy
+/forwarder | CapDrop=["ALL"] CapAdd=null | SecurityOpt=["no-new-privileges:true"] | Memoria=134217728 B | CPU=500000000 nanoCPU | Procesos=64 | Salud=healthy
+/log-reader | CapDrop=["ALL"] CapAdd=null | SecurityOpt=["no-new-privileges:true"] | Memoria=536870912 B | CPU=500000000 nanoCPU | Procesos=64 | Salud=healthy
+/postgres | CapDrop=["ALL"] CapAdd=["CAP_CHOWN","CAP_DAC_OVERRIDE","CAP_FOWNER","CAP_SETGID","CAP_SETUID"] | SecurityOpt=["no-new-privileges:true"] | Memoria=1073741824 B | CPU=1000000000 nanoCPU | Procesos=200 | Salud=healthy
+/n8n | CapDrop=["ALL"] CapAdd=null | SecurityOpt=["no-new-privileges:true"] | Memoria=1610612736 B | CPU=1500000000 nanoCPU | Procesos=512 | Salud=healthy
+
+# PE1: redes de cada servicio
+/cowrie: honeypot-b2_captura 
+/cowrie-proxy: honeypot-b2_captura honeypot-b2_entrada 
+/forwarder: honeypot-b2_proceso honeypot-b2_salida 
+/log-reader: honeypot-b2_proceso 
+/postgres: honeypot-b2_datos 
+/n8n: honeypot-b2_datos honeypot-b2_proceso honeypot-b2_salida 
+
+# Redes internal
+honeypot-b2_captura internal=true subred=10.0.1.0/24
+honeypot-b2_datos internal=true subred=10.0.3.0/24
+honeypot-b2_entrada internal=false subred=10.0.5.0/24
+honeypot-b2_honeypot-net internal=false subred=172.18.0.0/16
+honeypot-b2_proceso internal=true subred=10.0.2.0/24
+honeypot-b2_salida internal=false subred=10.0.4.0/24

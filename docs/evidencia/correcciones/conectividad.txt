@@ -1,0 +1,31 @@
+# Conectividad — 2026-10-06T12:27:44Z
+postgres IP: 10.0.3.2
+
+## Segmentación (S1-S10)
+S1  attack-runner -> cowrie:2222 : CONECTA
+S2  attack-runner -> n8n:5678    : NO CONECTA (gaierror)
+S3  attack-runner -> postgres:5432 (nombre) : NO CONECTA (gaierror)
+S4  attack-runner -> 10.0.3.2:5432 (IP) : NO CONECTA (OSError)
+S5  forwarder -> n8n:5678 : CONECTA
+S6a forwarder -> postgres:5432 (nombre) : NO CONECTA (gaierror)
+S6b forwarder -> 10.0.3.2:5432 (IP) : NO CONECTA (TimeoutError)
+S7  n8n -> postgres:5432 : CONECTA
+S8  postgres -> 1.1.1.1:443 : NO CONECTA
+S9  anfitrión -> 127.0.0.1:2222 : CONECTA
+S9  anfitrión -> 127.0.0.1:2323 : CONECTA
+S9  anfitrión -> 127.0.0.1:5678 : CONECTA
+S9' anfitrión -> 127.0.0.1:9000 (log-reader, ya no publicado) : NO CONECTA (ECONNREFUSED)
+S10 anfitrión -> 127.0.0.1:5433 : NO CONECTA (ECONNREFUSED)
+
+## Salida a Internet, 1.1.1.1:443 (PE2)
+cowrie        : NO CONECTA (OSError)
+attack-runner : NO CONECTA (OSError)
+log-reader    : NO CONECTA (OSError)
+postgres      : NO CONECTA
+n8n (control positivo)       : CONECTA
+forwarder (control positivo) : CONECTA
+
+## log-reader (PE4), desde el forwarder, en la red proceso
+sin token   HTTP 401 | Access-Control-Allow-Origin: None
+token malo  HTTP 401 | Access-Control-Allow-Origin: None
+con token   HTTP 200 | Access-Control-Allow-Origin: None

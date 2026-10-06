@@ -1,0 +1,289 @@
+[
+  {
+    "prueba": "PE6",
+    "desc": "Regresión de extremo a extremo (Telegram desactivado)",
+    "tg": "sin Telegram",
+    "desde": "2026-10-06T12:28:44Z",
+    "hasta": "2026-10-06T12:29:37Z",
+    "eventos_cowrie": 73,
+    "eventos_base": 73,
+    "identicos_campo_a_campo": 73,
+    "latencia_ms": {
+      "mediana": 2155,
+      "p95": 2979,
+      "max": 4216
+    },
+    "alertas_esperadas": {
+      "conexion": 13,
+      "login_fallido": 12,
+      "resumen": 1
+    },
+    "lineas_TG": "sin Telegram"
+  },
+  {
+    "prueba": "PC1",
+    "desc": "HTML de Telegram (C1), con n8n todavía arrancando tras reiniciarlo",
+    "tg": {
+      "conexion enviado": 3,
+      "resumen enviado": 3
+    },
+    "desvio": "Solo 21 de 33 eventos llegaron a la base: n8n se había reiniciado 30 s antes y su webhook respondía 404; el forwarder aún descartaba el evento (origen de C5). Se repitió como PC1b",
+    "desde": "2026-10-06T12:31:06Z",
+    "hasta": "2026-10-06T12:32:08Z",
+    "eventos_cowrie": 33,
+    "eventos_base": 21,
+    "identicos_campo_a_campo": 21,
+    "latencia_ms": {
+      "mediana": 1825,
+      "p95": 7988,
+      "max": 8043
+    },
+    "alertas_esperadas": {
+      "conexion": 3,
+      "login_fallido": 0,
+      "resumen": 3
+    },
+    "lineas_TG": {
+      "conexion enviado": 3,
+      "resumen enviado": 3
+    }
+  },
+  {
+    "prueba": "PC5",
+    "desc": "Reinicio de n8n durante una corrida del simulador (C5)",
+    "tg": {
+      "conexion enviado": "n/d"
+    },
+    "nota": "ventana de medición cerrada antes de que el forwarder terminara de reintentar; se volvió a medir la misma ventana minutos después",
+    "desde": "2026-10-06T12:33:26Z",
+    "hasta": "2026-10-06T12:34:26Z",
+    "eventos_cowrie": 55,
+    "eventos_base": 55,
+    "identicos_campo_a_campo": 55,
+    "latencia_ms": {
+      "mediana": 38691,
+      "p95": 41389,
+      "max": 43032
+    },
+    "alertas_esperadas": {
+      "conexion": 9,
+      "login_fallido": 8,
+      "resumen": 1
+    },
+    "lineas_TG": {
+      "conexion enviado": "n/d"
+    }
+  },
+  {
+    "prueba": "PC1b",
+    "desc": "HTML de Telegram (C1) con n8n estable",
+    "tg": {
+      "conexion enviado": 3,
+      "resumen enviado": 3
+    },
+    "desde": "2026-10-06T12:34:48Z",
+    "hasta": "2026-10-06T12:35:47Z",
+    "eventos_cowrie": 33,
+    "eventos_base": 33,
+    "identicos_campo_a_campo": 33,
+    "latencia_ms": {
+      "mediana": 2294,
+      "p95": 4613,
+      "max": 5184
+    },
+    "alertas_esperadas": {
+      "conexion": 3,
+      "login_fallido": 0,
+      "resumen": 3
+    },
+    "lineas_TG": {
+      "conexion enviado": 3,
+      "resumen enviado": 3
+    }
+  },
+  {
+    "prueba": "PC2-T1",
+    "desc": "Corrida normal con Telegram",
+    "tg": {
+      "conexion enviado": 15,
+      "login_fallido enviado": 13,
+      "resumen enviado": 2
+    },
+    "desde": "2026-10-06T12:35:58Z",
+    "hasta": "2026-10-06T12:37:28Z",
+    "eventos_cowrie": 93,
+    "eventos_base": 93,
+    "identicos_campo_a_campo": 93,
+    "latencia_ms": {
+      "mediana": 2683,
+      "p95": 6283,
+      "max": 8498
+    },
+    "alertas_esperadas": {
+      "conexion": 15,
+      "login_fallido": 13,
+      "resumen": 2
+    },
+    "lineas_TG": {
+      "conexion enviado": 15,
+      "login_fallido enviado": 13,
+      "resumen enviado": 2
+    }
+  },
+  {
+    "prueba": "PC2-T3",
+    "desc": "Telegram inalcanzable (C2)",
+    "tg": {
+      "conexion sin envío: ConnectionError": 5,
+      "login_fallido sin envío: ConnectionError": 4,
+      "resumen sin envío: ConnectionError": 1
+    },
+    "desde": "2026-10-06T12:37:53Z",
+    "hasta": "2026-10-06T12:38:59Z",
+    "eventos_cowrie": 34,
+    "eventos_base": 34,
+    "identicos_campo_a_campo": 34,
+    "latencia_ms": {
+      "mediana": 829,
+      "p95": 1801,
+      "max": 2000
+    },
+    "alertas_esperadas": {
+      "conexion": 5,
+      "login_fallido": 4,
+      "resumen": 1
+    },
+    "lineas_TG": {
+      "conexion sin envío: ConnectionError": 5,
+      "login_fallido sin envío: ConnectionError": 4,
+      "resumen sin envío: ConnectionError": 1
+    }
+  },
+  {
+    "prueba": "PC2-T3-extra1",
+    "desc": "Telegram inalcanzable, repetición",
+    "tg": "no capturadas",
+    "desde": "2026-10-06T12:39:08Z",
+    "hasta": "2026-10-06T12:40:10Z",
+    "eventos_cowrie": 58,
+    "eventos_base": 58,
+    "identicos_campo_a_campo": 58,
+    "latencia_ms": {
+      "mediana": 1203,
+      "p95": 2933,
+      "max": 3398
+    },
+    "alertas_esperadas": {
+      "conexion": 9,
+      "login_fallido": 7,
+      "resumen": 2
+    },
+    "lineas_TG": "no capturadas"
+  },
+  {
+    "prueba": "PC2-T3-extra2",
+    "desc": "Telegram inalcanzable, repetición",
+    "tg": "no capturadas",
+    "desde": "2026-10-06T12:40:11Z",
+    "hasta": "2026-10-06T12:41:16Z",
+    "eventos_cowrie": 60,
+    "eventos_base": 60,
+    "identicos_campo_a_campo": 60,
+    "latencia_ms": {
+      "mediana": 2112,
+      "p95": 3100,
+      "max": 3476
+    },
+    "alertas_esperadas": {
+      "conexion": 9,
+      "login_fallido": 7,
+      "resumen": 2
+    },
+    "lineas_TG": "no capturadas"
+  },
+  {
+    "prueba": "PC3",
+    "desc": "Forwarder detenido durante la corrida (C3)",
+    "tg": "no capturadas",
+    "desde": "2026-10-06T12:41:59Z",
+    "hasta": "2026-10-06T12:43:35Z",
+    "eventos_cowrie": 69,
+    "eventos_base": 69,
+    "identicos_campo_a_campo": 69,
+    "latencia_ms": {
+      "mediana": 25873,
+      "p95": 36341,
+      "max": 37110
+    },
+    "alertas_esperadas": {
+      "conexion": 12,
+      "login_fallido": 11,
+      "resumen": 1
+    },
+    "lineas_TG": "no capturadas"
+  },
+  {
+    "prueba": "PC4a",
+    "desc": "event-ingest inactivo y forwarder con MAX_REINTENTOS=1 (health-monitor)",
+    "tg": "no capturadas",
+    "desvio": "MAX_REINTENTOS=1 solo en esta prueba, porque con 60 reintentos una interrupción corta ya no pierde eventos (C5)",
+    "desde": "2026-10-06T12:44:35Z",
+    "hasta": "2026-10-06T12:45:25Z",
+    "eventos_cowrie": 85,
+    "eventos_base": 0,
+    "identicos_campo_a_campo": 0,
+    "latencia_ms": {
+      "mediana": 0,
+      "p95": 0,
+      "max": 0
+    },
+    "alertas_esperadas": {
+      "conexion": 15,
+      "login_fallido": 14,
+      "resumen": 1
+    },
+    "lineas_TG": "no capturadas"
+  },
+  {
+    "prueba": "PC4b",
+    "desc": "Credencial de PostgreSQL con ssl:false (health-monitor)",
+    "tg": "no capturadas",
+    "desde": "2026-10-06T12:50:57Z",
+    "hasta": "2026-10-06T12:51:42Z",
+    "eventos_cowrie": 53,
+    "eventos_base": 0,
+    "identicos_campo_a_campo": 0,
+    "latencia_ms": {
+      "mediana": 0,
+      "p95": 0,
+      "max": 0
+    },
+    "alertas_esperadas": {
+      "conexion": 9,
+      "login_fallido": 8,
+      "resumen": 1
+    },
+    "lineas_TG": "no capturadas"
+  },
+  {
+    "prueba": "regresion-final",
+    "desc": "Regresión tras restituir la credencial",
+    "tg": "no capturadas",
+    "desde": "2026-10-06T12:55:38Z",
+    "hasta": "2026-10-06T12:56:35Z",
+    "eventos_cowrie": 59,
+    "eventos_base": 59,
+    "identicos_campo_a_campo": 59,
+    "latencia_ms": {
+      "mediana": 833,
+      "p95": 2420,
+      "max": 2546
+    },
+    "alertas_esperadas": {
+      "conexion": 10,
+      "login_fallido": 9,
+      "resumen": 1
+    },
+    "lineas_TG": "no capturadas"
+  }
+]

@@ -1,0 +1,5 @@
+# PE5: docker compose config con N8N_ENCRYPTION_KEY vacía y con LOG_READER_TOKEN vacío
+error while interpolating services.n8n.environment.N8N_ENCRYPTION_KEY: required variable N8N_ENCRYPTION_KEY is missing a value: Definir N8N_ENCRYPTION_KEY en .env
+error while interpolating services.log-reader.environment.LOG_READER_TOKEN: required variable LOG_READER_TOKEN is missing a value: Definir LOG_READER_TOKEN en .env
+(con ambas definidas)
+compose válido

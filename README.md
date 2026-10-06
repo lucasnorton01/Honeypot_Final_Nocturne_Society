@@ -33,9 +33,10 @@ Servicios definidos en `docker-compose.yml`:
 
 | Servicio     | Imagen             | Puertos      | Rol                                     |
 |--------------|--------------------|--------------|-----------------------------------------|
-| cowrie       | `cowrie/cowrie`    | 127.0.0.1:2222 (SSH), 127.0.0.1:2323 (Telnet) | Honeypot SSH/Telnet de media interacción |
-| forwarder    | build `./forwarder`| —            | Lee `cowrie.json` y lo reenvía a n8n    |
-| log-reader   | build `./log-reader`| 127.0.0.1:9000 | Expone `/events` y `/report` del log  |
+| cowrie       | `cowrie/cowrie`    | — (los publica `cowrie-proxy`) | Honeypot SSH/Telnet de media interacción |
+| cowrie-proxy | `alpine/socat`     | 127.0.0.1:2222 (SSH), 127.0.0.1:2323 (Telnet) | Reenvío TCP del anfitrión a Cowrie: Docker no publica puertos de redes `internal` |
+| forwarder    | build `./forwarder`| —            | Lee `cowrie.json`, lo reenvía a n8n (con reintentos y posición guardada en el volumen `forwarder-state`) y envía las alertas de Telegram |
+| log-reader   | build `./log-reader`| — (desde el tag Honeypot_Final_2026-10-06c) | Expone `/events`, `/report` y `/count` del log; exige el token `LOG_READER_TOKEN` |
 | postgres     | `postgres:16`      | — (desde el tag Honeypot_Final_2026-10-05e; administración con `docker exec`) | Persistencia estructurada            |
 | n8n          | `n8nio/n8n`        | 127.0.0.1:5678 | Automatización de workflows           |
 | attack-runner | build `./attack-runner` | —       | Ejecuta `attack_ssh.py` (paramiko) contra `cowrie:2222` por la red interna de Docker y termina; el contenedor no tiene cron propio: cada corrida se dispara desde el anfitrión (`docker compose run --rm attack-runner`), en las validaciones con una tarea programada de Windows |
@@ -44,9 +45,13 @@ Segmentación de red (diseño de la Figura 4.2 de la tesis; plan y resultados en
 
 | Red | Subred | Servicios | Nota |
 |---|---|---|---|
-| `captura` | 10.0.1.0/24 | cowrie, attack-runner | Sin ruta hacia `proceso` ni `datos` |
-| `proceso` | 10.0.2.0/24 | forwarder, log-reader, n8n | Sin ruta hacia `datos`, salvo n8n |
+| `captura` | 10.0.1.0/24 | cowrie, cowrie-proxy, attack-runner | `internal`: sin salida al exterior; sin ruta hacia `proceso` ni `datos` |
+| `proceso` | 10.0.2.0/24 | forwarder, log-reader, n8n | `internal`; sin ruta hacia `datos`, salvo n8n |
 | `datos` | 10.0.3.0/24 | n8n, postgres | `internal`: sin salida al exterior ni puertos publicados |
+| `salida` | 10.0.4.0/24 | n8n, forwarder | Con salida a Internet, solo para `ip-api.com` y Telegram |
+| `entrada` | 10.0.5.0/24 | cowrie-proxy | Solo sirve para publicar los puertos de Cowrie en 127.0.0.1 |
+
+Endurecimiento (plan y resultados en `docs/PRUEBAS_CORRECCIONES_ENDURECIMIENTO.md` y `docs/evidencia/correcciones/`): todos los servicios con `cap_drop: ALL` (postgres agrega cinco capacidades que necesita su imagen), `no-new-privileges`, límites de memoria, CPU y procesos, y healthcheck; `N8N_ENCRYPTION_KEY` y `LOG_READER_TOKEN` son obligatorias. Las credenciales de `health-monitor` se cargan en n8n con `scripts/configurar_alertas.ps1`, que las toma de `.env`; el repositorio solo contiene marcadores.
 
 El forwarder y el log-reader leen el log de Cowrie desde el volumen `cowrie-var`, en solo lectura.
 
@@ -57,7 +62,7 @@ Workflows de n8n (`n8n/workflows/`):
 | `event-ingest.json`      | Recibe eventos del forwarder, enriquece con el país de la IP (consulta a `ip-api.com` dentro del nodo Code, verificada con IP públicas en prueba) y persiste en `events` |
 | `ioc-extractor.json`     | Extrae indicadores de compromiso (`ip`, `credential`, `command`, `hash`) desde `events` hacia `iocs` y registra en `ioc_sessions` cada aparición por sesión   |
 | `report-generator.json`  | Genera reportes agregados de inteligencia en `reports` sobre una ventana de 24h, disparado por cron, sin intervención manual |
-| `health-monitor.json`    | Cada 5 minutos compara los eventos de Cowrie (vía `log-reader`) con los de `events` en el intervalo de hace 20 a hace 2 minutos y busca eventos sin procesar de más de 35 minutos; registra las alertas en `error_log`. Si no puede consultar la base, su ejecución queda en error en el historial de n8n |
+| `health-monitor.json`    | Cada 5 minutos compara los eventos de Cowrie (vía `log-reader`) con los de `events` en el intervalo de hace 20 a hace 2 minutos y busca eventos sin procesar de más de 35 minutos; registra las alertas en `error_log` y las envía por Telegram (credencial cifrada de n8n). Si no puede consultar la base o `log-reader`, envía igualmente la alerta «base inaccesible» o «log-reader inaccesible» |
 
 ---
 
@@ -161,7 +166,8 @@ docker compose exec postgres psql -U honeypot -d honeypot -c "SELECT type, count
 docker compose exec postgres psql -U honeypot -d honeypot -c "SELECT id, created_at FROM reports;"
 
 # Reporte agregado del log de Cowrie
-curl http://localhost:9000/report
+# log-reader ya no publica su puerto: se consulta desde la red de proceso, con su token
+docker compose exec log-reader python -c "import os,urllib.request as u;print(u.urlopen(u.Request('http://127.0.0.1:9000/report',headers={'X-Token':os.environ['LOG_READER_TOKEN']})).read()[:300])"
 ```
 
 ---
@@ -196,9 +202,11 @@ curl http://localhost:9000/report
   la cobertura por sesión sin romper la unicidad de `iocs`; la atribución por `event_id`
   sigue limitada por esa restricción.
 - **Resiliencia del forwarder.** En corridas largas y sin supervisión activa se observaron
-  interrupciones intermitentes en el reenvío de eventos hacia n8n. Se recomienda monitorear
-  el proceso en vivo durante validaciones extensas; queda como trabajo futuro reforzar el
-  componente con lógica de reintento (backoff) o una cola de mensajes no entregados.
+  interrupciones intermitentes en el reenvío de eventos hacia n8n. Desde el tag
+  Honeypot_Final_2026-10-06c el forwarder reintenta cada evento (hasta 60 veces, cada 5 s) y
+  retoma el log desde la última posición reenviada tras un reinicio; `health-monitor` avisa por
+  Telegram ante cualquier diferencia que persista. Sigue pendiente una cola persistente para
+  interrupciones de n8n de más de 5 minutos.
 - **Línea de base manual de tamaño mínimo.** El 02/10/2026 se midió con dos integrantes del
   equipo autor (N = 2, 20 eventos; mediana de 18,44 s por evento para triaje y extracción;
   `docs/evidencia/b1/`). Es descriptiva y no admite inferencia; queda como trabajo futuro
