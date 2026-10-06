@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evaluación del reporte __CODIGO__</title>
+<style>
+  :root { --bg:#f6f7f9; --fg:#1b1f24; --mut:#5b6572; --card:#fff; --bd:#d5d9df; --ac:#1f5fbf; --ok:#1c7a3d; --er:#b3261e; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#15181c; --fg:#e8ebef; --mut:#9aa4b0; --card:#1d2127; --bd:#333a43; --ac:#6ea3ff; --ok:#5fcf86; --er:#ff8a80; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui, "Segoe UI", sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1 { font-size: 1.35rem; margin: 0 0 4px; } h2 { font-size: 1.1rem; margin: 18px 0 8px; }
+  .eyebrow { color: var(--mut); font-size: .85rem; }
+  .card { background: var(--card); border: 1px solid var(--bd); border-radius: 10px; padding: 16px; margin: 14px 0; }
+  .muted { color: var(--mut); font-size: .92rem; }
+  label { display:block; margin: 10px 0 2px; font-weight: 600; }
+  input[type=text], input[type=number], select, textarea { width:100%; padding:8px 10px; border:1px solid var(--bd); border-radius:6px; background:var(--bg); color:var(--fg); font:inherit; }
+  textarea { min-height: 90px; font-family: ui-monospace, Consolas, monospace; }
+  .row { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+  button { background: var(--ac); color:#fff; border:0; border-radius:6px; padding:10px 18px; font:inherit; cursor:pointer; margin-top: 14px; }
+  button.sec { background: transparent; color: var(--ac); border: 1px solid var(--ac); }
+  .err { color: var(--er); min-height: 1.3em; margin-top: 8px; }
+  pre.mat { background: var(--bg); border: 1px solid var(--bd); border-radius: 8px; padding: 12px; max-height: 52vh; overflow: auto; font: 13px/1.45 ui-monospace, Consolas, monospace; white-space: pre; margin: 8px 0 0; }
+  pre.mat.wrap { white-space: pre-wrap; word-break: break-all; }
+  .likert { display:grid; grid-template-columns: 1fr auto; gap: 6px 14px; align-items:center; margin: 10px 0; }
+  .likert .opts label { display:inline-flex; gap:3px; margin: 0 8px 0 0; font-weight: 400; align-items:center; }
+  .prog { height: 6px; background: var(--bd); border-radius: 3px; margin: 10px 0 0; } .prog i { display:block; height:100%; background: var(--ac); border-radius:3px; }
+  [hidden] { display: none !important; }
+  ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<main>
+  <span class="eyebrow">Tesis Nocturne Society · evaluación del reporte · participante __CODIGO__</span>
+  <h1>Evaluación del reporte de actividad</h1>
+
+  <section id="s-intro" class="card">
+    <p>Esta actividad dura unos 20 minutos. Vas a leer un <b>reporte</b> que genera el sistema de la tesis a partir de los ataques que capturó un honeypot, y un <b>fragmento del registro (log)</b> de esos mismos ataques. Después vas a contestar unas preguntas.</p>
+    <ul>
+      <li><b>Hacelo solo/a</b>, sin mirar la pantalla de otra persona y sin comentar nada hasta que todos terminen.</li>
+      <li>Se mide <b>cuánto tardás</b> en cada pregunta, pero no es una carrera: respondé con cuidado.</li>
+      <li>Si no sabés una respuesta, escribí <b>no sé</b>. No busques en otros lugares.</li>
+      <li>Para buscar dentro del texto podés usar <b>Ctrl+F</b>. Los datos son de un laboratorio: no hay información de personas.</li>
+      <li>Nadie te va a explicar el contenido ni el significado de los campos: leé lo que muestra la página.</li>
+      <li>Se guarda tu código (<b>__CODIGO__</b>), tus respuestas y los tiempos. Podés abandonar cuando quieras.</li>
+    </ul>
+    <p class="muted">Al terminar se descarga un archivo con tus respuestas. Avisá a quien aplica la actividad.</p>
+    <button id="btn-start">Empezar</button>
+  </section>
+
+  <section id="s-q" class="card" hidden>
+    <div class="eyebrow" id="q-bloque"></div>
+    <div class="prog"><i id="q-prog" style="width:0%"></i></div>
+    <h2 id="q-texto"></h2>
+    <div id="q-campos"></div>
+    <div class="err" id="q-err" role="alert"></div>
+    <button id="btn-next">Siguiente</button>
+    <h2 id="q-mat-titulo"></h2>
+    <p class="muted" id="q-mat-nota"></p>
+    <pre class="mat" id="q-mat" tabindex="0"></pre>
+  </section>
+
+  <section id="s-enc" class="card" hidden>
+    <h2>Para terminar</h2>
+    <p class="muted">Elegí de 1 («muy en desacuerdo») a 5 («muy de acuerdo»).</p>
+    <div id="enc-likert"></div>
+    <label for="o1">¿Qué agregarías al reporte?</label><textarea id="o1"></textarea>
+    <label for="o2">¿Qué te sobró o te confundió del reporte?</label><textarea id="o2"></textarea>
+    <label for="o3">¿Qué fue lo más difícil de hacer con el log?</label><textarea id="o3"></textarea>
+    <div class="err" id="enc-err" role="alert"></div>
+    <button id="btn-fin">Terminar</button>
+  </section>
+
+  <section id="s-fin" class="card" hidden>
+    <h2>Listo, gracias</h2>
+    <p>Se descargó el archivo <code id="fin-nombre"></code>. Si no se descargó, usá el botón. Avisá a quien aplica la actividad antes de cerrar la página.</p>
+    <button id="btn-desc">Descargar de nuevo</button>
+    <textarea id="fin-json" readonly style="margin-top:12px"></textarea>
+  </section>
+</main>
+
+<script>
+const VERSION = 'eval-reporte-v1';
+const CODIGO = '__CODIGO__';
+const ORDEN = '__ORDEN__'; // 'RL': primero el reporte y después el log; 'LR': al revés
+const REPORTE = __REPORTE__;
+const LOG = __LOG__;
+const LS = VERSION + '-' + CODIGO;
+const $ = id => document.getElementById(id);
+
+// Preguntas (el texto exacto está fijado en docs/PRUEBAS_EVALUACION_REPORTE.md; las respuestas correctas no están en esta página)
+const num = (id, etq) => ({ id, etq, tipo: 'num' });
+const txt = (id, etq, ph) => ({ id, etq, tipo: 'txt', ph });
+const BLOQUE_R = { nombre: 'Parte del reporte', material: 'reporte', items: [
+  { id: 'R1', texto: '¿Cuántos eventos registró el sistema en el período del reporte?', campos: [num('cantidad', 'Cantidad de eventos')] },
+  { id: 'R2', texto: '¿Desde cuántas direcciones IP distintas llegó la actividad y cuál es la más activa?', campos: [num('cantidad', 'Cantidad de IP distintas'), txt('ip', 'IP más activa')] },
+  { id: 'R3', texto: '¿Cuál es la combinación usuario/contraseña intentada más veces y cuántos intentos tuvo?', campos: [txt('usuario', 'Usuario'), txt('password', 'Contraseña'), num('intentos', 'Cantidad de intentos')] },
+  { id: 'R4', texto: '¿Cuántos eventos fueron intentos de login fallido?', campos: [num('cantidad', 'Cantidad de eventos')] },
+  { id: 'R5', texto: '¿Cuántos indicadores de compromiso (IoC) de tipo «command» se detectaron?', campos: [num('cantidad', 'Cantidad de IoC de tipo command')] },
+  { id: 'R6', texto: '¿Qué tipo de IoC es el más frecuente y cuántos hay de ese tipo?', campos: [{ id: 'tipo', etq: 'Tipo de IoC', tipo: 'sel', op: ['', 'credential', 'command', 'ip', 'hash', 'no sé'] }, num('cantidad', 'Cantidad')] },
+  { id: 'U1', texto: '¿Cuál fue el comando que más veces ejecutaron los atacantes?', campos: [{ id: 'esta', etq: '', tipo: 'lim' }] },
+  { id: 'U2', texto: '¿En qué hora del día hubo más actividad?', campos: [{ id: 'esta', etq: '', tipo: 'lim' }] },
+] };
+const BLOQUE_L = { nombre: 'Parte del log', material: 'log', items: [
+  { id: 'L1', texto: 'En este fragmento, ¿con qué usuario y contraseña se logró entrar en una sesión?', campos: [txt('usuario', 'Usuario'), txt('password', 'Contraseña')] },
+  { id: 'L2', texto: '¿Qué comandos ejecutó el atacante después de entrar? Escribí uno por línea.', campos: [{ id: 'comandos', etq: 'Comandos (uno por línea)', tipo: 'area' }] },
+] };
+const BLOQUES = ORDEN === 'LR' ? [BLOQUE_L, BLOQUE_R] : [BLOQUE_R, BLOQUE_L];
+const ITEMS = BLOQUES.flatMap(b => b.items.map(it => ({ ...it, bloque: b })));
+const LIKERT = [
+  ['S1', 'El reporte me resultó claro.'],
+  ['S2', 'Pude encontrar rápido en el reporte lo que me pedían.'],
+  ['S3', 'Con este reporte tendría información suficiente para decidir si vale la pena mirar el log en detalle.'],
+  ['S4', 'Confiaría en los números del reporte.'],
+  ['S5', 'Para entender qué hizo un atacante en una sesión, el log me resultó más útil que el reporte.'],
+];
+
+let estado = { version: VERSION, codigo: CODIGO, orden: ORDEN, inicio: null, respuestas: [], cuestionario: null, fin: null };
+let idx = 0, t0 = 0;
+const guardarLS = () => { try { localStorage.setItem(LS, JSON.stringify({ estado, idx })); } catch (_) {} };
+const leerLS = () => { try { return JSON.parse(localStorage.getItem(LS) || 'null'); } catch (_) { return null; } };
+const show = id => { for (const s of ['s-intro', 's-q', 's-enc', 's-fin']) $(s).hidden = s !== id; window.scrollTo(0, 0); };
+
+function pintarCampos(it) {
+  const cont = $('q-campos'); cont.innerHTML = '';
+  const fila = document.createElement('div'); fila.className = 'row'; cont.appendChild(fila);
+  for (const c of it.campos) {
+    if (c.tipo === 'lim') {
+      fila.className = '';
+      fila.innerHTML = `<label><input type="radio" name="lim" value="si"> Está en el reporte (escribilo abajo)</label>
+        <input type="text" id="c-esta-valor" placeholder="la respuesta que figura en el reporte" autocomplete="off">
+        <label><input type="radio" name="lim" value="no"> El reporte no lo dice</label>`;
+      continue;
+    }
+    const w = document.createElement('div');
+    let ctl;
+    if (c.tipo === 'sel') ctl = `<select id="c-${c.id}">${c.op.map(o => `<option value="${o}">${o || '— elegí —'}</option>`).join('')}</select>`;
+    else if (c.tipo === 'area') ctl = `<textarea id="c-${c.id}" spellcheck="false"></textarea>`;
+    else ctl = `<input type="text" id="c-${c.id}" ${c.tipo === 'num' ? 'inputmode="numeric"' : ''} autocomplete="off" spellcheck="false" ${c.ph ? `placeholder="${c.ph}"` : ''}>`;
+    w.innerHTML = `<label for="c-${c.id}">${c.etq}</label>${ctl}`;
+    fila.appendChild(w);
+  }
+}
+
+function pintarPregunta() {
+  const it = ITEMS[idx];
+  $('q-bloque').textContent = `${it.bloque.nombre} · pregunta ${idx + 1} de ${ITEMS.length}`;
+  $('q-prog').style.width = (100 * idx / ITEMS.length) + '%';
+  $('q-texto').textContent = it.texto;
+  $('q-err').textContent = '';
+  pintarCampos(it);
+  const esReporte = it.bloque.material === 'reporte';
+  $('q-mat-titulo').textContent = esReporte ? 'Reporte' : 'Fragmento del log';
+  $('q-mat-nota').textContent = esReporte
+    ? 'Este es el reporte tal como lo genera el sistema. Podés usar Ctrl+F.'
+    : 'Un evento por línea, tal como lo escribe el honeypot. Podés usar Ctrl+F.';
+  const mat = $('q-mat'); mat.textContent = esReporte ? REPORTE : LOG; mat.classList.toggle('wrap', !esReporte); mat.scrollTop = 0; mat.scrollLeft = 0;
+  show('s-q');
+  t0 = performance.now();
+  const primero = $('q-campos').querySelector('input,select,textarea'); if (primero) primero.focus();
+}
+
+function leerRespuesta(it) {
+  const r = {};
+  for (const c of it.campos) {
+    if (c.tipo === 'lim') {
+      const m = document.querySelector('input[name=lim]:checked');
+      if (!m) return { error: 'Elegí una de las dos opciones.' };
+      r.esta_en_reporte = m.value === 'si';
+      r.valor = $('c-esta-valor').value.trim();
+      if (r.esta_en_reporte && !r.valor) return { error: 'Escribí lo que dice el reporte, o elegí «El reporte no lo dice».' };
+      continue;
+    }
+    const v = $('c-' + c.id).value.trim();
+    if (!v) return { error: 'Completá todos los campos (si no sabés, escribí «no sé»).' };
+    r[c.id] = v;
+  }
+  return { r };
+}
+
+$('btn-start').onclick = () => { estado.inicio = new Date().toISOString(); idx = 0; guardarLS(); pintarPregunta(); };
+$('btn-next').onclick = () => {
+  const it = ITEMS[idx], l = leerRespuesta(it);
+  if (l.error) { $('q-err').textContent = l.error; return; }
+  const ms = Math.round(performance.now() - t0);
+  estado.respuestas.push({ id: it.id, bloque: it.bloque.material, respuesta: l.r, ms });
+  idx++; guardarLS();
+  if (idx < ITEMS.length) pintarPregunta(); else { pintarEncuesta(); }
+};
+
+function pintarEncuesta() {
+  const cont = $('enc-likert'); cont.innerHTML = '';
+  for (const [id, t] of LIKERT) {
+    const d = document.createElement('div'); d.className = 'likert';
+    d.innerHTML = `<div>${t}</div><div class="opts">${[1, 2, 3, 4, 5].map(n => `<label><input type="radio" name="${id}" value="${n}"> ${n}</label>`).join('')}</div>`;
+    cont.appendChild(d);
+  }
+  show('s-enc');
+}
+
+function nombreArchivo() { return `evaluacion-${CODIGO}.json`; }
+function descargar() {
+  try {
+    const blob = new Blob([JSON.stringify(estado, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nombreArchivo();
+    document.body.appendChild(a); a.click(); a.remove();
+  } catch (_) {}
+}
+$('btn-fin').onclick = () => {
+  const c = {};
+  for (const [id] of LIKERT) { const m = document.querySelector(`input[name=${id}]:checked`); if (!m) { $('enc-err').textContent = 'Contestá los cinco ítems.'; return; } c[id] = Number(m.value); }
+  c.O1 = $('o1').value.trim(); c.O2 = $('o2').value.trim(); c.O3 = $('o3').value.trim();
+  estado.cuestionario = c; estado.fin = new Date().toISOString(); estado.navegador = navigator.userAgent;
+  guardarLS();
+  $('fin-nombre').textContent = nombreArchivo(); $('fin-json').value = JSON.stringify(estado, null, 2);
+  show('s-fin'); descargar();
+};
+$('btn-desc').onclick = descargar;
+
+// Si se recarga la página a mitad de camino, retoma desde la pregunta en que estaba (el tiempo de esa pregunta vuelve a empezar)
+const prev = leerLS();
+if (prev && prev.estado && prev.estado.inicio && !prev.estado.fin && prev.idx < ITEMS.length) {
+  estado = prev.estado; idx = prev.idx;
+  $('btn-start').textContent = 'Continuar donde estabas';
+  $('btn-start').onclick = () => pintarPregunta();
+}
+</script>
+</body>
+</html>

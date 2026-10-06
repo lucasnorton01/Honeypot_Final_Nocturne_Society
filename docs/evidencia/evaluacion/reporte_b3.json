@@ -1,0 +1,194 @@
+{
+    "top_ips": [
+        {
+            "src_ip": "10.0.1.3",
+            "eventos": 3218,
+            "sesiones": 538
+        }
+    ],
+    "iocs_24h": [
+        {
+            "type": "credential",
+            "cantidad": 26
+        },
+        {
+            "type": "command",
+            "cantidad": 5
+        },
+        {
+            "type": "ip",
+            "cantidad": 1
+        }
+    ],
+    "credenciales": [
+        {
+            "intentos": 38,
+            "password": "oracle",
+            "username": "oracle"
+        },
+        {
+            "intentos": 37,
+            "password": "backup2024",
+            "username": "backup"
+        },
+        {
+            "intentos": 36,
+            "password": "jenkins",
+            "username": "jenkins"
+        },
+        {
+            "intentos": 35,
+            "password": "postgres",
+            "username": "postgres"
+        },
+        {
+            "intentos": 35,
+            "password": "ci",
+            "username": "ci"
+        },
+        {
+            "intentos": 34,
+            "password": "devops",
+            "username": "devops"
+        },
+        {
+            "intentos": 34,
+            "password": "123456",
+            "username": "admin"
+        },
+        {
+            "intentos": 34,
+            "password": "admin",
+            "username": "admin"
+        },
+        {
+            "intentos": 33,
+            "password": "toor",
+            "username": "root"
+        },
+        {
+            "intentos": 33,
+            "password": "deploy",
+            "username": "deploy"
+        }
+    ],
+    "generated_at": "2026-10-06T11:00:00.200Z",
+    "ips_por_pais": [
+        {
+            "ips": 1,
+            "pais": "Desconocido",
+            "eventos": 3218
+        }
+    ],
+    "total_eventos": "3218",
+    "sesiones_cubiertas": [
+        "34f6cc195fed",
+        "ed010e54c779",
+        "590192ad056d",
+        "1436b1abef54",
+        "bb484b1bcaeb",
+        "abbbf1860381",
+        "4e4c7bef1f2c",
+        "9a23f0e86d7f",
+        "c1ccc1a4bd33",
+        "3ca8b27fdff7",
+        "d12ac2c7a2ff",
+        "5c996e874a6a",
+        "ebce513ab1a2",
+        "51a07a278c06",
+        "5025209e205c",
+        "aa055238fc94",
+        "d1fa4e466114",
+        "f5609e7a20c4",
+        "c275594052f8",
+        "00802845d1a6",
+        "bd84a04ffb24",
+        "c771b8c4b56f",
+        "55b10712414c",
+        "a71913bd2936",
+        "db4921b181cc",
+        "7176566398ec",
+        "0b7daa42c3f2",
+        "6519185a43d2",
+        "79e0d28df06f",
+        "135599cd9bf3",
+        "bca6cf664b00",
+        "1ffce00b993e",
+        "2bacbb9dcbb8",
+        "d41d2f4a2c42",
+        "01f015056271",
+        "1b58bf2189af",
+        "93296d51eede",
+        "a222b98fcd68",
+        "b837f48f4521",
+        "57f0f59de248",
+        "788e1cca2195",
+        "c60cc2f2c995",
+        "f733d397f649",
+        "904b7a537906",
+        "3bbecacd0bb5",
+        "f525e57199df",
+        "4ef4d8cc2de4",
+        "7217f8908e1f",
+        "57950e2262b9",
+        "7e43886d0314",
+        "bd59fd108585",
+        "130aa9831072",
+        "30c5d5bbed3d",
+        "6540a0793964",
+        "3f549592f1c5",
+        "cdb6c13c8f0e",
+        "9e8e8fef801c",
+        "2709ebf86591",
+        "3fa28d08c249",
+        "f6f2cde012f9",
+        "45b3fee90d34",
+        "784bc4d1dac4",
+        "a94928578261",
+        "fa42a3a4463b",
+        "323ee202f22f",
+        "5daa3c15faf3"
+    ],
+    "distribucion_eventid": [
+        {
+            "eventid": "cowrie.client.version",
+            "cantidad": 538
+        },
+        {
+            "eventid": "cowrie.client.kex",
+            "cantidad": 538
+        },
+        {
+            "eventid": "cowrie.session.connect",
+            "cantidad": 538
+        },
+        {
+            "eventid": "cowrie.session.closed",
+            "cantidad": 538
+        },
+        {
+            "eventid": "cowrie.login.failed",
+            "cantidad": 472
+        },
+        {
+            "eventid": "cowrie.command.input",
+            "cantidad": 330
+        },
+        {
+            "eventid": "cowrie.session.params",
+            "cantidad": 66
+        },
+        {
+            "eventid": "cowrie.log.closed",
+            "cantidad": 66
+        },
+        {
+            "eventid": "cowrie.login.success",
+            "cantidad": 66
+        },
+        {
+            "eventid": "cowrie.client.size",
+            "cantidad": 66
+        }
+    ]
+}
