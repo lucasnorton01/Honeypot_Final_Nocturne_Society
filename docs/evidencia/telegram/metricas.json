@@ -1,0 +1,177 @@
+[
+  {
+    "prueba": "T0",
+    "desde": "2026-10-06T11:20:07Z",
+    "hasta": "2026-10-06T11:21:05Z",
+    "eventos_cowrie": 85,
+    "eventos_base": 85,
+    "latencia_ms": {
+      "mediana": 2205,
+      "p95": 2613,
+      "max": 4353
+    },
+    "alertas_esperadas": {
+      "conexion": 14,
+      "login_fallido": 12,
+      "resumen": 2
+    },
+    "lineas_TG": {},
+    "mensajes_distintos_de_falla": [],
+    "error_log_nuevos": 0,
+    "forwarder_ERR": 0,
+    "fuente_lineas_TG": "salida del script de medición al momento de la prueba; el log del contenedor se perdió al recrearlo"
+  },
+  {
+    "prueba": "T1",
+    "desde": "2026-10-06T11:26:58Z",
+    "hasta": "2026-10-06T11:28:07Z",
+    "eventos_cowrie": 60,
+    "eventos_base": 60,
+    "latencia_ms": {
+      "mediana": 1915,
+      "p95": 3206,
+      "max": 3279
+    },
+    "alertas_esperadas": {
+      "conexion": 10,
+      "login_fallido": 9,
+      "resumen": 1
+    },
+    "lineas_TG": {
+      "conexion enviado": 10,
+      "login_fallido enviado": 9,
+      "resumen enviado": 1
+    },
+    "mensajes_distintos_de_falla": [],
+    "error_log_nuevos": 0,
+    "forwarder_ERR": 0,
+    "fuente_lineas_TG": "salida del script de medición al momento de la prueba; el log del contenedor se perdió al recrearlo"
+  },
+  {
+    "prueba": "T2",
+    "desde": "2026-10-06T11:28:16Z",
+    "hasta": "2026-10-06T11:29:18Z",
+    "eventos_cowrie": 33,
+    "eventos_base": 33,
+    "latencia_ms": {
+      "mediana": 1298,
+      "p95": 2272,
+      "max": 2368
+    },
+    "alertas_esperadas": {
+      "conexion": 3,
+      "login_fallido": 0,
+      "resumen": 3
+    },
+    "lineas_TG": {
+      "conexion enviado": 3,
+      "resumen enviado": 2,
+      "resumen rechazado HTTP 400": 1
+    },
+    "mensajes_distintos_de_falla": [
+      "[TG] resumen rechazado HTTP 400: Bad Request: can't parse entities: Unsupported start tag \"b'\" at byte offset 203"
+    ],
+    "error_log_nuevos": 0,
+    "forwarder_ERR": 0,
+    "secuencia": [
+      "11:28:18 conexion enviado (830 ms)",
+      "11:28:23 resumen enviado (786 ms) [control]",
+      "11:28:28 conexion enviado (820 ms)",
+      "11:28:33 resumen rechazado HTTP 400 [con <]",
+      "11:28:39 conexion enviado (813 ms)",
+      "11:28:44 resumen enviado (792 ms) [con &]"
+    ],
+    "fuente_lineas_TG": "salida del script de medición al momento de la prueba; el log del contenedor se perdió al recrearlo"
+  },
+  {
+    "prueba": "T3",
+    "desde": "2026-10-06T11:29:37Z",
+    "hasta": "2026-10-06T11:30:44Z",
+    "eventos_cowrie": 57,
+    "eventos_base": 57,
+    "latencia_ms": {
+      "mediana": 16899,
+      "p95": 25298,
+      "max": 25446
+    },
+    "alertas_esperadas": {
+      "conexion": 10,
+      "login_fallido": 9,
+      "resumen": 1
+    },
+    "lineas_TG": {
+      "conexion sin envío: ConnectionError": 10,
+      "login_fallido sin envío: ConnectionError": 9,
+      "resumen sin envío: ConnectionError": 1
+    },
+    "mensajes_distintos_de_falla": [
+      "[TG] conexion sin envío: ConnectionError (… ms)",
+      "[TG] login_fallido sin envío: ConnectionError (… ms)",
+      "[TG] resumen sin envío: ConnectionError (… ms)"
+    ],
+    "error_log_nuevos": 0,
+    "forwarder_ERR": 0,
+    "duracion_intentos_ms": {
+      "n": 20,
+      "min": 2116,
+      "mediana": 2125,
+      "max": 2141
+    },
+    "fuente_lineas_TG": "salida del script de medición al momento de la prueba; el log del contenedor se perdió al recrearlo"
+  },
+  {
+    "prueba": "T4",
+    "desde": "2026-10-06T11:31:07Z",
+    "hasta": "2026-10-06T11:32:18Z",
+    "eventos_cowrie": 69,
+    "eventos_base": 69,
+    "latencia_ms": {
+      "mediana": 2274,
+      "p95": 3193,
+      "max": 4276
+    },
+    "alertas_esperadas": {
+      "conexion": 12,
+      "login_fallido": 11,
+      "resumen": 1
+    },
+    "lineas_TG": {
+      "conexion enviado": 12,
+      "login_fallido enviado": 11,
+      "resumen enviado": 1
+    },
+    "mensajes_distintos_de_falla": [],
+    "error_log_nuevos": 0,
+    "forwarder_ERR": 0,
+    "fuente_lineas_TG": "docs/evidencia/telegram/forwarder_tg.log"
+  },
+  {
+    "prueba": "T2b",
+    "desde": "2026-10-06T11:43:28Z",
+    "hasta": "2026-10-06T11:44:26Z",
+    "eventos_cowrie": 33,
+    "eventos_base": 33,
+    "latencia_ms": {
+      "mediana": 586,
+      "p95": 1473,
+      "max": 1549
+    },
+    "alertas_esperadas": {
+      "conexion": 3,
+      "login_fallido": 0,
+      "resumen": 3
+    },
+    "lineas_TG": {
+      "conexion enviado": 3,
+      "resumen enviado": 2,
+      "resumen rechazado HTTP 400": 1
+    },
+    "mensajes_distintos_de_falla": [
+      "[TG] resumen rechazado HTTP 400: Bad Request: can't parse entities: Unsupported start tag \"b'\" at byte offset 203"
+    ],
+    "error_log_nuevos": 0,
+    "forwarder_ERR": 0,
+    "fuente_lineas_TG": "docs/evidencia/telegram/forwarder_tg.log",
+    "nota": "repetición de T2, fuera del plan, para verificar la recepción"
+  }
+]
