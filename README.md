@@ -8,6 +8,8 @@ localmente con el simulador incluido y se procesan por el pipeline completo.
 
 > Proyecto académico — Nocturne Society (Crespo, Norton, Santos) — UTN FRM, Tecnicatura en Programación, 2026.
 
+**Versión final congelada:** tag `Honeypot_Final_2026-10-06e` (6/10/2026). Es el estado que cita el trabajo final. El código y la evidencia son los del tag `06d`; cambian solo este README y la `BITACORA.md`. Cualquier cambio posterior se publicará con un tag nuevo y declarado.
+
 ---
 
 ## Arquitectura
@@ -277,7 +279,7 @@ rastreo de citas) se declaran explícitamente en esa sección.
 
 ## Estructura del repositorio
 
-Refleja `git ls-files` en el tag `Honeypot_Final_2026-10-06d` (se omiten los archivos individuales
+Refleja `git ls-files` en el tag `Honeypot_Final_2026-10-06e` (se omiten los archivos individuales
 de las carpetas de skills, de los logs y de la evidencia).
 
 ```

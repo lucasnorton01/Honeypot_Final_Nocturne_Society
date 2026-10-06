@@ -543,3 +543,8 @@ Ventana del 02/10/2026, de 13:47:30 a 14:55:10 UTC (10:47:30 a 11:55:10 ART), ce
 
 ### [2026-10-06] README actualizado
 - Se actualizó `README.md` para que refleje el estado posterior al tag `Honeypot_Final_2026-10-06d`: variables obligatorias de `.env` (`LOG_READER_TOKEN`), carga de `health-monitor` con `scripts/configurar_alertas.ps1`, disparo de producción de las 08:00 observado el 06/10/2026, línea de base con los cinco participantes externos, evaluación del reporte, endurecimiento y sus pendientes, redes y puertos publicados, estructura del repositorio y verificación de los hashes del registro previo de B3. El tag `06d` conserva el README anterior; la versión nueva queda en `main`.
+
+### [2026-10-06] Congelado del artefacto
+- Se fija el estado final con el tag `Honeypot_Final_2026-10-06e`, que es el que cita el trabajo final. Parte de `main` en `f520d9d`; respecto del tag `06d` cambian únicamente `README.md` y `BITACORA.md` (`git diff --stat Honeypot_Final_2026-10-06d..origin/main`), de modo que el código, los workflows y la evidencia son los mismos.
+- **Verificación desde un clon limpio de `main`:** los `SHA256SUMS.txt` de las siete carpetas de evidencia que los tienen verifican sin fallas (b2: 11 archivos; b3: 11; correcciones: 9; evaluacion: 21; segmentacion: 5; sql_carga: 4; telegram: 4); `docker compose config` es válido con las tres variables obligatorias (`N8N_ENCRYPTION_KEY`, `POSTGRES_PASSWORD`, `LOG_READER_TOKEN`); el árbol de trabajo está sin cambios pendientes.
+- **Regla:** el código y la evidencia de este tag no se modifican. Un cambio posterior se publicará con un tag nuevo, se declarará aquí y no reemplazará a este.
