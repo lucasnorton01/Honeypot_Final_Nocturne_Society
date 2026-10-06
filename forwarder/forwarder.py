@@ -119,14 +119,27 @@ def build_telegram_payload(event, eventid, session=None):
     }
 
 
-def send_telegram(payload):
-    """Envía a Telegram SOLO si hay token y chat configurados."""
+def send_telegram(payload, tipo):
+    """Envía a Telegram SOLO si hay token y chat configurados.
+    Registra cada intento sin el token, la URL ni el chat ID (docs/PRUEBAS_TELEGRAM.md, §2)."""
     if not TELEGRAM_API or not TELEGRAM_CHAT_ID:
         return False
+    t0 = time.monotonic()
     try:
         r = requests.post(TELEGRAM_API, json=payload, timeout=10)
-        return r.status_code < 300
-    except requests.exceptions.RequestException:
+        ms = int((time.monotonic() - t0) * 1000)
+        if r.status_code < 300:
+            log(f"[TG] {tipo} enviado ({ms} ms)")
+            return True
+        try:
+            desc = str(r.json().get("description", ""))[:150]
+        except ValueError:
+            desc = ""
+        log(f"[TG] {tipo} rechazado HTTP {r.status_code}: {desc}")
+        return False
+    except requests.exceptions.RequestException as e:
+        # Solo la clase: el mensaje de requests incluye la URL con el token
+        log(f"[TG] {tipo} sin envío: {type(e).__name__} ({int((time.monotonic() - t0) * 1000)} ms)")
         return False
 
 
@@ -151,7 +164,7 @@ def send_summary(session_id):
         return
     payload = build_telegram_payload({}, "cowrie.session.summary", session)
     if payload:
-        send_telegram(payload)
+        send_telegram(payload, "resumen")
 
 
 def buffer_login(event):
@@ -247,11 +260,11 @@ def main():
         if eventid == "cowrie.session.connect":
             payload = build_telegram_payload(event, eventid)
             if payload:
-                send_telegram(payload)
+                send_telegram(payload, "conexion")
         elif eventid == "cowrie.login.failed":
             payload = build_telegram_payload(event, eventid)
             if payload:
-                send_telegram(payload)
+                send_telegram(payload, "login_fallido")
         elif eventid == "cowrie.login.success":
             buffer_login(event)
         elif eventid == "cowrie.command.input":

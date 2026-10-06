@@ -1,0 +1,9 @@
+# Solo para la prueba T3 (docs/PRUEBAS_TELEGRAM.md): api.telegram.org se resuelve a una dirección
+# no enrutable dentro del forwarder, para simular que Telegram no responde. Uso:
+#   docker compose -f docker-compose.yml -f docker-compose.telegram-caido.yml up -d forwarder
+# y al terminar, para volver a la configuración normal:
+#   docker compose up -d forwarder
+services:
+  forwarder:
+    extra_hosts:
+      - "api.telegram.org:10.255.255.1"
