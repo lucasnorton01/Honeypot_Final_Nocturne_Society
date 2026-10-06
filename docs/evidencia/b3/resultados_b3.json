@@ -1,0 +1,95 @@
+{
+  "ventana": {
+    "inicio": "2026-10-05 21:14:25",
+    "cierre": "2026-10-06 11:15:00"
+  },
+  "conteos": {
+    "eventos_cowrie": 3218,
+    "eventos_events": 3218,
+    "claves_distintas": 0,
+    "iocs": 32,
+    "ioc_sessions": 1108,
+    "reportes": 1,
+    "error_log": 0
+  },
+  "P1": {
+    "latencia_ms": {
+      "n": 3218,
+      "media": 1370.85,
+      "mediana": 693.53,
+      "min": 346.56,
+      "max": 4440.01,
+      "de": 913.85
+    },
+    "eventos_sobre_15s": 0,
+    "proporcion_de_b1_externos": "13.2 %",
+    "proporcion_de_b1_todos": "11.9 %",
+    "umbral": "media < 50 % de 10,36 s",
+    "cumple": true
+  },
+  "P2": {
+    "criterio_estricto": "3218/3218 = 100.0 % (IC 95 % [99.9; 100.0])",
+    "fidelidad_con_cowrie": "3211/3218 = 99.8 % (IC 95 % [99.6; 99.9])",
+    "umbral": "80 %",
+    "cumple": true
+  },
+  "P3": {
+    "sesiones_exitosas": 66,
+    "completitud": "66/66 = 100.0 % (IC 95 % [94.5; 100.0])",
+    "umbral": "70 %",
+    "cumple": true,
+    "sesiones_con_comando_ioc": 32,
+    "incompletas": [],
+    "continuidad_event_id": "14/66 = 21.2 % (IC 95 % [13.1; 32.5])"
+  },
+  "P3_calidad": {
+    "exactitud_catalogo": "32/32 = 100.0 % (IC 95 % [89.3; 100.0])",
+    "precision_atribucion": "1108/1108 = 100.0 % (IC 95 % [99.7; 100.0])",
+    "umbral": "ambas ≥ 95 %",
+    "cumple": true,
+    "no_exactos": [],
+    "atribuciones_no_esperadas": [],
+    "descriptivo": {
+      "sesiones_exitosas_con_indicador_nuevo": "14/66 = 21.2 % (IC 95 % [13.1; 32.5])",
+      "iocs_nuevos_por_hora_utc": {
+        "2026-10-05T22": 10,
+        "2026-10-05T23": 12,
+        "2026-10-06T00": 7,
+        "2026-10-06T01": 2,
+        "2026-10-06T02": 1
+      }
+    }
+  },
+  "P4": {
+    "ejecuciones_report_generator": [
+      "2026-10-06 11:00:00.045 trigger success"
+    ],
+    "reportes_trigger": 1,
+    "disparo_produccion_0800": true,
+    "reporte_0800_guardado": true,
+    "cobertura": "66/66 = 100.0 % (IC 95 % [94.5; 100.0])",
+    "umbral": "un único disparo de report-generator, a las 08:00 ART en modo trigger y con reporte guardado; cobertura ≥ 90 %",
+    "cumple": true
+  },
+  "ejecuciones": {
+    "total": 3443,
+    "manuales_extractor_o_reportes": 0,
+    "extractor": {
+      "n": 56,
+      "error": 0,
+      "duracion_ms": {
+        "n": 56,
+        "media": 273.95,
+        "mediana": 290,
+        "min": 43,
+        "max": 408,
+        "de": 84.54
+      }
+    }
+  },
+  "health_monitor": {
+    "ejecuciones": 168,
+    "en_error": 0,
+    "alertas": []
+  }
+}
