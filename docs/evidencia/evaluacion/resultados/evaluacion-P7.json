@@ -1,0 +1,107 @@
+{
+  "version": "eval-reporte-v1",
+  "codigo": "P7",
+  "orden": "RL",
+  "inicio": "2026-10-06T14:00:18.119Z",
+  "respuestas": [
+    {
+      "id": "R1",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "3218"
+      },
+      "ms": 310254
+    },
+    {
+      "id": "R2",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "1",
+        "ip": "10.0.1.3"
+      },
+      "ms": 3245
+    },
+    {
+      "id": "R3",
+      "bloque": "reporte",
+      "respuesta": {
+        "usuario": "oracle",
+        "password": "oracle",
+        "intentos": "38"
+      },
+      "ms": 12902
+    },
+    {
+      "id": "R4",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "472"
+      },
+      "ms": 8351
+    },
+    {
+      "id": "R5",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "5"
+      },
+      "ms": 6270
+    },
+    {
+      "id": "R6",
+      "bloque": "reporte",
+      "respuesta": {
+        "tipo": "credential",
+        "cantidad": "26"
+      },
+      "ms": 7083
+    },
+    {
+      "id": "U1",
+      "bloque": "reporte",
+      "respuesta": {
+        "esta_en_reporte": false,
+        "valor": ""
+      },
+      "ms": 1782
+    },
+    {
+      "id": "U2",
+      "bloque": "reporte",
+      "respuesta": {
+        "esta_en_reporte": false,
+        "valor": ""
+      },
+      "ms": 791
+    },
+    {
+      "id": "L1",
+      "bloque": "log",
+      "respuesta": {
+        "usuario": "webadmin",
+        "password": "Web2026"
+      },
+      "ms": 10726
+    },
+    {
+      "id": "L2",
+      "bloque": "log",
+      "respuesta": {
+        "comandos": "cat /etc/passwd\ndate\ndf -h"
+      },
+      "ms": 86766
+    }
+  ],
+  "cuestionario": {
+    "S1": 2,
+    "S2": 3,
+    "S3": 4,
+    "S4": 2,
+    "S5": 3,
+    "O1": "",
+    "O2": "",
+    "O3": ""
+  },
+  "fin": "2026-10-06T14:08:40.470Z",
+  "navegador": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+}

@@ -1,0 +1,107 @@
+{
+  "version": "eval-reporte-v1",
+  "codigo": "P6",
+  "orden": "LR",
+  "inicio": "2026-10-06T13:57:37.191Z",
+  "respuestas": [
+    {
+      "id": "L1",
+      "bloque": "log",
+      "respuesta": {
+        "usuario": "webadmin",
+        "password": "Web2026"
+      },
+      "ms": 55542
+    },
+    {
+      "id": "L2",
+      "bloque": "log",
+      "respuesta": {
+        "comandos": "date\ncat /etc/passwd"
+      },
+      "ms": 14714
+    },
+    {
+      "id": "R1",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "3218"
+      },
+      "ms": 4725
+    },
+    {
+      "id": "R2",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "1",
+        "ip": "10.0.1.3"
+      },
+      "ms": 18445
+    },
+    {
+      "id": "R3",
+      "bloque": "reporte",
+      "respuesta": {
+        "usuario": "oracle",
+        "password": "oracle",
+        "intentos": "38"
+      },
+      "ms": 15791
+    },
+    {
+      "id": "R4",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "472"
+      },
+      "ms": 6110
+    },
+    {
+      "id": "R5",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "5"
+      },
+      "ms": 5911
+    },
+    {
+      "id": "R6",
+      "bloque": "reporte",
+      "respuesta": {
+        "tipo": "credential",
+        "cantidad": "26"
+      },
+      "ms": 15556
+    },
+    {
+      "id": "U1",
+      "bloque": "reporte",
+      "respuesta": {
+        "esta_en_reporte": false,
+        "valor": ""
+      },
+      "ms": 11886
+    },
+    {
+      "id": "U2",
+      "bloque": "reporte",
+      "respuesta": {
+        "esta_en_reporte": false,
+        "valor": ""
+      },
+      "ms": 1207
+    }
+  ],
+  "cuestionario": {
+    "S1": 2,
+    "S2": 2,
+    "S3": 3,
+    "S4": 4,
+    "S5": 2,
+    "O1": "",
+    "O2": "",
+    "O3": ""
+  },
+  "fin": "2026-10-06T14:00:14.454Z",
+  "navegador": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+}

@@ -1,0 +1,107 @@
+{
+  "version": "eval-reporte-v1",
+  "codigo": "P4",
+  "orden": "LR",
+  "inicio": "2026-10-06T13:37:47.727Z",
+  "respuestas": [
+    {
+      "id": "L1",
+      "bloque": "log",
+      "respuesta": {
+        "usuario": "webadmin",
+        "password": "Web2026"
+      },
+      "ms": 19182
+    },
+    {
+      "id": "L2",
+      "bloque": "log",
+      "respuesta": {
+        "comandos": "cat /etc/passwd\ndate\ndf -h"
+      },
+      "ms": 28939
+    },
+    {
+      "id": "R1",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "3218"
+      },
+      "ms": 5221
+    },
+    {
+      "id": "R2",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "1",
+        "ip": "10.0.1.3"
+      },
+      "ms": 6486
+    },
+    {
+      "id": "R3",
+      "bloque": "reporte",
+      "respuesta": {
+        "usuario": "oracle",
+        "password": "oracle",
+        "intentos": "38"
+      },
+      "ms": 22022
+    },
+    {
+      "id": "R4",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "472"
+      },
+      "ms": 9190
+    },
+    {
+      "id": "R5",
+      "bloque": "reporte",
+      "respuesta": {
+        "cantidad": "330"
+      },
+      "ms": 9933
+    },
+    {
+      "id": "R6",
+      "bloque": "reporte",
+      "respuesta": {
+        "tipo": "credential",
+        "cantidad": "26"
+      },
+      "ms": 88879
+    },
+    {
+      "id": "U1",
+      "bloque": "reporte",
+      "respuesta": {
+        "esta_en_reporte": false,
+        "valor": ""
+      },
+      "ms": 13773
+    },
+    {
+      "id": "U2",
+      "bloque": "reporte",
+      "respuesta": {
+        "esta_en_reporte": false,
+        "valor": ""
+      },
+      "ms": 1783
+    }
+  ],
+  "cuestionario": {
+    "S1": 4,
+    "S2": 3,
+    "S3": 3,
+    "S4": 2,
+    "S5": 3,
+    "O1": "",
+    "O2": "",
+    "O3": ""
+  },
+  "fin": "2026-10-06T13:41:18.959Z",
+  "navegador": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+}

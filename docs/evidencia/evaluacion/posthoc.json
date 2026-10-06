@@ -1,0 +1,74 @@
+{
+  "L1": [
+    {
+      "codigo": "P3",
+      "usuario_correcto": false,
+      "password_correcta": false,
+      "password_sin_signos_finales_correcta": false,
+      "password_dada": "ninguno"
+    },
+    {
+      "codigo": "P4",
+      "usuario_correcto": true,
+      "password_correcta": false,
+      "password_sin_signos_finales_correcta": true,
+      "password_dada": "Web2026"
+    },
+    {
+      "codigo": "P5",
+      "usuario_correcto": true,
+      "password_correcta": false,
+      "password_sin_signos_finales_correcta": true,
+      "password_dada": "Web2026"
+    },
+    {
+      "codigo": "P6",
+      "usuario_correcto": true,
+      "password_correcta": false,
+      "password_sin_signos_finales_correcta": true,
+      "password_dada": "Web2026"
+    },
+    {
+      "codigo": "P7",
+      "usuario_correcto": true,
+      "password_correcta": false,
+      "password_sin_signos_finales_correcta": true,
+      "password_dada": "Web2026"
+    }
+  ],
+  "L2": [
+    {
+      "codigo": "P3",
+      "comandos_esperados_encontrados": "0/4",
+      "comandos_de_mas": 1
+    },
+    {
+      "codigo": "P4",
+      "comandos_esperados_encontrados": "3/4",
+      "comandos_de_mas": 0
+    },
+    {
+      "codigo": "P5",
+      "comandos_esperados_encontrados": "3/4",
+      "comandos_de_mas": 0
+    },
+    {
+      "codigo": "P6",
+      "comandos_esperados_encontrados": "2/4",
+      "comandos_de_mas": 0
+    },
+    {
+      "codigo": "P7",
+      "comandos_esperados_encontrados": "3/4",
+      "comandos_de_mas": 0
+    }
+  ],
+  "resumen": {
+    "L1_usuario_correcto": "4/5",
+    "L1_password_correcta_estricta": "0/5",
+    "L1_password_correcta_ignorando_signos_finales": "4/5",
+    "R1_R6_respuestas_con_mas_de_200_s": "3/30",
+    "R1_R6_media_sin_esas_respuestas_s": 16.4,
+    "R1_R6_mediana_s": 11.8
+  }
+}
