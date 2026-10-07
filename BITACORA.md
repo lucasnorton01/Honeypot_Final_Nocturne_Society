@@ -557,3 +557,9 @@ Ventana del 02/10/2026, de 13:47:30 a 14:55:10 UTC (10:47:30 a 11:55:10 ART), ce
 ### [2026-10-06] Cierre del registro B1b: medición no completada
 - La medición ampliada de la línea de base manual (B1b) no se completó: las entregas recibidas no contienen las respuestas ni los tiempos que genera la página de cronometraje y no se usan. El equipo decidió no repetirla.
 - Se retiran de `main` las diez páginas `linea-base-P8` a `P17` (siguen en el historial y en el tag `Honeypot_Final_2026-10-06f`). `docs/PREREGISTRO_B1b.md` se conserva con una nota de estado. No se modifica ningún código ni dato de evidencia, ni el tag `06e`, que sigue siendo el que cita el trabajo final.
+
+### [2026-10-07] Retiro de la landing page y correcciones de documentación (tag `Honeypot_Final_2026-10-08`)
+- Se retiran `Landing page/` y `API/public/landing/`: describían un diseño y unos veredictos anteriores a los del trabajo final (por ejemplo, P3 «Confirmada»). Se quitan de la demo `API/public/index.html` la pestaña «Dashboard» que las embebía y la tarjeta «Reducción P1: 99 %», un valor fijo sin respaldo. Siguen en el historial y en los tags anteriores.
+- `API/DOCUMENTACION.md` y `README.md` se alinean con ese estado; se declara que la demo y `scripts/attack_simulator.py` no corren contra el compose final, y que todos los servicios tienen healthcheck salvo `attack-runner`.
+- Se agrega `docs/ANEXOS_EXTENDIDOS.md` con material que la tesis cita y trasladó para acortar el documento (consultas SQL del Anexo VII.5, cronología del lote del 25/09/2026 y tablas de detalle de los Anexos II, III, VII y IX), sin cambios de contenido.
+- No cambia ningún workflow, esquema, configuración ni evidencia. El código del pipeline es idéntico al del tag `Honeypot_Final_2026-10-07`.

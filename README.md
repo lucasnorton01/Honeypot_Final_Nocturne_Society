@@ -53,7 +53,7 @@ Segmentación de red (diseño de la Figura 4.2 de la tesis; plan y resultados en
 | `salida` | 10.0.4.0/24 | n8n, forwarder | Con salida a Internet, solo para `ip-api.com` y Telegram |
 | `entrada` | 10.0.5.0/24 | cowrie-proxy | Solo sirve para publicar los puertos de Cowrie en 127.0.0.1 |
 
-Endurecimiento (plan y resultados en `docs/PRUEBAS_CORRECCIONES_ENDURECIMIENTO.md` y `docs/evidencia/correcciones/`): todos los servicios con `cap_drop: ALL` (postgres agrega cinco capacidades que necesita su imagen), `no-new-privileges`, límites de memoria, CPU y procesos, y healthcheck; `N8N_ENCRYPTION_KEY` y `LOG_READER_TOKEN` son obligatorias. Las credenciales de `health-monitor` se cargan en n8n con `scripts/configurar_alertas.ps1`, que las toma de `.env`; el repositorio solo contiene marcadores.
+Endurecimiento (plan y resultados en `docs/PRUEBAS_CORRECCIONES_ENDURECIMIENTO.md` y `docs/evidencia/correcciones/`): todos los servicios con `cap_drop: ALL` (postgres agrega cinco capacidades que necesita su imagen), `no-new-privileges`, límites de memoria, CPU y procesos, y healthcheck (todos los servicios salvo `attack-runner`); `N8N_ENCRYPTION_KEY` y `LOG_READER_TOKEN` son obligatorias. Las credenciales de `health-monitor` se cargan en n8n con `scripts/configurar_alertas.ps1`, que las toma de `.env`; el repositorio solo contiene marcadores.
 
 El forwarder y el log-reader leen el log de Cowrie desde el volumen `cowrie-var`, en solo lectura.
 
@@ -358,7 +358,6 @@ de las carpetas de skills, de los logs y de la evidencia).
 ├─ Logs/                    ← scripts y logs sueltos de la etapa inicial (histórico)
 ├─ logs 10 septiembre/      ← logs de ataque del 10/09/2026
 ├─ API/                     ← servidor Node.js (dashboard); FUERA DEL PIPELINE
-├─ Landing page/            ← landing HTML estática; FUERA DEL PIPELINE
 ├─ .agents/, .atl/          ← configuración de herramientas de asistente de código
 └─ evidencia/               ← logs y dumps generados (no versionados)
 ```
@@ -440,7 +439,7 @@ El archivo solo conserva en el árbol su estado final (12 cuentas). Los commits 
   ningún puerto. Las redes `captura`, `proceso` y `datos` son `internal` (sin salida a Internet);
   solo n8n y el forwarder se conectan además a la red `salida`.
 - Los contenedores corren con `cap_drop: ALL` y `no-new-privileges`, con límites de recursos y
-  healthcheck. `log-reader` exige un token y `N8N_ENCRYPTION_KEY` es obligatoria.
+  healthcheck (salvo attack-runner). `log-reader` exige un token y `N8N_ENCRYPTION_KEY` es obligatoria.
 - **No subir al repositorio**: `.env`, tokens, `evidencia/`, ni bases de datos locales.
   Ver `.gitignore`.
 - Los archivos `postgres-cred.json` y `n8n/workflows/postgres-credential.json` contienen

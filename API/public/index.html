@@ -78,7 +78,6 @@
           <button class="tab" role="tab" id="tab-btn-metrics" aria-selected="false" aria-controls="tab-metrics" tabindex="-1" data-tab="metrics">Métricas</button>
           <button class="tab" role="tab" id="tab-btn-iocs" aria-selected="false" aria-controls="tab-iocs" tabindex="-1" data-tab="iocs">IoCs</button>
           <button class="tab" role="tab" id="tab-btn-commands" aria-selected="false" aria-controls="tab-commands" tabindex="-1" data-tab="commands">Comandos</button>
-          <button class="tab" role="tab" id="tab-btn-dashboard" aria-selected="false" aria-controls="tab-dashboard" tabindex="-1" data-tab="dashboard">Dashboard</button>
         </div>
 
         <!-- Tab: Events -->
@@ -102,10 +101,6 @@
             <div class="metric-card">
               <div class="metric-value" id="stat-sessions">0</div>
               <div class="metric-label">Sesiones</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-value stat-highlight" id="stat-reduction">99%</div>
-              <div class="metric-label">Reducción P1</div>
             </div>
           </div>
           <div class="metrics-section">
@@ -143,11 +138,6 @@
           <div id="commands-feed" class="commands-feed" aria-live="polite" aria-label="Comandos ejecutados">
             <div class="events-empty">Los comandos aparecerán aquí cuando se escriban en la terminal...</div>
           </div>
-        </div>
-
-        <!-- Tab: Dashboard (Landing Page embebida) -->
-        <div id="tab-dashboard" class="tab-content tab-dashboard" role="tabpanel" aria-labelledby="tab-btn-dashboard" aria-hidden="true" tabindex="-1">
-          <iframe src="/landing/index.html" class="dashboard-iframe" title="Dashboard de análisis"></iframe>
         </div>
       </section>
     </main>

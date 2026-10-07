@@ -1,5 +1,7 @@
 # Cowrie Web Interface — Documentación Técnica
 
+> **Estado:** herramienta de demostración para la defensa, ajena al pipeline. No se validó contra el `docker-compose.yml` del tag final: espera PostgreSQL en el puerto 5432 del anfitrión y el compose final no lo publica. Los resultados válidos son los del trabajo final y los de `docs/evidencia/`. Del mismo modo, `scripts/attack_simulator.py` consulta log-reader en `127.0.0.1:9000` sin token y no corre contra el compose final (fue la herramienta de L0).
+
 ## 1. Descripción General
 
 **Cowrie Web Interface** es una aplicación web que permite interactuar con el honeypot Cowrie desde un navegador, visualizar eventos en tiempo real, métricas del sistema, Indicadores de Compromiso (IoCs) y comandos ejecutados. Está diseñada para facilitar la demostración del sistema ante el tribunal de tesis sin requerir instalación de herramientas adicionales.
@@ -14,8 +16,8 @@
 │  ┌───────────────────┐  ┌────────────────────────────┐  │
 │  │  Terminal web      │  │  Dashboard en vivo         │  │
 │  │  (xterm.js)        │  │  (Eventos, Métricas,       │  │
-│  │  ←WebSocket→       │  │   IoCs, Comandos,          │  │
-│  │                    │  │   Landing Page embebida)    │  │
+│  │  ←WebSocket→       │  │   IoCs, Comandos)          │  │
+│  │                    │  │                             │  │
 │  └─────────┬─────────┘  └─────────────┬──────────────┘  │
 └────────────┼───────────────────────────┼─────────────────┘
              │ WebSocket (Socket.IO)     │ HTTP/REST
@@ -59,7 +61,6 @@
 | `public/js/app.js` | Orquestación. Login, inicialización de componentes. |
 | `public/js/terminal.js` | xterm.js. Terminal web conectada al bridge SSH. Tracking de comandos. |
 | `public/js/dashboard.js` | Eventos en vivo, métricas, IoCs, comandos. |
-| `public/landing/index.html` | Landing page de la tesis embebida en pestaña "Dashboard". |
 
 ### 3.3 Dependencias
 
@@ -167,11 +168,9 @@ Abrir el navegador en: **http://localhost:4000**
 - Columnas: tipo, valor, fuente, confianza, fecha de creación.
 - Tipos: IP, credencial, hash, URL, dominio.
 
-### 5.6 Landing Page Embebida
+### 5.6 Nota sobre la landing page
 
-- Pestaña "Dashboard" muestra la landing page de la tesis en un iframe.
-- Incluye todos los gráficos y métricas de las hipótesis P1-P4.
-- Permite al tribunal navegar el análisis completo sin salir de la interfaz.
+La landing page de la tesis (y la pestaña "Dashboard" que la embebía) se retiró en el tag Honeypot_Final_2026-10-08: describía un diseño y unos veredictos anteriores a los de la tesis. Los resultados válidos son los del trabajo final y los de docs/evidencia/.
 
 ---
 
@@ -318,9 +317,6 @@ API/
     │   ├── app.js                # Orquestación
     │   ├── terminal.js           # xterm.js + comandos
     │   └── dashboard.js          # Métricas, eventos, IoCs
-    └── landing/
-        ├── index.html            # Landing page de la tesis
-        └── chart.umd.min.js     # Librería de gráficos
 ```
 
 ---
