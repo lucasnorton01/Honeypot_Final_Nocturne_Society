@@ -1,5 +1,7 @@
 # Registro previo B1b — línea de base manual ampliada (P1)
 
+> **Estado (cierre, 2026-10-06): la medición no se completó.** No se usan datos de esta convocatoria y el equipo decidió no repetirla. Las páginas de cronometraje se retiraron del repositorio; los hashes de la sección 5 documentan lo que se había preparado. Este registro se conserva sin cambios en lo demás.
+
 Fecha de redacción: 2026-10-06. Este documento se publica en el repositorio **antes** de enviar las páginas a los participantes.
 
 ## 1. Objetivo
