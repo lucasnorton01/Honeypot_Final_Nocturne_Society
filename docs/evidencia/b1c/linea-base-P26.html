@@ -1,0 +1,709 @@
+<title>Línea de base P26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: una columna de trabajo; arriba el evento crudo, abajo los dos pasos cronometrados */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --ink:#18221f; --muted:#5b6b66; --line:#d6dedb;
+  --accent:#0f7a63; --accent-ink:#ffffff; --code-bg:#eef2f0; --warn:#9a5b00; --ok:#1d7a3a;
+  --font-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111816; --surface:#18211e; --ink:#e3ebe8; --muted:#97a8a2; --line:#2c3a35;
+  --accent:#3fbf9c; --accent-ink:#06130f; --code-bg:#0d1412; --warn:#e0a446; --ok:#5fcf86; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111816; --surface:#18211e; --ink:#e3ebe8; --muted:#97a8a2; --line:#2c3a35;
+  --accent:#3fbf9c; --accent-ink:#06130f; --code-bg:#0d1412; --warn:#e0a446; --ok:#5fcf86; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body)}
+.wrap{max-width:46rem;margin:0 auto;padding-inline:16px;padding-block:24px 48px;display:flex;flex-direction:column;gap:20px}
+h1{font-size:1.6rem;line-height:1.2;margin:0;text-wrap:balance}
+h2{font-size:1.15rem;margin:0}
+p{margin:0}
+.muted{color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+ol.steps{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:6px}
+pre.log{margin:0;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:12px;font:13px/1.5 var(--font-mono);overflow-x:auto;white-space:pre}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:12px}
+label{display:flex;flex-direction:column;gap:4px;font-size:.9rem;font-weight:700;min-width:0}
+input,select,textarea{font:15px/1.4 var(--font-mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%;box-sizing:border-box}
+select{font-family:var(--font-body)}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:700 15px/1 var(--font-body);border-radius:8px;padding:12px 16px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.step{border-left:3px solid var(--line);padding-left:14px;display:flex;flex-direction:column;gap:12px}
+.step.on{border-left-color:var(--accent)}
+.step.done{opacity:.6}
+.pill{display:inline-block;font-size:.78rem;font-weight:700;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.pill.ok{color:var(--ok);border-color:var(--ok)}
+.pill.warn{color:var(--warn);border-color:var(--warn)}
+.bar{height:6px;background:var(--line);border-radius:999px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);width:0}
+.err{color:var(--warn);font-size:.9rem;min-height:1.2em}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:.92rem}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.tablewrap{overflow-x:auto}
+textarea{min-height:7rem;font-size:12px}
+@media (prefers-reduced-motion:no-preference){.bar>i{transition:width .3s}}
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <span class="eyebrow">Tesis Nocturne Society · nivel B1 · participante P26</span>
+    <h1>Línea de base manual: procesamiento de eventos de Cowrie</h1>
+    <p class="muted" id="estado-guardado"><span class="pill">Comprobando dónde se guardan las respuestas…</span></p>
+  </header>
+
+  <!-- Pantalla 1: inicio -->
+  <section class="panel" id="s-inicio">
+    <h2>Antes de empezar</h2>
+    <p>Vas a procesar a mano <b>20 eventos reales</b> que registró el honeypot Cowrie durante la validación del 30/09/2026, como lo haría un analista con el log crudo y sin herramientas de automatización. Antes hay <b>2 eventos de práctica</b> que no se cuentan. Calculá unos 30 a 40 minutos.</p>
+    <ol class="steps">
+      <li>Tocá <b>Mostrar evento</b>: desde ese momento corre el tiempo.</li>
+      <li><b>Paso 1 · Triaje y extracción.</b> Leé el JSON, elegí el tipo de evento, decidí si es relevante y copiá los campos que tenga (sesión, IP de origen, usuario, contraseña, comando). Dejá vacío lo que el evento no trae. Tocá <b>Campos listos</b>.</li>
+      <li><b>Paso 2 · Clasificación y documentación.</b> Asigná una severidad y registrá el indicador (IoC) que corresponda, o «ninguno». Tocá <b>Guardar y seguir</b>.</li>
+      <li>Entre un evento y otro podés descansar: el tiempo solo corre con el evento a la vista.</li>
+    </ol>
+    <p><b>Hacelo solo/a</b>, sin mirar la pantalla de otro participante y sin comentar los eventos hasta que todos terminen. Esta página es solo para <b>P26</b>.</p>
+    <p class="muted">No consultes servicios externos de geolocalización ni de reputación: todas las IP son direcciones internas del laboratorio. Trabajá a tu ritmo normal; no es una prueba de velocidad. No se guarda tu nombre: usá el código que te dio el equipo.</p>
+    <h2>Qué poner en cada campo</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Campo</th><th>Qué va</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>Sesión</td><td>el valor de <code>session</code></td><td><code>89d78abf875c</code></td></tr>
+        <tr><td>IP de origen</td><td>el valor de <code>src_ip</code></td><td><code>172.19.0.7</code></td></tr>
+        <tr><td>Usuario / Contraseña</td><td>los valores de <code>username</code> y <code>password</code></td><td><code>admin</code> / <code>test123</code></td></tr>
+        <tr><td>Comando</td><td>el <b>texto</b> que trae <code>input</code> (no la palabra «input»)</td><td><code>uname -a</code></td></tr>
+        <tr><td>Valor del IoC</td><td>el <b>dato</b> del indicador, no la severidad</td><td><code>172.19.0.7</code> · <code>admin:test123</code> · <code>wget http://…</code></td></tr>
+      </tbody></table></div>
+    <p class="muted">Si el evento no trae un campo, dejalo vacío. Podés copiar y pegar del JSON.</p>
+    <h2>Criterio común para el paso 2</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Tipo de evento</th><th>¿Relevante?</th><th>Severidad</th><th>IoC</th></tr></thead>
+      <tbody>
+        <tr><td><code>session.connect</code></td><td>Sí</td><td>Baja</td><td>IP → valor de <code>src_ip</code></td></tr>
+        <tr><td><code>login.failed</code></td><td>Sí</td><td>Baja</td><td>Credencial → <code>usuario:contraseña</code></td></tr>
+        <tr><td><code>login.success</code></td><td>Sí</td><td>Alta</td><td>Credencial → <code>usuario:contraseña</code></td></tr>
+        <tr><td><code>command.input</code></td><td>Sí</td><td>Alta si el comando contiene wget, curl, bash, sh, python, chmod, nc, tftp o /bin; si no, Media</td><td>Comando sospechoso → el comando, si contiene alguna de esas palabras; si no, Ninguno</td></tr>
+        <tr><td>el resto (<code>client.version</code>, <code>client.kex</code>, <code>session.params</code>, <code>log.closed</code>, <code>session.closed</code>)</td><td>No</td><td>Baja</td><td>Ninguno</td></tr>
+      </tbody></table></div>
+    <p class="muted">Si el mensaje trae un hash SHA-256, el IoC es Hash. Si en algún caso no estás de acuerdo con el criterio, seguí tu juicio y explicalo en la nota.</p>
+    <div class="grid">
+      <label for="codigo">Código de participante
+        <input id="codigo" value="P26" readonly>
+      </label>
+      <label for="perfil">Formación en seguridad
+        <select id="perfil">
+          <option value="">Elegí una opción</option>
+          <option value="estudiante">Estudiante de informática o sistemas</option>
+          <option value="estudiante-seg">Estudiante con cursos de seguridad</option>
+          <option value="profesional">Trabaja o trabajó en seguridad / SOC</option>
+          <option value="otro">Otra</option>
+        </select>
+      </label>
+    </div>
+    <p class="err" id="err-inicio"></p>
+    <div class="row"><button id="btn-empezar">Empezar con la práctica</button></div>
+  </section>
+
+  <!-- Pantalla 2: trabajo -->
+  <section class="panel" id="s-trabajo" hidden>
+    <div class="row" style="justify-content:space-between">
+      <span class="eyebrow" id="lbl-evento">Evento</span>
+      <span class="pill" id="lbl-modo">Práctica</span>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="progreso"></i></div>
+
+    <div id="pre-mostrar" class="row"><button id="btn-mostrar">Mostrar evento</button><span class="muted">El tiempo empieza al tocar el botón.</span></div>
+
+    <div id="zona-evento" hidden style="display:flex;flex-direction:column;gap:16px">
+      <pre class="log" id="log" aria-label="Evento JSON de Cowrie"></pre>
+
+      <div class="step on" id="paso1">
+        <h2>Paso 1 · Triaje y extracción</h2>
+        <div class="grid">
+          <label for="f-tipo">Tipo de evento (eventid)
+            <select id="f-tipo">
+              <option value="">Elegí</option>
+              <option>cowrie.session.connect</option>
+              <option>cowrie.client.version</option>
+              <option>cowrie.client.kex</option>
+              <option>cowrie.login.failed</option>
+              <option>cowrie.login.success</option>
+              <option>cowrie.session.params</option>
+              <option>cowrie.command.input</option>
+              <option>cowrie.log.closed</option>
+              <option>cowrie.session.closed</option>
+              <option>otro</option>
+            </select>
+          </label>
+          <label for="f-relevante">¿Es relevante para el análisis?
+            <select id="f-relevante"><option value="">Elegí</option><option value="si">Sí</option><option value="no">No</option></select>
+          </label>
+          <label for="f-sesion">Sesión<input id="f-sesion" autocomplete="off" spellcheck="false"></label>
+          <label for="f-ip">IP de origen<input id="f-ip" autocomplete="off" spellcheck="false"></label>
+          <label for="f-usuario">Usuario<input id="f-usuario" autocomplete="off" spellcheck="false"></label>
+          <label for="f-password">Contraseña<input id="f-password" autocomplete="off" spellcheck="false"></label>
+          <label for="f-comando">Comando (texto de <code>input</code>)<input id="f-comando" autocomplete="off" spellcheck="false" placeholder="ej.: uname -a"></label>
+        </div>
+        <p class="err" id="err-1"></p>
+        <div class="row"><button id="btn-campos">Campos listos</button></div>
+      </div>
+
+      <div class="step" id="paso2">
+        <h2>Paso 2 · Clasificación y documentación</h2>
+        <div class="grid">
+          <label for="f-severidad">Severidad
+            <select id="f-severidad"><option value="">Elegí</option><option value="baja">Baja</option><option value="media">Media</option><option value="alta">Alta</option></select>
+          </label>
+          <label for="f-ioc-tipo">Indicador (IoC) a registrar
+            <select id="f-ioc-tipo"><option value="">Elegí</option><option value="ninguno">Ninguno</option><option value="ip">IP</option><option value="credential">Credencial (usuario:contraseña)</option><option value="command">Comando sospechoso</option><option value="hash">Hash</option></select>
+          </label>
+          <label for="f-ioc-valor">Valor del IoC<input id="f-ioc-valor" autocomplete="off" spellcheck="false" placeholder="ej.: 172.19.0.7 o admin:test123 (vacío si es «ninguno»)"></label>
+          <label for="f-nota">Nota (opcional)<input id="f-nota" autocomplete="off"></label>
+        </div>
+        <p class="err" id="err-2"></p>
+        <div class="row"><button id="btn-guardar" disabled>Guardar y seguir</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pantalla 3: pausa -->
+  <section class="panel" id="s-pausa" hidden>
+    <h2 id="pausa-titulo">Evento guardado</h2>
+    <p class="muted" id="pausa-texto">Podés descansar. El tiempo no corre hasta que muestres el próximo evento.</p>
+    <div class="row"><button id="btn-siguiente">Ir al siguiente evento</button></div>
+  </section>
+
+  <!-- Pantalla 4: fin -->
+  <section class="panel" id="s-fin" hidden>
+    <h2>Listo, gracias</h2>
+    <p id="fin-texto">Procesaste los 20 eventos.</p>
+    <div class="tablewrap"><table id="fin-tabla"><thead><tr><th>Medida (20 eventos)</th><th>Paso 1</th><th>Paso 2</th><th>Total</th></tr></thead><tbody></tbody></table></div>
+    <div id="respaldo" style="display:flex;flex-direction:column;gap:10px">
+      <p class="muted" id="respaldo-texto">Copia de respaldo: si el equipo te la pide, enviásela tal cual.</p>
+      <textarea id="respaldo-json" readonly aria-label="Respuestas en formato JSON"></textarea>
+      <div class="row"><button class="ghost" id="btn-copiar">Copiar respuestas</button><button class="ghost" id="btn-json">Descargar JSON</button><button class="ghost" id="btn-descargar" hidden>Descargar CSV</button><span class="muted" id="copiado" aria-live="polite"></span></div>
+    </div>
+  </section>
+</div>
+
+<div style="text-align:center;margin:24px 0"><button class="ghost" id="btn-reiniciar">Reiniciar mi medición</button></div>
+
+<script id="muestra" type="application/json">{
+ "practica": [
+  {
+   "session": "1d1f132375ef",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 34494,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "username": "test",
+   "password": "test",
+   "eventid": "cowrie.login.failed",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T01:30:24.803947Z",
+   "message": "login attempt [test/test] failed"
+  },
+  {
+   "session": "49f31d37ef4a",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 38968,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "input": "cat /etc/passwd",
+   "eventid": "cowrie.command.input",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T00:30:22.215027Z",
+   "message": "CMD: cat /etc/passwd"
+  }
+ ],
+ "eventos": [
+  {
+   "session": "89d78abf875c",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 51284,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "username": "admin",
+   "password": "test123",
+   "eventid": "cowrie.login.success",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T07:30:11.747581Z",
+   "message": "login attempt [admin/test123] succeeded"
+  },
+  {
+   "session": "ecf0cdadcaad",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 45838,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "eventid": "cowrie.session.connect",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T08:00:28.874376Z",
+   "message": "New connection: 172.19.0.7:45838 (172.19.0.6:2222) [session: ecf0cdadcaad]"
+  },
+  {
+   "session": "f77de392ea30",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 38958,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "eventid": "cowrie.session.connect",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T00:30:18.642410Z",
+   "message": "New connection: 172.19.0.7:38958 (172.19.0.6:2222) [session: f77de392ea30]"
+  },
+  {
+   "session": "f2c1f0c35110",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 36784,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "duration_ms": 21544,
+   "eventid": "cowrie.session.closed",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T02:30:26.602210Z",
+   "message": "Connection lost after 21544 milliseconds"
+  },
+  {
+   "session": "7b58ef07064d",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 37982,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "version": "SSH-2.0-paramiko_5.0.0",
+   "eventid": "cowrie.client.version",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T01:45:20.240323Z",
+   "message": "Remote SSH version: SSH-2.0-paramiko_5.0.0"
+  },
+  {
+   "session": "0176df2d684b",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 36808,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "username": "guest",
+   "password": "guest123",
+   "eventid": "cowrie.login.success",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T02:30:13.341412Z",
+   "message": "login attempt [guest/guest123] succeeded"
+  },
+  {
+   "session": "6016e5327863",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 57150,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "username": "oracle",
+   "password": "oracle",
+   "eventid": "cowrie.login.failed",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T01:15:08.736699Z",
+   "message": "login attempt [oracle/oracle] failed"
+  },
+  {
+   "session": "cdbcecd46703",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 37978,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "input": "whoami",
+   "eventid": "cowrie.command.input",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T01:45:18.437940Z",
+   "message": "CMD: whoami"
+  },
+  {
+   "session": "c7cae8df13e8",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 33240,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "username": "guest",
+   "password": "guest123",
+   "eventid": "cowrie.login.success",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T06:00:26.213685Z",
+   "message": "login attempt [guest/guest123] succeeded"
+  },
+  {
+   "session": "58bf11c95e71",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 47408,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "input": "w",
+   "eventid": "cowrie.command.input",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T00:00:07.056727Z",
+   "message": "CMD: w"
+  },
+  {
+   "session": "b28a78d4fa36",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 42830,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "eventid": "cowrie.session.connect",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T01:30:28.881303Z",
+   "message": "New connection: 172.19.0.7:42830 (172.19.0.6:2222) [session: b28a78d4fa36]"
+  },
+  {
+   "session": "f9e20da22577",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 49152,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "username": "postgres",
+   "password": "postgres",
+   "eventid": "cowrie.login.failed",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T02:15:07.624029Z",
+   "message": "login attempt [postgres/postgres] failed"
+  },
+  {
+   "session": "aed6b0778f02",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 55350,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "input": "date",
+   "eventid": "cowrie.command.input",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T03:45:20.540464Z",
+   "message": "CMD: date"
+  },
+  {
+   "session": "28a8bd9a5489",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 38410,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "eventid": "cowrie.session.connect",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T00:00:18.682510Z",
+   "message": "New connection: 172.19.0.7:38410 (172.19.0.6:2222) [session: 28a8bd9a5489]"
+  },
+  {
+   "session": "49f31d37ef4a",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 38968,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "input": "w",
+   "eventid": "cowrie.command.input",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T00:30:24.613873Z",
+   "message": "CMD: w"
+  },
+  {
+   "session": "0d6809c7319d",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 38966,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "username": "root",
+   "password": "toor",
+   "eventid": "cowrie.login.failed",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T03:30:10.643528Z",
+   "message": "login attempt [root/toor] failed"
+  },
+  {
+   "session": "084537cb17d7",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 59984,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "username": "ci",
+   "password": "ci",
+   "eventid": "cowrie.login.failed",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T06:30:12.522740Z",
+   "message": "login attempt [ci/ci] failed"
+  },
+  {
+   "session": "77751d138ec3",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 52406,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "input": "w",
+   "eventid": "cowrie.command.input",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T00:45:21.050201Z",
+   "message": "CMD: w"
+  },
+  {
+   "session": "3013e6bdc4c1",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 52546,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "version": "SSH-2.0-paramiko_5.0.0",
+   "eventid": "cowrie.client.version",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T02:45:28.403054Z",
+   "message": "Remote SSH version: SSH-2.0-paramiko_5.0.0"
+  },
+  {
+   "session": "5fc5db47f316",
+   "protocol": "ssh",
+   "src_ip": "172.19.0.7",
+   "src_port": 56382,
+   "dst_ip": "172.19.0.6",
+   "dst_port": 2222,
+   "username": "devops",
+   "password": "devops",
+   "eventid": "cowrie.login.failed",
+   "sensor": "honeypot-lab",
+   "uuid": "8dca3d2a-b56a-11f1-82fc-a67643ac1ed9",
+   "timestamp": "2026-09-30T05:15:28.567621Z",
+   "message": "login attempt [devops/devops] failed"
+  }
+ ]
+}</script>
+<script>
+(function(){
+  const MUESTRA = JSON.parse(document.getElementById('muestra').textContent);
+  const ITEMS = [
+    ...MUESTRA.practica.map((e,i)=>({e, practica:true, n:i+1})),
+    ...MUESTRA.eventos.map((e,i)=>({e, practica:false, n:i+1}))
+  ];
+  const VERSION = 'b1-v3';
+  const $ = id => document.getElementById(id);
+  const show = id => { ['s-inicio','s-trabajo','s-pausa','s-fin'].forEach(s => $(s).hidden = (s !== id)); try { window.scrollTo(0, 0); } catch(_) {} };
+  const LS = 'b1v2-progreso-P26';
+  const lsGet = () => { try { return JSON.parse(localStorage.getItem(LS) || 'null'); } catch(_) { return null; } };
+  const lsSet = v => { try { localStorage.setItem(LS, JSON.stringify(v)); } catch(_) {} };
+
+  let estado = { codigo:'', perfil:'', inicio:null, respuestas:[] };
+  let reinicios = 0; try { reinicios = Number(localStorage.getItem(LS + '-reinicios') || 0); } catch(_) {}
+  let idx = 0, t0 = 0, t1 = 0, db = null, docRef = null, downloads = null, guardaRemoto = false;
+
+  function pillEstado(txt, cls){ $('estado-guardado').innerHTML = ''; const s=document.createElement('span'); s.className='pill '+(cls||''); s.textContent=txt; $('estado-guardado').appendChild(s); }
+
+  async function iniciarCapacidades(){
+    try {
+      const [d, u, dl] = await Promise.all([claude.use('db'), claude.use('user'), claude.use('downloads')]);
+      downloads = dl;
+      const uid = u ? await u.id() : null;
+      if (d && uid) {
+        db = d; docRef = db.doc('sesiones/' + uid);
+        const snap = await docRef.get();
+        if (snap.exists) {
+          const data = snap.data();
+          if (data && Array.isArray(data.respuestas)) {
+            estado = { codigo:data.codigo||'', perfil:data.perfil||'', inicio:data.inicio||null, respuestas:[...data.respuestas] };
+          }
+        }
+        guardaRemoto = true;
+        pillEstado('Las respuestas se guardan en línea para el equipo', 'ok');
+      } else {
+        pillEstado('Sin guardado en línea: al terminar vas a copiar las respuestas', 'warn');
+      }
+    } catch(_) {
+      pillEstado('Sin guardado en línea: al terminar vas a copiar las respuestas', 'warn');
+    }
+    if (!estado.respuestas.length) { const l = lsGet(); if (l && Array.isArray(l.respuestas)) estado = l; }
+    retomar();
+  }
+
+  function retomar(){
+    if (estado.codigo) { $('codigo').value = estado.codigo; $('perfil').value = estado.perfil; }
+    idx = estado.respuestas.length;
+    if (idx >= ITEMS.length) { terminar(); return; }
+    if (idx > 0) { $('btn-empezar').textContent = 'Seguir donde quedé (evento ' + (idx+1) + ' de ' + ITEMS.length + ')'; }
+  }
+
+  async function persistir(){
+    lsSet(estado);
+    if (!guardaRemoto) return;
+    const cuerpo = { version:VERSION, codigo:estado.codigo, perfil:estado.perfil, inicio:estado.inicio, actualizado:new Date().toISOString(), respuestas:estado.respuestas };
+    try { await docRef.set(cuerpo); }
+    catch(e) {
+      if (e && e.code === 'unavailable') { await new Promise(r=>setTimeout(r, 800 + Math.random()*800)); try { await docRef.set(cuerpo); return; } catch(_){} }
+      guardaRemoto = false;
+      pillEstado('No se pudo guardar en línea: al terminar vas a copiar las respuestas', 'warn');
+    }
+  }
+
+  const campos1 = ['f-tipo','f-relevante','f-sesion','f-ip','f-usuario','f-password','f-comando'];
+  const campos2 = ['f-severidad','f-ioc-tipo','f-ioc-valor','f-nota'];
+
+  function prepararEvento(){
+    const it = ITEMS[idx];
+    $('lbl-evento').textContent = it.practica ? ('Práctica ' + it.n + ' de 2') : ('Evento ' + it.n + ' de 20');
+    $('lbl-modo').textContent = it.practica ? 'Práctica · no se cuenta' : 'Cuenta para la medición';
+    $('lbl-modo').className = 'pill ' + (it.practica ? '' : 'ok');
+    $('progreso').style.width = (100 * idx / ITEMS.length) + '%';
+    [...campos1, ...campos2].forEach(id => { $(id).value = ''; $(id).disabled = false; });
+    $('err-1').textContent = ''; $('err-2').textContent = ''; $('log').textContent = '';
+    $('paso1').className = 'step on'; $('paso2').className = 'step';
+    $('btn-campos').disabled = false; $('btn-guardar').disabled = true;
+    campos2.forEach(id => $(id).disabled = true);
+    $('zona-evento').hidden = true; $('pre-mostrar').hidden = false;
+    show('s-trabajo'); $('btn-mostrar').focus();
+  }
+
+  $('btn-empezar').addEventListener('click', () => {
+    const c = $('codigo').value.trim(), p = $('perfil').value;
+    if (!c) { $('err-inicio').textContent = 'Escribí el código de participante que te dio el equipo.'; return; }
+    if (!p) { $('err-inicio').textContent = 'Elegí tu formación en seguridad.'; return; }
+    if (!estado.codigo) { estado.codigo = c; estado.perfil = p; estado.inicio = new Date().toISOString(); }
+    prepararEvento();
+  });
+
+  $('btn-mostrar').addEventListener('click', () => {
+    $('log').textContent = JSON.stringify(ITEMS[idx].e, null, 2);
+    $('pre-mostrar').hidden = true; $('zona-evento').hidden = false;
+    t0 = performance.now(); $('f-tipo').focus();
+  });
+
+  $('btn-campos').addEventListener('click', () => {
+    if (!$('f-tipo').value || !$('f-relevante').value) { $('err-1').textContent = 'Elegí el tipo de evento y si es relevante.'; return; }
+    if (/^input$/i.test($('f-comando').value.trim())) { $('err-1').textContent = 'En «Comando» va el texto que trae input (por ejemplo, uname -a), no la palabra «input».'; return; }
+    t1 = performance.now(); $('err-1').textContent = '';
+    campos1.forEach(id => $(id).disabled = true);
+    $('btn-campos').disabled = true;
+    $('paso1').className = 'step done'; $('paso2').className = 'step on';
+    campos2.forEach(id => $(id).disabled = false); $('btn-guardar').disabled = false;
+    $('f-severidad').focus();
+  });
+
+  $('btn-guardar').addEventListener('click', async () => {
+    const tipo = $('f-ioc-tipo').value, valor = $('f-ioc-valor').value.trim();
+    if (!$('f-severidad').value || !tipo) { $('err-2').textContent = 'Elegí la severidad y el tipo de indicador.'; return; }
+    if (tipo !== 'ninguno' && !valor) { $('err-2').textContent = 'Escribí el valor del indicador, o elegí «Ninguno».'; return; }
+    if (/^(alt[ao]|medi[ao]|baj[ao]|credencial|ip|comando|hash|ninguno)$/i.test(valor) && tipo !== 'ninguno') { $('err-2').textContent = 'En «Valor del IoC» va el dato (por ejemplo, la IP o usuario:contraseña), no la severidad ni el tipo.'; return; }
+    const t2 = performance.now(), it = ITEMS[idx];
+    estado.respuestas.push({
+      orden: idx + 1, practica: it.practica, n: it.n,
+      evento: { session: it.e.session, eventid: it.e.eventid, timestamp: it.e.timestamp },
+      ms_paso1: Math.round(t1 - t0), ms_paso2: Math.round(t2 - t1), ms_total: Math.round(t2 - t0),
+      fin: new Date().toISOString(),
+      respuesta: {
+        tipo: $('f-tipo').value, relevante: $('f-relevante').value, sesion: $('f-sesion').value.trim(),
+        ip: $('f-ip').value.trim(), usuario: $('f-usuario').value, password: $('f-password').value,
+        comando: $('f-comando').value, severidad: $('f-severidad').value, ioc_tipo: tipo, ioc_valor: valor, nota: $('f-nota').value.trim()
+      }
+    });
+    $('btn-guardar').disabled = true;
+    persistir().catch(() => {});
+    idx++;
+    if (idx >= ITEMS.length) { terminar(); return; }
+    const sig = ITEMS[idx];
+    $('pausa-titulo').textContent = it.practica && !sig.practica ? 'Terminaste la práctica' : 'Evento guardado';
+    $('pausa-texto').textContent = it.practica && !sig.practica ? 'Desde ahora los 20 eventos cuentan para la medición. Podés descansar; el tiempo no corre hasta que muestres el próximo.' : 'Podés descansar. El tiempo no corre hasta que muestres el próximo evento.';
+    show('s-pausa'); $('btn-siguiente').focus();
+  });
+
+  $('btn-siguiente').addEventListener('click', prepararEvento);
+
+  function terminar(){
+    $('progreso').style.width = '100%';
+    const r = estado.respuestas.filter(x => !x.practica);
+    const med = a => { const s=[...a].sort((x,y)=>x-y), n=s.length; return n ? (n%2 ? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2) : 0; };
+    const prom = a => a.length ? a.reduce((x,y)=>x+y,0)/a.length : 0;
+    const f = ms => (ms/1000).toFixed(1).replace('.', ',') + ' s';
+    const tb = $('fin-tabla').querySelector('tbody'); tb.innerHTML = '';
+    [['Promedio por evento', prom], ['Mediana por evento', med]].forEach(([nom, fn]) => {
+      const tr = document.createElement('tr');
+      [nom, f(fn(r.map(x=>x.ms_paso1))), f(fn(r.map(x=>x.ms_paso2))), f(fn(r.map(x=>x.ms_total)))].forEach(v => { const td=document.createElement('td'); td.textContent=v; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+    $('fin-texto').textContent = 'Procesaste los 20 eventos' + (guardaRemoto ? ' y tus respuestas quedaron guardadas para el equipo.' : '. Tocá «Descargar JSON» y enviá al equipo, sin abrirlo ni modificarlo, el archivo que se descarga.');
+    $('respaldo-texto').textContent = guardaRemoto ? 'Copia de respaldo: solo hace falta si el equipo te la pide.' : 'Enviá el archivo .json descargado tal como se generó: es la única copia de tus respuestas. No lo conviertas ni lo copies a otro formato.';
+    $('respaldo-json').value = JSON.stringify({ version:VERSION, codigo:estado.codigo, perfil:estado.perfil, inicio:estado.inicio, reinicios:reinicios, respuestas:estado.respuestas });
+    $('btn-descargar').hidden = !downloads;
+    show('s-fin');
+  }
+
+  $('btn-copiar').addEventListener('click', () => {
+    const t = $('respaldo-json').value;
+    navigator.clipboard.writeText(t).then(() => { $('copiado').textContent = 'Copiado.'; })
+      .catch(() => { $('respaldo-json').select(); $('copiado').textContent = 'Seleccioné el texto: copialo con Ctrl+C.'; });
+  });
+
+  $('btn-json').addEventListener('click', () => {
+    try {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([$('respaldo-json').value], { type: 'application/json' }));
+      a.download = 'linea-base-' + (estado.codigo || 'participante') + '.json';
+      document.body.appendChild(a); a.click(); a.remove();
+      $('copiado').textContent = 'Archivo descargado.';
+    } catch (e) { $('copiado').textContent = 'No se pudo descargar: usá «Copiar respuestas» y pegá el texto en un archivo .json sin cambiarlo.'; }
+  });
+
+  $('btn-descargar').addEventListener('click', async () => {
+    const enc = ['codigo','perfil','orden','practica','n','session','eventid','timestamp','ms_paso1','ms_paso2','ms_total','tipo','relevante','sesion','ip','usuario','password','comando','severidad','ioc_tipo','ioc_valor','nota'];
+    const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+    const filas = estado.respuestas.map(x => [estado.codigo, estado.perfil, x.orden, x.practica, x.n, x.evento.session, x.evento.eventid, x.evento.timestamp, x.ms_paso1, x.ms_paso2, x.ms_total,
+      x.respuesta.tipo, x.respuesta.relevante, x.respuesta.sesion, x.respuesta.ip, x.respuesta.usuario, x.respuesta.password, x.respuesta.comando, x.respuesta.severidad, x.respuesta.ioc_tipo, x.respuesta.ioc_valor, x.respuesta.nota].map(q).join(','));
+    try { await downloads.save({ filename: 'linea-base-' + (estado.codigo || 'participante') + '.csv', data: [enc.join(','), ...filas].join('\n') }); $('copiado').textContent = 'Archivo guardado.'; }
+    catch(e) { $('copiado').textContent = (e && e.code === 'declined') ? 'Descarga cancelada.' : 'No se pudo descargar: usá «Copiar respuestas».'; }
+  });
+
+  $('btn-reiniciar').addEventListener('click', async () => {
+    if (!confirm('¿Reiniciar tu medición? Se borran las respuestas guardadas en este navegador y empezás de nuevo desde la práctica. Se deja constancia del reinicio en el archivo.')) return;
+    reinicios++;
+    try { localStorage.setItem(LS + '-reinicios', String(reinicios)); localStorage.removeItem(LS); } catch(_) {}
+    estado = { codigo: $('codigo').value.trim(), perfil: '', inicio: null, respuestas: [] }; idx = 0;
+    if (guardaRemoto) { try { await docRef.set({ version:VERSION, codigo:'', perfil:'', inicio:null, actualizado:new Date().toISOString(), respuestas:[] }); } catch(_) {} }
+    $('perfil').value = ''; $('err-inicio').textContent = ''; $('log').textContent = ''; $('progreso').style.width = '0%';
+    $('btn-empezar').textContent = 'Empezar con la práctica';
+    show('s-inicio');
+  });
+
+  iniciarCapacidades();
+})();
+</script>
