@@ -1,0 +1,644 @@
+{
+ "P3": {
+  "version": "b1-v2",
+  "perfil": "estudiante",
+  "inicio": "2026-10-05T15:24:01.223Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 14.06,
+   "media": 13.52,
+   "min": 8.92,
+   "max": 24.727
+  },
+  "paso2": {
+   "mediana": 6.86,
+   "media": 8.14
+  },
+  "total": {
+   "mediana": 20.85,
+   "suma_min": 7.2
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 1,
+   "ioc_tipo": 0,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 11
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "8 sev baja vs media (cowrie.command.input)",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P4": {
+  "version": "b1-v2",
+  "perfil": "estudiante-seg",
+  "inicio": "2026-10-05T15:32:55.998Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 11.68,
+   "media": 11.37,
+   "min": 7.207,
+   "max": 16.232
+  },
+  "paso2": {
+   "mediana": 6.43,
+   "media": 7.84
+  },
+  "total": {
+   "mediana": 17.99,
+   "suma_min": 6.4
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 1,
+   "ioc_tipo": 1,
+   "ioc_valor": 7,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 12
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest/guest123» vs «guest:guest123»",
+   "12 iocval «postgres» vs «postgres:postgres»",
+   "16 sev media vs baja (cowrie.login.failed)",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 ioc ip vs credential"
+  ]
+ },
+ "P5": {
+  "version": "b1-v2",
+  "perfil": "estudiante",
+  "inicio": "2026-10-05T15:41:03.645Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 10.12,
+   "media": 12.32,
+   "min": 6.512,
+   "max": 46.168
+  },
+  "paso2": {
+   "mediana": 6.06,
+   "media": 6.47
+  },
+  "total": {
+   "mediana": 16.03,
+   "suma_min": 6.3
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 1,
+   "severidad": 1,
+   "ioc_tipo": 1,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 19,
+   "ev_paso2_ok": 10
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "4 relevante si vs no",
+   "4 sev media vs baja (cowrie.session.closed)",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres/postgres» vs «postgres:postgres»",
+   "14 ioc ninguno vs ip",
+   "16 iocval «root / toor» vs «root:toor»",
+   "17 iocval «ci/ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P6": {
+  "version": "b1-v2",
+  "perfil": "otro",
+  "inicio": "2026-10-05T15:50:21.613Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 10.26,
+   "media": 13.45,
+   "min": 7.16,
+   "max": 32.96
+  },
+  "paso2": {
+   "mediana": 5.73,
+   "media": 8.46
+  },
+  "total": {
+   "mediana": 16.04,
+   "suma_min": 7.3
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 1,
+   "ioc_tipo": 0,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 11
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "19 sev media vs baja (cowrie.client.version)",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P7": {
+  "version": "b1-v2",
+  "perfil": "estudiante",
+  "inicio": "2026-10-05T15:59:44.205Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 9.11,
+   "media": 10.12,
+   "min": 6.816,
+   "max": 29.584
+  },
+  "paso2": {
+   "mediana": 5.6,
+   "media": 6.13
+  },
+  "total": {
+   "mediana": 15.18,
+   "suma_min": 5.4
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 2,
+   "severidad": 1,
+   "ioc_tipo": 0,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 18,
+   "ev_paso2_ok": 11
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "4 relevante si vs no",
+   "4 sev media vs baja (cowrie.session.closed)",
+   "5 relevante si vs no",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P18": {
+  "version": "b1-v3",
+  "perfil": "",
+  "inicio": null,
+  "n": 20,
+  "paso1": {
+   "mediana": 12.07,
+   "media": 21.22,
+   "min": 8.761,
+   "max": 110.161
+  },
+  "paso2": {
+   "mediana": 6.31,
+   "media": 7.27
+  },
+  "total": {
+   "mediana": 19.18,
+   "suma_min": 9.5
+  },
+  "errores": {
+   "campos": 1,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 1,
+   "severidad": 1,
+   "ioc_tipo": 2,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 18,
+   "ev_paso2_ok": 9
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "2 ioc ninguno vs ip",
+   "3 ioc ninguno vs ip",
+   "4 relevante si vs no",
+   "4 sev media vs baja (cowrie.session.closed)",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "8 comando: «w» vs «whoami»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P19": {
+  "version": "b1-v3",
+  "perfil": "",
+  "inicio": null,
+  "n": 20,
+  "paso1": {
+   "mediana": 12.91,
+   "media": 13.47,
+   "min": 8.606,
+   "max": 26.16
+  },
+  "paso2": {
+   "mediana": 6.58,
+   "media": 8.07
+  },
+  "total": {
+   "mediana": 19.96,
+   "suma_min": 7.2
+  },
+  "errores": {
+   "campos": 1,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 1,
+   "severidad": 0,
+   "ioc_tipo": 1,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 18,
+   "ev_paso2_ok": 11
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "6 password: «guest132» vs «guest123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "11 relevante no vs si",
+   "11 ioc ninguno vs ip",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P20": {
+  "version": "b1-v3",
+  "perfil": "estudiante",
+  "inicio": "2026-10-08T12:52:43.926Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 11.85,
+   "media": 13.03,
+   "min": 7.891,
+   "max": 28.911
+  },
+  "paso2": {
+   "mediana": 5.86,
+   "media": 6.71
+  },
+  "total": {
+   "mediana": 18.57,
+   "suma_min": 6.6
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 1,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 11
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "3 ioc ninguno vs ip",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P21": {
+  "version": "b1-v3",
+  "perfil": "estudiante-seg",
+  "inicio": "2026-10-08T13:02:19.271Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 11.79,
+   "media": 15.43,
+   "min": 7.718,
+   "max": 68.112
+  },
+  "paso2": {
+   "mediana": 8.55,
+   "media": 10.58
+  },
+  "total": {
+   "mediana": 20.52,
+   "suma_min": 8.7
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 1,
+   "ioc_tipo": 0,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 11
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "10 sev baja vs media (cowrie.command.input)",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P22": {
+  "version": "b1-v3",
+  "perfil": "",
+  "inicio": null,
+  "n": 20,
+  "paso1": {
+   "mediana": 11.32,
+   "media": 15.04,
+   "min": 7.919,
+   "max": 45.479
+  },
+  "paso2": {
+   "mediana": 6.34,
+   "media": 8.27
+  },
+  "total": {
+   "mediana": 19.06,
+   "suma_min": 7.8
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 1,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 11
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "3 ioc ninguno vs ip",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P23": {
+  "version": "b1-v3",
+  "perfil": "estudiante-seg",
+  "inicio": "2026-10-08T13:28:43.123Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 11.4,
+   "media": 14.05,
+   "min": 7.576,
+   "max": 38.752
+  },
+  "paso2": {
+   "mediana": 6.35,
+   "media": 6.89
+  },
+  "total": {
+   "mediana": 18.35,
+   "suma_min": 7
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 0,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 12
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest 123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P24": {
+  "version": "b1-v3",
+  "perfil": "estudiante",
+  "inicio": "2026-10-08T13:45:10.369Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 9.92,
+   "media": 11.35,
+   "min": 6.836,
+   "max": 28.289
+  },
+  "paso2": {
+   "mediana": 5.85,
+   "media": 6.72
+  },
+  "total": {
+   "mediana": 16.55,
+   "suma_min": 6
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 1,
+   "ioc_tipo": 0,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 12
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "6 iocval «guest  /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 sev media vs baja (cowrie.login.failed)",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P25": {
+  "version": "b1-v3",
+  "perfil": "estudiante",
+  "inicio": "2026-10-08T14:00:26.689Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 10.61,
+   "media": 11.23,
+   "min": 7.344,
+   "max": 19.792
+  },
+  "paso2": {
+   "mediana": 5.44,
+   "media": 6.36
+  },
+  "total": {
+   "mediana": 16.5,
+   "suma_min": 5.9
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 1,
+   "ioc_valor": 7,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 12
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 ioc command vs credential",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P26": {
+  "version": "b1-v3",
+  "perfil": "estudiante",
+  "inicio": "2026-10-08T14:15:55.097Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 10.82,
+   "media": 10.98,
+   "min": 6.895,
+   "max": 20.213
+  },
+  "paso2": {
+   "mediana": 6.83,
+   "media": 6.74
+  },
+  "total": {
+   "mediana": 18.25,
+   "suma_min": 5.9
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 0,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 12
+  },
+  "detalle": [
+   "1 iocval «admin /tes123» vs «admin:test123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci /ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "P27": {
+  "version": "b1-v3",
+  "perfil": "estudiante-seg",
+  "inicio": "2026-10-08T14:15:53.595Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 10.17,
+   "media": 53.28,
+   "min": 7.192,
+   "max": 850.224
+  },
+  "paso2": {
+   "mediana": 6.4,
+   "media": 7.27
+  },
+  "total": {
+   "mediana": 17.38,
+   "suma_min": 20.2
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 0,
+   "ioc_valor": 8,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 12
+  },
+  "detalle": [
+   "1 iocval «admin /test123» vs «admin:test123»",
+   "6 iocval «guest /guest123» vs «guest:guest123»",
+   "7 iocval «oracle /oracle» vs «oracle:oracle»",
+   "9 iocval «guest /guest123» vs «guest:guest123»",
+   "12 iocval «postgres /postgres» vs «postgres:postgres»",
+   "16 iocval «root /toor» vs «root:toor»",
+   "17 iocval «ci / ci» vs «ci:ci»",
+   "20 iocval «devops /devops» vs «devops:devops»"
+  ]
+ },
+ "linea_base": {
+  "criterio": "mediana por evento del paso 1 (entre participantes), luego mediana de los 20 eventos",
+  "paso1_mediana_s": 10.92,
+  "paso1_media_s": 11.07,
+  "total_mediana_s": 17.37
+ }
+}

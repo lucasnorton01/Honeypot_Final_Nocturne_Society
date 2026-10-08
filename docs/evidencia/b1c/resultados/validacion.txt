@@ -1,0 +1,10 @@
+linea-base-P18.json                   reinicios 1 stale 0 med1 12.0705 min 8.761 max 110.161 ok
+linea-base-P19.json                   reinicios 1 stale 0 med1 12.908 min 8.606 max 26.16 ok
+linea-base-P20.json      estudiante  12:52:43 reinicios 0 stale 0 med1 11.847 min 7.891 max 28.911 ok
+linea-base-P21.json      estudiante-seg 13:02:19 reinicios 0 stale 0 med1 11.795 min 7.718 max 68.112 ok
+linea-base-P22.json                   reinicios 1 stale 0 med1 11.3165 min 7.919 max 45.479 ok
+linea-base-P23.json      estudiante-seg 13:28:43 reinicios 0 stale 0 med1 11.3955 min 7.576 max 38.752 ok
+linea-base-P24.json      estudiante  13:45:10 reinicios 0 stale 0 med1 9.9175 min 6.836 max 28.289 ok
+linea-base-P25.json      estudiante  14:00:26 reinicios 0 stale 0 med1 10.61 min 7.344 max 19.792 ok
+linea-base-P26.json      estudiante  14:15:55 reinicios 0 stale 0 med1 10.824 min 6.895 max 20.213 ok
+linea-base-P27.json      estudiante-seg 14:15:53 reinicios 0 stale 0 med1 10.173 min 7.192 max 850.224 ok
