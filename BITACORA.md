@@ -580,3 +580,7 @@ Ventana del 02/10/2026, de 13:47:30 a 14:55:10 UTC (10:47:30 a 11:55:10 ART), ce
 - Se agregan `scripts/b1c_bootstrap.js` y dos salidas de análisis en `docs/evidencia/b1c/resultados/` (`analisis_bootstrap.json`, `analisis_formato_credencial.json`), con `SHA256SUMS.txt` actualizado. Ambos análisis son **posteriores** al registro previo y se declaran como tales en `docs/RESULTADOS_B1c.md`.
 - Mediana del paso 1 de B1c: 11,01 s, con intervalo bootstrap del 95 % de 10,44 a 11,93 s; reducción de la latencia de W2 y C2 de 84,7 a 88,5 % respecto de esa línea de base. Con el formato de credencial normalizado, el paso 2 queda correcto en 190 de 200 eventos.
 - No cambia ningún dato, workflow, esquema ni evidencia anterior.
+
+### [2026-10-08] Script de verificación de cifras (tag `Honeypot_Final_2026-10-08e`)
+- Se agrega `scripts/verificar_cifras.js`: recalcula desde `docs/evidencia/` las cifras principales de la tesis (eventos y sesiones de W2, C1 y C2, completitud por `ioc_sessions` y por `event_id`, latencias medias, mediana de B1c) y las compara con las publicadas. Resultado de la corrida: las 17 cifras coinciden (la latencia de W2 se compara con 1,6 s con una tolerancia de 0,1 s).
+- No cambia ningún dato, workflow, esquema ni evidencia anterior.
