@@ -584,3 +584,8 @@ Ventana del 02/10/2026, de 13:47:30 a 14:55:10 UTC (10:47:30 a 11:55:10 ART), ce
 ### [2026-10-08] Script de verificación de cifras (tag `Honeypot_Final_2026-10-08e`)
 - Se agrega `scripts/verificar_cifras.js`: recalcula desde `docs/evidencia/` las cifras principales de la tesis (eventos y sesiones de W2, C1 y C2, completitud por `ioc_sessions` y por `event_id`, latencias medias, mediana de B1c) y las compara con las publicadas. Resultado de la corrida: las 17 cifras coinciden (la latencia de W2 se compara con 1,6 s con una tolerancia de 0,1 s).
 - No cambia ningún dato, workflow, esquema ni evidencia anterior.
+
+### [2026-10-08] Registro previo de la validación B4: configuración final del 06/10 (tag `Honeypot_Final_2026-10-08f`)
+- Se publica `docs/PREREGISTRO_B4.md` (SHA-256 `9b6ec1c5a9f728f56f5dc2564142d9836dfb3823a1af6ee437eba3d0941b1c6d`) y los scripts `scripts/b4_iniciar.ps1`, `b4_cerrar.ps1`, `b4_exportar.js` y `b4_analisis.js` **antes** de iniciar la ventana. Objetivo: validar con una ventana propia la configuración final (el tag `Honeypot_Final_2026-10-06e`, que B3 no alcanzó a cubrir), observar las alertas de Telegram activas y repetir la observación del disparo de producción de las 08:00.
+- Ventana: simulador cada 15 minutos de las 22:30 ART del 08/10 a las 07:45 ART del 09/10 (38 corridas); cierre fijo a las 08:15 ART (11:15 UTC).
+- `b4_analisis.js` se probó sobre la evidencia de B3 y reproduce sus cifras; `b4_exportar.js` se probó en modo de solo lectura. No cambia ningún workflow, esquema ni configuración: solo se agregan documentación y scripts.
