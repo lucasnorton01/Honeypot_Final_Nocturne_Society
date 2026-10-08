@@ -575,3 +575,8 @@ Ventana del 02/10/2026, de 13:47:30 a 14:55:10 UTC (10:47:30 a 11:55:10 ART), ce
 - Mediana del paso 1: 11,01 s (media 11,32 s; total 17,83 s); con los cinco externos de B1, 10,92 s. P1 se confirma con las tres referencias (reducción de 85 a 88 % de la latencia de W2 y de C2). Resultados y declaraciones completas en `docs/RESULTADOS_B1c.md`; archivos y hashes en `docs/evidencia/b1c/resultados/`.
 - Se declara que el botón «Reiniciar mi medición» dejó vacíos `inicio` y `perfil` en los archivos de P18, P19 y P22 (el perfil lo aportaron los autores), que P27 tuvo una pausa de unos 14 min en un evento (no se descartó) y que una primera tanda de P18, hecha antes de la publicación, se descartó (sección 7 del registro).
 - Solo se agregan documentación, scripts de análisis y los archivos de resultados: no cambia ningún workflow, esquema, configuración ni evidencia anterior.
+
+### [2026-10-08] Análisis posterior de B1c: intervalo de confianza y formato de credencial (tag `Honeypot_Final_2026-10-08d`)
+- Se agregan `scripts/b1c_bootstrap.js` y dos salidas de análisis en `docs/evidencia/b1c/resultados/` (`analisis_bootstrap.json`, `analisis_formato_credencial.json`), con `SHA256SUMS.txt` actualizado. Ambos análisis son **posteriores** al registro previo y se declaran como tales en `docs/RESULTADOS_B1c.md`.
+- Mediana del paso 1 de B1c: 11,01 s, con intervalo bootstrap del 95 % de 10,44 a 11,93 s; reducción de la latencia de W2 y C2 de 84,7 a 88,5 % respecto de esa línea de base. Con el formato de credencial normalizado, el paso 2 queda correcto en 190 de 200 eventos.
+- No cambia ningún dato, workflow, esquema ni evidencia anterior.

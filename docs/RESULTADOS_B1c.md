@@ -18,7 +18,9 @@ Mediana por evento del paso 1 entre los 10 participantes y, luego, mediana de lo
 
 Por participante, la mediana del paso 1 va de 9,92 s (P24) a 12,91 s (P19); por perfil: «estudiante» (7 con P18, P19 y P22) entre 9,92 y 12,91 s y «estudiante-seg» (3) entre 10,17 y 11,79 s.
 
-**P1.** Frente a la mediana principal (11,01 s), la latencia media de ingesta de W2 (1,6 s) y la de C2 (1,37 s) equivalen a una reducción de 85,5 % y de 87,6 %. Con las 15 personas externas (10,92 s), 85,3 % para W2. El umbral de P1 (50 %) se supera con las tres líneas de base; B1c no cambia el veredicto, lo confirma con una muestra mayor.
+**Intervalo de confianza (análisis posterior, no fijado en el registro previo).** Bootstrap percentil con 10.000 remuestreos de participantes y semilla fija (`scripts/b1c_bootstrap.js`, salida en `docs/evidencia/b1c/resultados/analisis_bootstrap.json`): la mediana de 11,01 s tiene un intervalo del 95 % de 10,44 a 11,93 s. Es un intervalo de muestreo entre 10 personas del mismo entorno; no incluye la variabilidad entre analistas reales ni entre equipos.
+
+**P1.** Frente a la mediana principal (11,01 s), la latencia media de ingesta de W2 (1,6 s) y la de C2 (1,37 s) equivalen a una reducción de 85,5 % y de 87,6 %. Con las 15 personas externas (10,92 s), 85,3 % para W2. Con el intervalo anterior, la reducción frente a W2 va de 84,7 a 86,6 % y frente a C2, de 86,9 a 88,5 %, siempre muy por encima del umbral de P1 (50 %); se supera con las tres líneas de base; B1c no cambia el veredicto, lo confirma con una muestra mayor.
 
 ## 3. Calidad de las respuestas (secundario)
 Sobre 10 × 20 = 200 eventos medidos:
@@ -34,7 +36,7 @@ Sobre 10 × 20 = 200 eventos medidos:
 | Errores de tipo de IoC | 6 |
 | Errores de valor del IoC | 79 |
 
-Los 79 errores de valor del IoC son sistemáticos: todos los participantes escribieron la credencial como `usuario /contraseña` (por ejemplo, `admin /test123`) y el criterio de `scripts/b1_analisis.js` espera `usuario:contraseña`. Es el mismo defecto de formato que ya tuvo B1, y explica casi todo el 43,5 % de eventos del paso 2 marcados incorrectos. Las cifras de error de este registro **no** se interpretan como falta de competencia de los participantes; los tiempos no dependen de ese formato.
+Los 79 errores de valor del IoC son sistemáticos: todos los participantes escribieron la credencial como `usuario /contraseña` (por ejemplo, `admin /test123`) y el criterio de `scripts/b1_analisis.js` espera `usuario:contraseña`. Es el mismo defecto de formato que ya tuvo B1, y explica casi todo el 43,5 % de eventos del paso 2 marcados incorrectos. **Análisis posterior con el formato de la credencial normalizado** (`usuario /contraseña` leído como `usuario:contraseña`; `docs/evidencia/b1c/resultados/analisis_formato_credencial.json`, no fijado en el registro previo): el paso 2 queda correcto en 190 de 200 eventos (95,0 %; Wilson 91,0 a 97,3 %, que trata los eventos como independientes y por eso es solo orientativo), con 3 errores de severidad, 6 de tipo de IoC y 1 de valor. Las cifras de error de este registro **no** se interpretan como falta de competencia de los participantes; los tiempos no dependen de ese formato.
 
 ## 4. Hechos que se declaran
 1. **Defecto del botón «Reiniciar mi medición».** P18, P19 y P22 reiniciaron una vez (`reinicios = 1`). Al reiniciar, la página dejó vacíos `inicio` y `perfil` en el archivo (el código del reinicio no los vuelve a fijar). Los tiempos y las respuestas no se afectan; el perfil se completó con lo informado por los autores (sección 1). Es un error del instrumento y no se corrigió el archivo.

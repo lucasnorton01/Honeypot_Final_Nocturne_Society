@@ -1,0 +1,350 @@
+{
+ "P18": {
+  "version": "b1-v3",
+  "perfil": "",
+  "inicio": null,
+  "n": 20,
+  "paso1": {
+   "mediana": 12.07,
+   "media": 21.22,
+   "min": 8.761,
+   "max": 110.161
+  },
+  "paso2": {
+   "mediana": 6.31,
+   "media": 7.27
+  },
+  "total": {
+   "mediana": 19.18,
+   "suma_min": 9.5
+  },
+  "errores": {
+   "campos": 1,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 1,
+   "severidad": 1,
+   "ioc_tipo": 2,
+   "ioc_valor": 0,
+   "ev_paso1_ok": 18,
+   "ev_paso2_ok": 17
+  },
+  "detalle": [
+   "2 ioc ninguno vs ip",
+   "3 ioc ninguno vs ip",
+   "4 relevante si vs no",
+   "4 sev media vs baja (cowrie.session.closed)",
+   "8 comando: «w» vs «whoami»"
+  ]
+ },
+ "P19": {
+  "version": "b1-v3",
+  "perfil": "",
+  "inicio": null,
+  "n": 20,
+  "paso1": {
+   "mediana": 12.91,
+   "media": 13.47,
+   "min": 8.606,
+   "max": 26.16
+  },
+  "paso2": {
+   "mediana": 6.58,
+   "media": 8.07
+  },
+  "total": {
+   "mediana": 19.96,
+   "suma_min": 7.2
+  },
+  "errores": {
+   "campos": 1,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 1,
+   "severidad": 0,
+   "ioc_tipo": 1,
+   "ioc_valor": 0,
+   "ev_paso1_ok": 18,
+   "ev_paso2_ok": 19
+  },
+  "detalle": [
+   "6 password: «guest132» vs «guest123»",
+   "11 relevante no vs si",
+   "11 ioc ninguno vs ip"
+  ]
+ },
+ "P20": {
+  "version": "b1-v3",
+  "perfil": "estudiante",
+  "inicio": "2026-10-08T12:52:43.926Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 11.85,
+   "media": 13.03,
+   "min": 7.891,
+   "max": 28.911
+  },
+  "paso2": {
+   "mediana": 5.86,
+   "media": 6.71
+  },
+  "total": {
+   "mediana": 18.57,
+   "suma_min": 6.6
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 1,
+   "ioc_valor": 0,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 19
+  },
+  "detalle": [
+   "3 ioc ninguno vs ip"
+  ]
+ },
+ "P21": {
+  "version": "b1-v3",
+  "perfil": "estudiante-seg",
+  "inicio": "2026-10-08T13:02:19.271Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 11.79,
+   "media": 15.43,
+   "min": 7.718,
+   "max": 68.112
+  },
+  "paso2": {
+   "mediana": 8.55,
+   "media": 10.58
+  },
+  "total": {
+   "mediana": 20.52,
+   "suma_min": 8.7
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 1,
+   "ioc_tipo": 0,
+   "ioc_valor": 0,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 19
+  },
+  "detalle": [
+   "10 sev baja vs media (cowrie.command.input)"
+  ]
+ },
+ "P22": {
+  "version": "b1-v3",
+  "perfil": "",
+  "inicio": null,
+  "n": 20,
+  "paso1": {
+   "mediana": 11.32,
+   "media": 15.04,
+   "min": 7.919,
+   "max": 45.479
+  },
+  "paso2": {
+   "mediana": 6.34,
+   "media": 8.27
+  },
+  "total": {
+   "mediana": 19.06,
+   "suma_min": 7.8
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 1,
+   "ioc_valor": 0,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 19
+  },
+  "detalle": [
+   "3 ioc ninguno vs ip"
+  ]
+ },
+ "P23": {
+  "version": "b1-v3",
+  "perfil": "estudiante-seg",
+  "inicio": "2026-10-08T13:28:43.123Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 11.4,
+   "media": 14.05,
+   "min": 7.576,
+   "max": 38.752
+  },
+  "paso2": {
+   "mediana": 6.35,
+   "media": 6.89
+  },
+  "total": {
+   "mediana": 18.35,
+   "suma_min": 7
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 0,
+   "ioc_valor": 0,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 20
+  },
+  "detalle": []
+ },
+ "P24": {
+  "version": "b1-v3",
+  "perfil": "estudiante",
+  "inicio": "2026-10-08T13:45:10.369Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 9.92,
+   "media": 11.35,
+   "min": 6.836,
+   "max": 28.289
+  },
+  "paso2": {
+   "mediana": 5.85,
+   "media": 6.72
+  },
+  "total": {
+   "mediana": 16.55,
+   "suma_min": 6
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 1,
+   "ioc_tipo": 0,
+   "ioc_valor": 0,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 19
+  },
+  "detalle": [
+   "12 sev media vs baja (cowrie.login.failed)"
+  ]
+ },
+ "P25": {
+  "version": "b1-v3",
+  "perfil": "estudiante",
+  "inicio": "2026-10-08T14:00:26.689Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 10.61,
+   "media": 11.23,
+   "min": 7.344,
+   "max": 19.792
+  },
+  "paso2": {
+   "mediana": 5.44,
+   "media": 6.36
+  },
+  "total": {
+   "mediana": 16.5,
+   "suma_min": 5.9
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 1,
+   "ioc_valor": 0,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 19
+  },
+  "detalle": [
+   "9 ioc command vs credential"
+  ]
+ },
+ "P26": {
+  "version": "b1-v3",
+  "perfil": "estudiante",
+  "inicio": "2026-10-08T14:15:55.097Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 10.82,
+   "media": 10.98,
+   "min": 6.895,
+   "max": 20.213
+  },
+  "paso2": {
+   "mediana": 6.83,
+   "media": 6.74
+  },
+  "total": {
+   "mediana": 18.25,
+   "suma_min": 5.9
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 0,
+   "ioc_valor": 1,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 19
+  },
+  "detalle": [
+   "1 iocval «admin:tes123» vs «admin:test123»"
+  ]
+ },
+ "P27": {
+  "version": "b1-v3",
+  "perfil": "estudiante-seg",
+  "inicio": "2026-10-08T14:15:53.595Z",
+  "n": 20,
+  "paso1": {
+   "mediana": 10.17,
+   "media": 53.28,
+   "min": 7.192,
+   "max": 850.224
+  },
+  "paso2": {
+   "mediana": 6.4,
+   "media": 7.27
+  },
+  "total": {
+   "mediana": 17.38,
+   "suma_min": 20.2
+  },
+  "errores": {
+   "campos": 0,
+   "campos_tot": 100,
+   "eventid": 0,
+   "relevante": 0,
+   "severidad": 0,
+   "ioc_tipo": 0,
+   "ioc_valor": 0,
+   "ev_paso1_ok": 20,
+   "ev_paso2_ok": 20
+  },
+  "detalle": []
+ },
+ "linea_base": {
+  "criterio": "mediana por evento del paso 1 (entre participantes), luego mediana de los 20 eventos",
+  "paso1_mediana_s": 11.01,
+  "paso1_media_s": 11.32,
+  "total_mediana_s": 17.83
+ }
+}
