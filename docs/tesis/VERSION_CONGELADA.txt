@@ -1,0 +1,8 @@
+Estado: DEFINITIVA
+Versión: v77 (versión de entrega de la tesis)
+Fecha y hora del congelado: 09/10/2026 10:05 (hora local)
+PDF  : Tesis_Nocturne_Society_v77_entrega.pdf  SHA-256: 49a5e3d695fcb8350e31f38687f4f868de974408e5cca4cc56a161d65582f3b0
+DOCX : Tesis_Nocturne_Society_v77_entrega.docx SHA-256: a146e3d0d7570e90daaeeecd57c821f459215d9e9cc7188b1506272b47f47d20
+Tag de código y evidencia citado en la portada: Honeypot_Final_2026-10-08g (commit 930acf617ca8c2cb20860aec812deccb074afd5e)
+La portada cita el tag de código y evidencia; el tag Honeypot_Final_entrega marca el commit que contiene el documento entregado.
+El hash de ese commit no se escribe aquí: este archivo forma parte del commit y modificarlo lo cambiaría. Lo identifica el tag.
