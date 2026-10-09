@@ -1,0 +1,33 @@
+id,type,value,confidence,event_id,source,created_at
+1,ip,10.0.1.4,BAJO,1,cowrie,2026-10-09 01:45:00.298063+00
+2,credential,webadmin:Web2026!,BAJO,4,cowrie,2026-10-09 01:45:00.473757+00
+4,credential,ci:ci,BAJO,16,cowrie,2026-10-09 01:45:00.723908+00
+6,credential,git:git123,BAJO,20,cowrie,2026-10-09 01:45:00.793561+00
+8,credential,root:toor,BAJO,24,cowrie,2026-10-09 01:45:00.910722+00
+10,credential,backup:backup2024,BAJO,28,cowrie,2026-10-09 01:45:00.985+00
+12,credential,admin:admin,BAJO,32,cowrie,2026-10-09 01:45:01.072981+00
+14,credential,root:password,BAJO,36,cowrie,2026-10-09 01:45:01.139269+00
+16,credential,ubuntu:ubuntu123,BAJO,40,cowrie,2026-10-09 01:45:01.181953+00
+18,credential,deploy:deploy,BAJO,44,cowrie,2026-10-09 01:45:01.235858+00
+20,credential,test:test,BAJO,48,cowrie,2026-10-09 01:45:01.331301+00
+24,credential,oracle:oracle,BAJO,65,cowrie,2026-10-09 02:00:00.570995+00
+26,credential,support:support01,BAJO,69,cowrie,2026-10-09 02:00:00.64806+00
+28,credential,devops:devops,BAJO,81,cowrie,2026-10-09 02:00:00.86293+00
+30,credential,postgres:postgres,BAJO,85,cowrie,2026-10-09 02:00:00.912161+00
+34,credential,jenkins:jenkins,BAJO,93,cowrie,2026-10-09 02:00:01.016231+00
+40,credential,monitor:m0nitor,BAJO,111,cowrie,2026-10-09 02:15:00.521096+00
+44,credential,guest:guest123,BAJO,129,cowrie,2026-10-09 02:15:00.835737+00
+45,command,which sh ,BAJO,134,cowrie,2026-10-09 02:15:00.904317+00
+51,credential,admin:123456,BAJO,150,cowrie,2026-10-09 02:15:01.183182+00
+63,credential,dev:devpass22,BAJO,183,cowrie,2026-10-09 02:30:00.597073+00
+105,credential,pi:raspberry,BAJO,289,cowrie,2026-10-09 02:45:01.081154+00
+114,command,bash --version,BAJO,326,cowrie,2026-10-09 03:00:00.582283+00
+116,credential,user:user1234,BAJO,335,cowrie,2026-10-09 03:00:00.729035+00
+139,credential,admin:test123,BAJO,404,cowrie,2026-10-09 03:30:00.642778+00
+179,credential,oracle:oracle2024,BAJO,505,cowrie,2026-10-09 03:45:01.201193+00
+191,credential,backup:backupsvc99,BAJO,545,cowrie,2026-10-09 04:00:01.1127+00
+192,command,ls -la /usr/bin,BAJO,553,cowrie,2026-10-09 04:00:01.30872+00
+216,credential,deploy:deployKey7,BAJO,615,cowrie,2026-10-09 04:15:01.103175+00
+232,credential,ftpuser:ftpPass321,BAJO,664,cowrie,2026-10-09 04:30:00.697875+00
+280,command,python3 -V,BAJO,803,cowrie,2026-10-09 05:00:01.379985+00
+493,command,ls /bin,BAJO,1437,cowrie,2026-10-09 07:45:00.506144+00

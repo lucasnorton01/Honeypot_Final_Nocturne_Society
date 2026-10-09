@@ -1,0 +1,30 @@
+{
+  "entregas_ok": 2386,
+  "entregas_err": 0,
+  "telegram": {
+    "conexion": {
+      "enviado": 397,
+      "rechazado": 0,
+      "sin_envio": 0,
+      "descartado": 0,
+      "mediana_ms": 803,
+      "max_ms": 2091
+    },
+    "resumen": {
+      "enviado": 48,
+      "rechazado": 0,
+      "sin_envio": 1,
+      "descartado": 0,
+      "mediana_ms": 802,
+      "max_ms": 834
+    },
+    "login_fallido": {
+      "enviado": 348,
+      "rechazado": 0,
+      "sin_envio": 0,
+      "descartado": 0,
+      "mediana_ms": 803,
+      "max_ms": 4104
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "ventana": {
+    "inicio": "2026-10-08 23:13:59",
+    "cierre": "2026-10-09 11:15:00"
+  },
+  "conteos": {
+    "eventos_cowrie": 2386,
+    "eventos_events": 2386,
+    "claves_distintas": 0,
+    "iocs": 32,
+    "ioc_sessions": 817,
+    "reportes": 1,
+    "error_log": 0
+  },
+  "P1": {
+    "latencia_ms": {
+      "n": 2386,
+      "media": 1697.89,
+      "mediana": 1258.75,
+      "min": 387.09,
+      "max": 5255.19,
+      "de": 1038.46
+    },
+    "eventos_sobre_15s": 0,
+    "proporcion_de_b1_externos": "16.4 %",
+    "proporcion_de_b1_todos": "14.8 %",
+    "proporcion_de_b1c": "15.4 %",
+    "umbral": "media < 50 % de 10,36 s",
+    "cumple": true
+  },
+  "P2": {
+    "criterio_estricto": "2386/2386 = 100.0 % (IC 95 % [99.8; 100.0])",
+    "fidelidad_con_cowrie": "2382/2386 = 99.8 % (IC 95 % [99.6; 99.9])",
+    "umbral": "80 %",
+    "cumple": true
+  },
+  "P3": {
+    "sesiones_exitosas": 49,
+    "completitud": "49/49 = 100.0 % (IC 95 % [92.7; 100.0])",
+    "umbral": "70 %",
+    "cumple": true,
+    "sesiones_con_comando_ioc": 23,
+    "incompletas": [],
+    "continuidad_event_id": "15/49 = 30.6 % (IC 95 % [19.5; 44.5])"
+  },
+  "P3_calidad": {
+    "exactitud_catalogo": "32/32 = 100.0 % (IC 95 % [89.3; 100.0])",
+    "precision_atribucion": "817/817 = 100.0 % (IC 95 % [99.5; 100.0])",
+    "umbral": "ambas ≥ 95 %",
+    "cumple": true,
+    "no_exactos": [],
+    "atribuciones_no_esperadas": [],
+    "descriptivo": {
+      "sesiones_exitosas_con_indicador_nuevo": "15/49 = 30.6 % (IC 95 % [19.5; 44.5])",
+      "iocs_nuevos_por_hora_utc": {
+        "2026-10-09T01": 11,
+        "2026-10-09T02": 11,
+        "2026-10-09T03": 4,
+        "2026-10-09T04": 4,
+        "2026-10-09T05": 1,
+        "2026-10-09T07": 1
+      }
+    }
+  },
+  "P4": {
+    "ejecuciones_report_generator": [
+      "2026-10-09 11:00:00.227 trigger success"
+    ],
+    "reportes_trigger": 1,
+    "disparo_produccion_0800": true,
+    "reporte_0800_guardado": true,
+    "cobertura": "49/49 = 100.0 % (IC 95 % [92.7; 100.0])",
+    "umbral": "un único disparo de report-generator, a las 08:00 ART en modo trigger y con reporte guardado; cobertura ≥ 90 %",
+    "cumple": true
+  },
+  "ejecuciones": {
+    "total": 2579,
+    "manuales_extractor_o_reportes": 0,
+    "extractor": {
+      "n": 48,
+      "error": 0,
+      "duracion_ms": {
+        "n": 48,
+        "media": 1134.83,
+        "mediana": 1280,
+        "min": 129,
+        "max": 2486,
+        "de": 600.16
+      }
+    }
+  },
+  "health_monitor": {
+    "ejecuciones": 144,
+    "en_error": 0,
+    "alertas": []
+  },
+  "configuracion_final": {
+    "fallas": [],
+    "umbral": "los seis servicios corriendo, puertos publicados solo en 127.0.0.1 (2222, 2323 y 5678) y las redes captura, proceso y datos internal",
+    "cumple": true
+  },
+  "forwarder": {
+    "entregas_ok": 2386,
+    "entregas_err": 0,
+    "eventos_cowrie": 2386,
+    "entregas_sin_error": true,
+    "telegram": {
+      "conexion": {
+        "esperadas": 397,
+        "enviado": 397,
+        "rechazado": 0,
+        "sin_envio": 0,
+        "descartado": 0,
+        "mediana_ms": 803,
+        "max_ms": 2091
+      },
+      "login_fallido": {
+        "esperadas": 348,
+        "enviado": 348,
+        "rechazado": 0,
+        "sin_envio": 0,
+        "descartado": 0,
+        "mediana_ms": 803,
+        "max_ms": 4104
+      },
+      "resumen": {
+        "esperadas_aprox": 49,
+        "enviado": 48,
+        "rechazado": 0,
+        "sin_envio": 1,
+        "descartado": 0,
+        "mediana_ms": 802,
+        "max_ms": 834
+      }
+    },
+    "nota": "Las alertas esperadas se calculan del log de Cowrie; el resumen depende del cierre de cada sesión. Sin umbral: se informa lo observado."
+  }
+}
