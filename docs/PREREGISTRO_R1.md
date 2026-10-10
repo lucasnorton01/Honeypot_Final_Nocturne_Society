@@ -73,7 +73,7 @@ Piloto del 10/10/2026 (12:35 ART, no computa): 5 sesiones, 28 comandos, `docs/ev
 |---|---|
 | `scripts/r1_analisis.js` | `edf1e35333c73d2dfa9eda4a3e95e6471a91aeb194e0cadde559853fdebbc8ae` |
 | `scripts/r1_exportar.js` | `5732c2e8a0563a6642a06f75d063c9d1609f1527a16ac8f506ce03974494cb4c` |
-| `scripts/r1_iniciar.ps1` | `1b8501dbf27fbefd4bdf0fbce19694d50c27b4459bbf8e79a9b63a61be18fefe` |
+| `scripts/r1_iniciar.ps1` | `ab92eb3bdaa5bb1cfffb009ce4def8c2a20adc854e599e8df2f8d3321df03118` (versión corregida; ver §9) |
 | `scripts/r1_cerrar.ps1` | `7a8160ad1bd75370e69a87a194d67471bd174233a5a9b283804d3a6ecd248623` |
 | `scripts/r1_muestra.js` | `47bc8f5061deb386a1ab1787aafaf0d3b2371776add5412b09ee5d4bfda733e0` |
 | `attack-runner/replay_dataset.py` | `20d746077216cee2e01ef989c304784ed46b6ab6f4631882c25946e1e4851b97` |
@@ -97,3 +97,7 @@ Los archivos con extremos de línea CRLF en el equipo (`cowrie/userdb.txt`, `att
 ## 8. Qué se hace con el resultado
 
 Se publica salga lo que salga, también si algún umbral no se cumple o si la ventana se interrumpe. Si algo falla, se informa la causa y se la incorpora a la discusión; no se vuelve a medir dentro de R1. R1 entra en la tesis como validación ampliada y **no modifica los veredictos de P1 a P4**.
+
+## 9. Corrección anterior al inicio (10/10/2026)
+
+Al ejecutar `scripts/r1_iniciar.ps1` por primera vez, falló la comprobación del `userdb.txt` cargado en Cowrie, antes de cualquier cambio de estado (no se respaldó ni se vació nada, y no hubo ninguna sesión de la ventana): la imagen de Cowrie no tiene `sh`, que el script usaba para contar las líneas del archivo. Se corrigió ese comando (ahora usa `python3`, que la imagen sí tiene) y se cambió el tag de referencia que comprueba el script a `Honeypot_R1_prereg2`, que apunta al commit con la corrección. El tag `Honeypot_R1_prereg` (commit `81748dc`) sigue publicado sin cambios. Se corrigió únicamente `scripts/r1_iniciar.ps1` y la fila de su SHA-256 en la §7; ningún criterio, umbral, muestra ni otro script cambió. La corrección se publica (commit y tag) antes de iniciar la ventana y, por lo tanto, antes de la primera sesión válida.

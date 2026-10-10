@@ -30,10 +30,10 @@ $cambios = git status --porcelain -- $fijos
 if ($cambios) { throw "Hay cambios sin publicar en archivos registrados:`n$cambios" }
 git fetch -q origin
 if ((git rev-parse HEAD) -ne (git rev-parse origin/main)) { throw "HEAD no coincide con origin/main: el registro previo no esta publicado." }
-$remoto = git ls-remote --tags origin "refs/tags/Honeypot_R1_prereg^{}"
-if (-not $remoto) { $remoto = git ls-remote --tags origin "refs/tags/Honeypot_R1_prereg" }
-if (-not $remoto) { throw "El tag Honeypot_R1_prereg no esta publicado en origin." }
-if ((git rev-parse "Honeypot_R1_prereg^{commit}") -ne (git rev-parse HEAD)) { throw "HEAD no coincide con el commit del tag Honeypot_R1_prereg." }
+$remoto = git ls-remote --tags origin "refs/tags/Honeypot_R1_prereg2^{}"
+if (-not $remoto) { $remoto = git ls-remote --tags origin "refs/tags/Honeypot_R1_prereg2" }
+if (-not $remoto) { throw "El tag Honeypot_R1_prereg2 no esta publicado en origin." }
+if ((git rev-parse "Honeypot_R1_prereg2^{commit}") -ne (git rev-parse HEAD)) { throw "HEAD no coincide con el commit del tag Honeypot_R1_prereg2." }
 
 Write-Host "[2] Comprobando servicios, redes y workflows..."
 $up = docker compose ps --services --filter status=running
@@ -53,7 +53,7 @@ if ($tg -ne "si") { throw "El forwarder no tiene Telegram configurado: la config
 
 Write-Host "[2b] Comprobando que Cowrie tiene las cuentas de la muestra..."
 $local = (Get-Content (Join-Path $root "cowrie\userdb.txt")).Count
-$cont = [int](docker exec cowrie sh -c "wc -l < /cowrie/cowrie-git/etc/userdb.txt")
+$cont = [int](docker exec cowrie python3 -c "print(len(open('/cowrie/cowrie-git/etc/userdb.txt').read().splitlines()))")
 if ([math]::Abs($local - $cont) -gt 1) { throw "El userdb.txt cargado en Cowrie ($cont lineas) no coincide con el del repo ($local): reiniciar cowrie." }
 
 Write-Host "[3] Comprobando que Cowrie no tuvo actividad en los ultimos 25 minutos..."
