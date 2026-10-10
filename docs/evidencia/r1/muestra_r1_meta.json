@@ -1,0 +1,39 @@
+{
+  "dataset": "Wang et al. (2025), shell-attack-evolution-dataset (CC BY 4.0)",
+  "commit_dataset": "d5f7fe120ebd921e04026b6348c3ec5d399c5df6",
+  "archivo_sesiones": "dataset/sessions/2024.jsonl",
+  "sha256_sesiones": "7ea4b916841708c36dbe24f95b882f06335e85ed2e77bdc70ba985c9c9653752",
+  "semilla": 20261010,
+  "N": 200,
+  "piloto": 5,
+  "criterios": {
+    "max_comandos": 30,
+    "max_longitud": 500,
+    "credencial": "/^[A-Za-z0-9._@%+=,-]{1,32}$/",
+    "demora_min_s": 0.3,
+    "demora_max_s": 5,
+    "demora_inicial_s": 1
+  },
+  "descartes": {
+    "total_2024": 6658,
+    "sin_registro_crudo": 0,
+    "comandos_fuera_de_rango": 3,
+    "caracteres_de_control_o_no_ascii": 4,
+    "comando_largo": 111,
+    "sin_credencial_simple": 1000,
+    "elegibles": 5540
+  },
+  "comandos_muestra": 1020,
+  "comandos_con_demora_original": 813,
+  "comandos_total_reg": 1048,
+  "protocolo_original": {
+    "ssh": 161,
+    "telnet": 37,
+    "ssh+telnet": 2
+  },
+  "suma_demoras_s": 1856,
+  "comandos_max_por_sesion": 28,
+  "cuentas_distintas": 165,
+  "sha256_muestra": "d94987144ebe6e74eb412cd012061cad0bc39b4d450c4a5adc3c9f206ea20002",
+  "sha256_piloto": "85e368cadfc6e4d59eafbf0da310842eb0a5d0ea115659185a20cb3896f7bc80"
+}
