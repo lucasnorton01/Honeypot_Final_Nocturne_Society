@@ -1,0 +1,22 @@
+{
+  "entregas_ok": 3110,
+  "entregas_err": 0,
+  "telegram": {
+    "conexion": {
+      "enviado": 200,
+      "rechazado": 0,
+      "sin_envio": 0,
+      "descartado": 0,
+      "mediana_ms": 800,
+      "max_ms": 1090
+    },
+    "resumen": {
+      "enviado": 200,
+      "rechazado": 0,
+      "sin_envio": 0,
+      "descartado": 0,
+      "mediana_ms": 808,
+      "max_ms": 1162
+    }
+  }
+}

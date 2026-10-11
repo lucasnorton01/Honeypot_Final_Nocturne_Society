@@ -1,0 +1,295 @@
+id,type,value,confidence,event_id,source,created_at
+1,ip,10.0.1.4,BAJO,1,cowrie,2026-10-11 00:45:00.186918+00
+2,credential,root:ubuntu,BAJO,5,cowrie,2026-10-11 00:45:00.243368+00
+3,command,chmod +x ./.3470676265721833074/sshd;nohup ./.3470676265721833074/sshd  &,BAJO,7,cowrie,2026-10-11 00:45:00.250368+00
+5,credential,root:aa147258,BAJO,13,cowrie,2026-10-11 00:45:00.43292+00
+6,command,"cd ~ && rm -rf .ssh && mkdir .ssh && echo ""ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArDp4cun2lhr4KUhBGE7VvAcwdli2a8dbnrTOrbMz1+5O73fcBOx8NVbUT0bUanUV9tJ2/9p7+vD0EpZ3Tz/+0kX34uAx1RV/75GVOmNx+9EuWOnvNoaJe0QXxziIg9eLBHpgLMuakb5+BgTFB+rKJAw9u9FSTDengvS8hX1kNFS4Mjux0hJOK8rvcEmPecjdySYMb66nylAKGwCEE6WEQHmd1mUPgHwGQ0hWCwsQk13yCGPK5w6hYp5zYkFnvlC8hGmd4Ww+u97k6pfTGTUbJk14ujvcD9iUKQTTWYYjIIu5PmUux5bsZ0R4WFwdIe6+i6rBLAsPKgAySVKPRK+oRw== mdrfckr"">>.ssh/authorized_keys && chmod -R go= ~/.ssh && cd ~",BAJO,18,cowrie,2026-10-11 00:45:00.451791+00
+8,credential,root:Aa123456789,BAJO,26,cowrie,2026-10-11 00:45:00.471254+00
+11,credential,root:1@admin,BAJO,38,cowrie,2026-10-11 00:45:00.526458+00
+14,credential,root:root,BAJO,49,cowrie,2026-10-11 00:45:00.550326+00
+15,command,/bin/busybox cat /proc/self/exe || cat /proc/self/exe,BAJO,62,cowrie,2026-10-11 00:45:00.577692+00
+20,credential,root:fuckyou1,BAJO,90,cowrie,2026-10-11 00:45:00.651719+00
+23,credential,root:server@2021,BAJO,102,cowrie,2026-10-11 00:45:00.683181+00
+26,credential,root:Root123456789,BAJO,114,cowrie,2026-10-11 00:45:00.711893+00
+32,credential,root:Aa123321,BAJO,146,cowrie,2026-10-11 01:00:00.198651+00
+35,credential,root:admin,BAJO,158,cowrie,2026-10-11 01:00:00.225599+00
+36,command,cat /proc/mounts; /bin/busybox PEEZO,BAJO,167,cowrie,2026-10-11 01:00:00.249785+00
+37,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox PEEZO,BAJO,168,cowrie,2026-10-11 01:00:00.252879+00
+38,command,tftp; wget; /bin/busybox PEEZO,BAJO,169,cowrie,2026-10-11 01:00:00.254871+00
+39,command,/bin/busybox PEEZO,BAJO,171,cowrie,2026-10-11 01:00:00.258848+00
+41,credential,root:zaq1@WSX,BAJO,179,cowrie,2026-10-11 01:00:00.274786+00
+44,credential,root:jelszo123,BAJO,190,cowrie,2026-10-11 01:00:00.295454+00
+47,credential,root:1977,BAJO,203,cowrie,2026-10-11 01:00:00.327135+00
+49,command,"echo ""root:7eQkXrijVS00""|chpasswd|bash",BAJO,209,cowrie,2026-10-11 01:00:00.340957+00
+50,command,"echo ""root:uikUtbpxqFBR""|chpasswd|bash",BAJO,226,cowrie,2026-10-11 01:00:00.37585+00
+52,credential,root:Aa111111.,BAJO,236,cowrie,2026-10-11 01:00:00.395444+00
+55,credential,root:test123+,BAJO,248,cowrie,2026-10-11 01:00:00.420714+00
+58,credential,root:admin_2024,BAJO,260,cowrie,2026-10-11 01:00:00.446353+00
+61,credential,root:QQ123456,BAJO,272,cowrie,2026-10-11 01:00:00.471153+00
+64,credential,root:147896325,BAJO,284,cowrie,2026-10-11 01:00:00.495364+00
+67,credential,root:1,BAJO,296,cowrie,2026-10-11 01:15:00.209641+00
+69,credential,root:bugaosuni,BAJO,305,cowrie,2026-10-11 01:15:00.227471+00
+72,credential,root:merda123,BAJO,317,cowrie,2026-10-11 01:15:00.258298+00
+75,credential,root:---fuck_you----,BAJO,329,cowrie,2026-10-11 01:15:00.284109+00
+77,credential,root:p@55w0rd,BAJO,337,cowrie,2026-10-11 01:15:00.300306+00
+80,credential,root:123456@Ab,BAJO,350,cowrie,2026-10-11 01:15:00.326053+00
+82,command,"echo ""root:nih8akaeqIAC""|chpasswd|bash",BAJO,356,cowrie,2026-10-11 01:15:00.338888+00
+83,command,"echo ""root:EPRxq0J9jU23""|chpasswd|bash",BAJO,373,cowrie,2026-10-11 01:15:00.372534+00
+84,command,"echo ""root:5JboiKQsgfeL""|chpasswd|bash",BAJO,375,cowrie,2026-10-11 01:15:00.376739+00
+85,command,"echo ""root:btPaXoIE4IMN""|chpasswd|bash",BAJO,377,cowrie,2026-10-11 01:15:00.381259+00
+86,command,"echo ""root:UfoAdQuMsmOM""|chpasswd|bash",BAJO,379,cowrie,2026-10-11 01:15:00.385219+00
+87,command,"echo ""root:Em5fndCFE7ia""|chpasswd|bash",BAJO,381,cowrie,2026-10-11 01:15:00.389486+00
+88,command,"echo ""root:dF6MID9lAZAr""|chpasswd|bash",BAJO,383,cowrie,2026-10-11 01:15:00.394478+00
+90,credential,root:Asd@123123123,BAJO,393,cowrie,2026-10-11 01:15:00.41555+00
+95,credential,root:tomas,BAJO,415,cowrie,2026-10-11 01:15:00.458957+00
+98,credential,root:PAssw0rd,BAJO,427,cowrie,2026-10-11 01:15:00.482322+00
+101,credential,root:password88,BAJO,439,cowrie,2026-10-11 01:30:00.294672+00
+104,credential,root:abc@2024,BAJO,451,cowrie,2026-10-11 01:30:00.486549+00
+106,command,"echo ""root:lqCpErDGCfHm""|chpasswd|bash",BAJO,457,cowrie,2026-10-11 01:30:00.514286+00
+109,command,cat /bin/ls|more,BAJO,500,cowrie,2026-10-11 01:30:00.612801+00
+110,command,cat /bin/ls|head -n 1,BAJO,501,cowrie,2026-10-11 01:30:00.614822+00
+112,credential,root:zhangwei,BAJO,508,cowrie,2026-10-11 01:30:00.628992+00
+115,credential,root:qqq123,BAJO,519,cowrie,2026-10-11 01:30:00.652752+00
+118,credential,root:Abc258369,BAJO,532,cowrie,2026-10-11 01:30:00.681578+00
+121,credential,root:Qq123456,BAJO,544,cowrie,2026-10-11 01:30:00.706037+00
+123,command,"echo ""root:qHUm5oSSgGfk""|chpasswd|bash",BAJO,550,cowrie,2026-10-11 01:30:00.719521+00
+125,credential,root:aquario,BAJO,575,cowrie,2026-10-11 01:30:00.768938+00
+126,command,cat /proc/mounts; /bin/busybox CWQQZ,BAJO,584,cowrie,2026-10-11 01:30:00.787032+00
+127,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox CWQQZ,BAJO,585,cowrie,2026-10-11 01:30:00.788993+00
+128,command,tftp; wget; /bin/busybox CWQQZ,BAJO,586,cowrie,2026-10-11 01:30:00.791091+00
+129,command,/bin/busybox CWQQZ,BAJO,588,cowrie,2026-10-11 01:30:00.795216+00
+131,credential,root:123456,BAJO,594,cowrie,2026-10-11 01:30:00.80713+00
+133,credential,root:------fuck------,BAJO,605,cowrie,2026-10-11 01:30:00.829293+00
+135,credential,root:123456abc,BAJO,614,cowrie,2026-10-11 01:45:00.241762+00
+141,credential,root:mark,BAJO,646,cowrie,2026-10-11 01:45:00.311123+00
+144,credential,root:novogene2017,BAJO,658,cowrie,2026-10-11 01:45:00.337841+00
+147,credential,root:123QweasD,BAJO,670,cowrie,2026-10-11 01:45:00.362637+00
+149,command,"echo ""root:s1zKaMVTUgWP""|chpasswd|bash",BAJO,676,cowrie,2026-10-11 01:45:00.375192+00
+152,command,cat /proc/mounts; /bin/busybox TIEES,BAJO,710,cowrie,2026-10-11 01:45:00.44353+00
+153,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox TIEES,BAJO,711,cowrie,2026-10-11 01:45:00.445772+00
+154,command,tftp; wget; /bin/busybox TIEES,BAJO,712,cowrie,2026-10-11 01:45:00.447983+00
+155,command,/bin/busybox TIEES,BAJO,714,cowrie,2026-10-11 01:45:00.452248+00
+157,credential,root:dubin@19820120,BAJO,722,cowrie,2026-10-11 01:45:00.46835+00
+160,credential,root:Qwertyu1,BAJO,735,cowrie,2026-10-11 01:45:00.499371+00
+165,credential,root:zsun1188,BAJO,755,cowrie,2026-10-11 01:45:00.54371+00
+166,command,cat /proc/mounts; /bin/busybox HFBWV,BAJO,764,cowrie,2026-10-11 01:45:00.562563+00
+167,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox HFBWV,BAJO,765,cowrie,2026-10-11 01:45:00.564699+00
+168,command,tftp; wget; /bin/busybox HFBWV,BAJO,766,cowrie,2026-10-11 01:45:00.566851+00
+169,command,/bin/busybox HFBWV,BAJO,768,cowrie,2026-10-11 01:45:00.571988+00
+171,credential,root:12345678x,BAJO,776,cowrie,2026-10-11 02:00:00.242211+00
+174,credential,root:Kk123456789,BAJO,788,cowrie,2026-10-11 02:00:00.266206+00
+176,command,"echo ""root:LgN9sAjGwHdD""|chpasswd|bash",BAJO,794,cowrie,2026-10-11 02:00:00.27879+00
+180,credential,root:zxc741,BAJO,829,cowrie,2026-10-11 02:00:00.357206+00
+183,credential,root:family,BAJO,841,cowrie,2026-10-11 02:00:00.386923+00
+189,credential,root:Server2023,BAJO,873,cowrie,2026-10-11 02:00:00.553125+00
+192,credential,root:test88,BAJO,885,cowrie,2026-10-11 02:00:00.580263+00
+195,credential,root:pakistan92,BAJO,897,cowrie,2026-10-11 02:00:00.609207+00
+197,command,"echo ""root:z4NEDDYeeere""|chpasswd|bash",BAJO,903,cowrie,2026-10-11 02:00:00.622137+00
+199,credential,root:admin2024,BAJO,927,cowrie,2026-10-11 02:00:00.671924+00
+202,credential,root:oelinux1234,BAJO,940,cowrie,2026-10-11 02:15:00.210513+00
+203,command,cat /proc/mounts; /bin/busybox YACBA,BAJO,949,cowrie,2026-10-11 02:15:00.228243+00
+204,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox YACBA,BAJO,950,cowrie,2026-10-11 02:15:00.230403+00
+205,command,tftp; wget; /bin/busybox YACBA,BAJO,951,cowrie,2026-10-11 02:15:00.23234+00
+206,command,/bin/busybox YACBA,BAJO,953,cowrie,2026-10-11 02:15:00.236438+00
+208,credential,root:game1234,BAJO,964,cowrie,2026-10-11 02:15:00.261872+00
+211,credential,root:emporium,BAJO,975,cowrie,2026-10-11 02:15:00.284323+00
+214,credential,root:1q2w3e...,BAJO,985,cowrie,2026-10-11 02:15:00.305706+00
+223,command,cat /proc/mounts; /bin/busybox PYDGZ,BAJO,1027,cowrie,2026-10-11 02:15:00.395495+00
+224,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox PYDGZ,BAJO,1028,cowrie,2026-10-11 02:15:00.397581+00
+225,command,tftp; wget; /bin/busybox PYDGZ,BAJO,1029,cowrie,2026-10-11 02:15:00.40001+00
+226,command,/bin/busybox PYDGZ,BAJO,1031,cowrie,2026-10-11 02:15:00.405046+00
+228,credential,root:ubuntu12,BAJO,1039,cowrie,2026-10-11 02:15:00.423778+00
+231,credential,root:-,BAJO,1051,cowrie,2026-10-11 02:15:00.448637+00
+233,credential,root:123.com,BAJO,1060,cowrie,2026-10-11 02:15:00.46732+00
+238,credential,root:yz123456@,BAJO,1082,cowrie,2026-10-11 02:30:00.213726+00
+241,credential,root:Admin@2022,BAJO,1094,cowrie,2026-10-11 02:30:00.265476+00
+244,credential,admin:admin,BAJO,1106,cowrie,2026-10-11 02:30:00.384302+00
+247,credential,root:abc123456@,BAJO,1126,cowrie,2026-10-11 02:30:00.428809+00
+250,credential,root:root321321,BAJO,1139,cowrie,2026-10-11 02:30:00.460625+00
+253,credential,root:Huawei2023,BAJO,1151,cowrie,2026-10-11 02:30:00.484562+00
+256,credential,root:Global@123,BAJO,1163,cowrie,2026-10-11 02:30:00.508776+00
+259,credential,user:user,BAJO,1175,cowrie,2026-10-11 02:30:00.533625+00
+260,command,cat /proc/mounts; /bin/busybox YWBBR,BAJO,1184,cowrie,2026-10-11 02:30:00.551796+00
+261,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox YWBBR,BAJO,1185,cowrie,2026-10-11 02:30:00.553964+00
+262,command,tftp; wget; /bin/busybox YWBBR,BAJO,1186,cowrie,2026-10-11 02:30:00.556192+00
+263,command,/bin/busybox YWBBR,BAJO,1188,cowrie,2026-10-11 02:30:00.560541+00
+265,credential,root:123qwe123,BAJO,1196,cowrie,2026-10-11 02:30:00.578307+00
+268,credential,root:34erdfcv,BAJO,1208,cowrie,2026-10-11 02:45:00.239648+00
+270,command,"echo ""root:IFIB9ghChQXz""|chpasswd|bash",BAJO,1214,cowrie,2026-10-11 02:45:00.253834+00
+274,credential,root:ampulamare,BAJO,1249,cowrie,2026-10-11 02:45:00.33941+00
+276,credential,root:1234321,BAJO,1258,cowrie,2026-10-11 02:45:00.360821+00
+279,credential,root:ms123456,BAJO,1287,cowrie,2026-10-11 02:45:00.422379+00
+286,credential,root:abc123ABC,BAJO,1317,cowrie,2026-10-11 02:45:00.48466+00
+289,credential,root:abc159,BAJO,1328,cowrie,2026-10-11 02:45:00.508844+00
+292,credential,root:Admin123@,BAJO,1341,cowrie,2026-10-11 02:45:00.536608+00
+294,command,"echo ""root:mVDzAe2ZreeT""|chpasswd|bash",BAJO,1347,cowrie,2026-10-11 02:45:00.548882+00
+296,credential,root:node,BAJO,1372,cowrie,2026-10-11 03:00:00.278422+00
+298,credential,root:202020,BAJO,1381,cowrie,2026-10-11 03:00:00.386316+00
+301,credential,root:Azerty2021,BAJO,1393,cowrie,2026-10-11 03:00:00.502042+00
+307,credential,root:qwer@2021,BAJO,1425,cowrie,2026-10-11 03:00:00.573176+00
+309,command,"echo ""root:wuX7SVxvKVnX""|chpasswd|bash",BAJO,1431,cowrie,2026-10-11 03:00:00.586409+00
+310,command,"echo ""root:0DNVse9RdIfi""|chpasswd|bash",BAJO,1448,cowrie,2026-10-11 03:00:00.630984+00
+312,credential,root:test12345678,BAJO,1458,cowrie,2026-10-11 03:00:00.656708+00
+315,credential,root:Hb123456789,BAJO,1470,cowrie,2026-10-11 03:00:00.684394+00
+318,credential,root:cluster,BAJO,1482,cowrie,2026-10-11 03:00:00.710512+00
+321,credential,root:2002,BAJO,1494,cowrie,2026-10-11 03:00:00.733428+00
+323,command,"echo ""root:VvxD8aiW1l6m""|chpasswd|bash",BAJO,1500,cowrie,2026-10-11 03:00:00.746552+00
+325,credential,root:1001chin,BAJO,1525,cowrie,2026-10-11 03:00:00.816904+00
+326,command,cat /proc/mounts; /bin/busybox JWHPD,BAJO,1534,cowrie,2026-10-11 03:00:00.834328+00
+327,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox JWHPD,BAJO,1535,cowrie,2026-10-11 03:00:00.836229+00
+328,command,tftp; wget; /bin/busybox JWHPD,BAJO,1536,cowrie,2026-10-11 03:00:00.838278+00
+329,command,/bin/busybox JWHPD,BAJO,1538,cowrie,2026-10-11 03:00:00.8423+00
+331,credential,root:Hb@123456,BAJO,1546,cowrie,2026-10-11 03:15:00.189591+00
+334,credential,root:sa123456,BAJO,1558,cowrie,2026-10-11 03:15:00.217535+00
+337,credential,root:cat1029,BAJO,1570,cowrie,2026-10-11 03:15:00.247729+00
+338,command,cat /proc/mounts; /bin/busybox IIHPP,BAJO,1579,cowrie,2026-10-11 03:15:00.265647+00
+339,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox IIHPP,BAJO,1580,cowrie,2026-10-11 03:15:00.267446+00
+340,command,tftp; wget; /bin/busybox IIHPP,BAJO,1581,cowrie,2026-10-11 03:15:00.26942+00
+341,command,/bin/busybox IIHPP,BAJO,1583,cowrie,2026-10-11 03:15:00.273112+00
+343,credential,root:7ujMko0vizxv,BAJO,1591,cowrie,2026-10-11 03:15:00.288167+00
+344,command,cat /proc/mounts; /bin/busybox MZDAM,BAJO,1600,cowrie,2026-10-11 03:15:00.30778+00
+345,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox MZDAM,BAJO,1601,cowrie,2026-10-11 03:15:00.309742+00
+346,command,tftp; wget; /bin/busybox MZDAM,BAJO,1602,cowrie,2026-10-11 03:15:00.311994+00
+347,command,/bin/busybox MZDAM,BAJO,1604,cowrie,2026-10-11 03:15:00.316201+00
+352,credential,root:zabbix123,BAJO,1631,cowrie,2026-10-11 03:15:00.371746+00
+354,command,"echo ""root:rtzkokBQpZqB""|chpasswd|bash",BAJO,1638,cowrie,2026-10-11 03:15:00.385926+00
+356,credential,root:Lx123456,BAJO,1660,cowrie,2026-10-11 03:15:00.432725+00
+359,credential,root:P@55w0rd1,BAJO,1672,cowrie,2026-10-11 03:15:00.457262+00
+362,credential,root:w123456789,BAJO,1680,cowrie,2026-10-11 03:15:00.475844+00
+365,credential,root:Aa@12345,BAJO,1696,cowrie,2026-10-11 03:15:00.514279+00
+368,credential,root:optimus,BAJO,1707,cowrie,2026-10-11 03:30:00.253135+00
+374,credential,root:1qq2w3e4r5t,BAJO,1740,cowrie,2026-10-11 03:30:00.329074+00
+376,command,"echo ""root:CSRAlPFQXRNS""|chpasswd|bash",BAJO,1746,cowrie,2026-10-11 03:30:00.344378+00
+379,command,ls -la /dev/ttyGSM* /dev/ttyUSB-mod* /var/spool/sms/* /var/log/smsd.log /etc/smsd.conf* /usr/bin/qmuxd /var/qmux_connect_socket /etc/config/simman /dev/modem* /var/config/sms/*,BAJO,1780,cowrie,2026-10-11 03:30:00.417803+00
+381,credential,root:Huawei_123,BAJO,1788,cowrie,2026-10-11 03:30:00.434833+00
+387,credential,root:zxczxc123,BAJO,1819,cowrie,2026-10-11 03:30:00.507727+00
+390,credential,root:tornado,BAJO,1832,cowrie,2026-10-11 03:30:00.538474+00
+392,command,"echo ""root:pLAxl93marfK""|chpasswd|bash",BAJO,1838,cowrie,2026-10-11 03:30:00.551199+00
+394,credential,root:cc,BAJO,1863,cowrie,2026-10-11 03:30:00.606618+00
+397,credential,root:zhu88jie,BAJO,1875,cowrie,2026-10-11 03:30:00.631321+00
+400,credential,root:zhang@123,BAJO,1887,cowrie,2026-10-11 03:45:00.26438+00
+403,credential,root:dreambox,BAJO,1899,cowrie,2026-10-11 03:45:00.292124+00
+404,command,cat /proc/mounts; /bin/busybox YVJBQ,BAJO,1908,cowrie,2026-10-11 03:45:00.31651+00
+405,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox YVJBQ,BAJO,1909,cowrie,2026-10-11 03:45:00.318677+00
+406,command,tftp; wget; /bin/busybox YVJBQ,BAJO,1910,cowrie,2026-10-11 03:45:00.320926+00
+407,command,/bin/busybox YVJBQ,BAJO,1912,cowrie,2026-10-11 03:45:00.324907+00
+412,credential,root:1234qwerty,BAJO,1937,cowrie,2026-10-11 03:45:00.378039+00
+415,credential,root:lenovo123,BAJO,1949,cowrie,2026-10-11 03:45:00.40336+00
+418,credential,root:124,BAJO,1961,cowrie,2026-10-11 03:45:00.429399+00
+421,credential,root:Sk123456,BAJO,1973,cowrie,2026-10-11 03:45:00.452824+00
+424,credential,root:Abc123456@,BAJO,1985,cowrie,2026-10-11 03:45:00.483669+00
+427,credential,root:1qasw23edfr4,BAJO,1997,cowrie,2026-10-11 03:45:00.507357+00
+430,credential,root:pearljam1,BAJO,2009,cowrie,2026-10-11 03:45:00.532054+00
+436,credential,root:gitlab,BAJO,2042,cowrie,2026-10-11 04:00:00.289757+00
+444,credential,root:@dmin2022,BAJO,2084,cowrie,2026-10-11 04:00:00.471624+00
+447,credential,root:123456mm,BAJO,2096,cowrie,2026-10-11 04:00:00.504752+00
+449,command,"echo ""root:01lBl98Jbr5T""|chpasswd|bash",BAJO,2102,cowrie,2026-10-11 04:00:00.518586+00
+451,credential,root:Abcd@123,BAJO,2126,cowrie,2026-10-11 04:00:00.582681+00
+454,credential,root:123.com.,BAJO,2139,cowrie,2026-10-11 04:00:00.615335+00
+460,credential,root:jvbzd,BAJO,2172,cowrie,2026-10-11 04:00:00.686265+00
+461,command,cat /proc/mounts; /bin/busybox YIDAX,BAJO,2180,cowrie,2026-10-11 04:00:00.703833+00
+462,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox YIDAX,BAJO,2181,cowrie,2026-10-11 04:00:00.705961+00
+463,command,tftp; wget; /bin/busybox YIDAX,BAJO,2182,cowrie,2026-10-11 04:00:00.708042+00
+464,command,/bin/busybox YIDAX,BAJO,2184,cowrie,2026-10-11 04:00:00.71228+00
+467,command,cat /proc/mounts; /bin/busybox BXHBA,BAJO,2201,cowrie,2026-10-11 04:15:00.187274+00
+468,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox BXHBA,BAJO,2202,cowrie,2026-10-11 04:15:00.189404+00
+469,command,tftp; wget; /bin/busybox BXHBA,BAJO,2203,cowrie,2026-10-11 04:15:00.191693+00
+470,command,/bin/busybox BXHBA,BAJO,2205,cowrie,2026-10-11 04:15:00.198358+00
+477,credential,root:Qwer24680,BAJO,2234,cowrie,2026-10-11 04:15:00.26699+00
+480,credential,root:Root@000,BAJO,2246,cowrie,2026-10-11 04:15:00.295925+00
+483,credential,root:123qweas,BAJO,2258,cowrie,2026-10-11 04:15:00.321473+00
+486,credential,root:fy@123456,BAJO,2270,cowrie,2026-10-11 04:15:00.345812+00
+489,credential,root:1231231,BAJO,2282,cowrie,2026-10-11 04:15:00.370056+00
+492,credential,root:siteadminpass1,BAJO,2294,cowrie,2026-10-11 04:15:00.394028+00
+495,credential,root:lala,BAJO,2306,cowrie,2026-10-11 04:15:00.418145+00
+498,credential,root:Cs123456,BAJO,2318,cowrie,2026-10-11 04:30:00.241696+00
+501,credential,root:Admin1234.,BAJO,2330,cowrie,2026-10-11 04:30:00.268763+00
+504,credential,root:Mm123123,BAJO,2342,cowrie,2026-10-11 04:30:00.296099+00
+507,credential,service:service,BAJO,2354,cowrie,2026-10-11 04:30:00.32081+00
+508,command,cat /proc/mounts; /bin/busybox LXONI,BAJO,2363,cowrie,2026-10-11 04:30:00.33846+00
+509,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox LXONI,BAJO,2364,cowrie,2026-10-11 04:30:00.340738+00
+510,command,tftp; wget; /bin/busybox LXONI,BAJO,2365,cowrie,2026-10-11 04:30:00.342737+00
+511,command,/bin/busybox LXONI,BAJO,2367,cowrie,2026-10-11 04:30:00.346668+00
+513,credential,root:abc.123,BAJO,2375,cowrie,2026-10-11 04:30:00.362035+00
+518,credential,root:maggieown,BAJO,2396,cowrie,2026-10-11 04:30:00.430041+00
+521,credential,root:Pw123456,BAJO,2408,cowrie,2026-10-11 04:30:00.540432+00
+524,credential,root:okokok,BAJO,2420,cowrie,2026-10-11 04:30:00.56981+00
+527,credential,root:realtek,BAJO,2432,cowrie,2026-10-11 04:30:00.602637+00
+528,command,cat /proc/mounts; /bin/busybox EIDBG,BAJO,2441,cowrie,2026-10-11 04:30:00.625734+00
+529,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox EIDBG,BAJO,2442,cowrie,2026-10-11 04:30:00.628687+00
+530,command,tftp; wget; /bin/busybox EIDBG,BAJO,2443,cowrie,2026-10-11 04:30:00.631386+00
+531,command,/bin/busybox EIDBG,BAJO,2445,cowrie,2026-10-11 04:30:00.636095+00
+533,credential,root:123123.com,BAJO,2453,cowrie,2026-10-11 04:45:00.213477+00
+539,credential,root:user,BAJO,2477,cowrie,2026-10-11 04:45:00.2736+00
+540,command,cat /proc/mounts; /bin/busybox AXNUM,BAJO,2486,cowrie,2026-10-11 04:45:00.291207+00
+541,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox AXNUM,BAJO,2487,cowrie,2026-10-11 04:45:00.293863+00
+542,command,tftp; wget; /bin/busybox AXNUM,BAJO,2488,cowrie,2026-10-11 04:45:00.296381+00
+543,command,/bin/busybox AXNUM,BAJO,2490,cowrie,2026-10-11 04:45:00.302221+00
+545,credential,root:blob,BAJO,2498,cowrie,2026-10-11 04:45:00.319303+00
+550,command,cat /proc/mounts; /bin/busybox TZFKF,BAJO,2526,cowrie,2026-10-11 04:45:00.379692+00
+551,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox TZFKF,BAJO,2527,cowrie,2026-10-11 04:45:00.382157+00
+552,command,tftp; wget; /bin/busybox TZFKF,BAJO,2528,cowrie,2026-10-11 04:45:00.384415+00
+553,command,/bin/busybox TZFKF,BAJO,2530,cowrie,2026-10-11 04:45:00.388699+00
+554,command,cat /proc/mounts; /bin/busybox PGZJF,BAJO,2532,cowrie,2026-10-11 04:45:00.392903+00
+555,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox PGZJF,BAJO,2533,cowrie,2026-10-11 04:45:00.394833+00
+556,command,tftp; wget; /bin/busybox PGZJF,BAJO,2534,cowrie,2026-10-11 04:45:00.396824+00
+557,command,/bin/busybox PGZJF,BAJO,2535,cowrie,2026-10-11 04:45:00.399006+00
+559,credential,root:Wj123456.,BAJO,2542,cowrie,2026-10-11 04:45:00.412729+00
+561,command,"echo ""root:uq7b5bThnict""|chpasswd|bash",BAJO,2548,cowrie,2026-10-11 04:45:00.425703+00
+562,command,"echo ""root:hmEfvmNDV5el""|chpasswd|bash",BAJO,2565,cowrie,2026-10-11 04:45:00.461796+00
+563,command,"echo ""root:QKAeGEMG0rvu""|chpasswd|bash",BAJO,2567,cowrie,2026-10-11 04:45:00.465846+00
+564,command,"echo ""root:2SOZqHtNdHVQ""|chpasswd|bash",BAJO,2569,cowrie,2026-10-11 04:45:00.469828+00
+565,command,"echo ""root:pH9mhg6GM6tW""|chpasswd|bash",BAJO,2571,cowrie,2026-10-11 04:45:00.47391+00
+566,command,"echo ""root:OLZISr9DUXJB""|chpasswd|bash",BAJO,2573,cowrie,2026-10-11 04:45:00.477722+00
+567,command,"echo ""root:HKHLbIIWfffQ""|chpasswd|bash",BAJO,2575,cowrie,2026-10-11 04:45:00.481809+00
+568,command,"echo ""root:KPMtZJn3PPez""|chpasswd|bash",BAJO,2577,cowrie,2026-10-11 04:45:00.486214+00
+569,command,"echo ""root:15xJs9MB0LKk""|chpasswd|bash",BAJO,2579,cowrie,2026-10-11 04:45:00.490943+00
+570,command,"echo ""root:JudWUs4yNW2R""|chpasswd|bash",BAJO,2581,cowrie,2026-10-11 04:45:00.495765+00
+572,credential,root:3edcXSW@,BAJO,2591,cowrie,2026-10-11 04:45:00.518645+00
+575,credential,root:Sz123456,BAJO,2603,cowrie,2026-10-11 04:45:00.545379+00
+582,command,cat /proc/mounts; /bin/busybox HRZRE,BAJO,2636,cowrie,2026-10-11 05:00:00.219691+00
+583,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox HRZRE,BAJO,2637,cowrie,2026-10-11 05:00:00.221916+00
+584,command,tftp; wget; /bin/busybox HRZRE,BAJO,2638,cowrie,2026-10-11 05:00:00.224046+00
+585,command,/bin/busybox HRZRE,BAJO,2640,cowrie,2026-10-11 05:00:00.228164+00
+587,credential,root:password@123,BAJO,2648,cowrie,2026-10-11 05:00:00.253836+00
+590,credential,root:Aa123123.,BAJO,2660,cowrie,2026-10-11 05:00:00.302627+00
+593,credential,root:Egypt__,BAJO,2672,cowrie,2026-10-11 05:00:00.421087+00
+596,credential,root:Vilas123,BAJO,2684,cowrie,2026-10-11 05:00:00.449698+00
+599,credential,root:tata,BAJO,2696,cowrie,2026-10-11 05:00:00.476446+00
+602,credential,root:Hf@123456,BAJO,2708,cowrie,2026-10-11 05:00:00.507685+00
+605,credential,root:root12345,BAJO,2720,cowrie,2026-10-11 05:00:00.534869+00
+607,command,"echo ""root:mwz7lOwqZKEn""|chpasswd|bash",BAJO,2726,cowrie,2026-10-11 05:00:00.5472+00
+609,credential,root:1qazxcde3,BAJO,2751,cowrie,2026-10-11 05:00:00.596926+00
+614,credential,root:hello1,BAJO,2772,cowrie,2026-10-11 05:15:00.205079+00
+617,credential,root:PaSsWoRd0,BAJO,2785,cowrie,2026-10-11 05:15:00.233136+00
+620,credential,root:porsche911,BAJO,2797,cowrie,2026-10-11 05:15:00.264557+00
+623,credential,root:sanane123,BAJO,2808,cowrie,2026-10-11 05:15:00.286583+00
+626,credential,root:master123,BAJO,2821,cowrie,2026-10-11 05:15:00.316126+00
+630,command,cat /proc/mounts; /bin/busybox ESZXQ,BAJO,2842,cowrie,2026-10-11 05:15:00.361863+00
+631,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox ESZXQ,BAJO,2843,cowrie,2026-10-11 05:15:00.363983+00
+632,command,tftp; wget; /bin/busybox ESZXQ,BAJO,2844,cowrie,2026-10-11 05:15:00.366007+00
+633,command,/bin/busybox ESZXQ,BAJO,2846,cowrie,2026-10-11 05:15:00.370126+00
+635,credential,root:Yq123456,BAJO,2854,cowrie,2026-10-11 05:15:00.386357+00
+637,command,"echo ""root:PIa3kMMP8ZPJ""|chpasswd|bash",BAJO,2860,cowrie,2026-10-11 05:15:00.399889+00
+642,credential,root:12345Aa@,BAJO,2905,cowrie,2026-10-11 05:15:00.496805+00
+648,credential,root:wk123456,BAJO,2937,cowrie,2026-10-11 05:30:00.209269+00
+653,credential,root:letmein1234,BAJO,2959,cowrie,2026-10-11 05:30:00.255018+00
+656,credential,root:qazxsw,BAJO,2971,cowrie,2026-10-11 05:30:00.283159+00
+657,command,cat /proc/mounts; /bin/busybox VPLCO,BAJO,2980,cowrie,2026-10-11 05:30:00.300543+00
+658,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox VPLCO,BAJO,2981,cowrie,2026-10-11 05:30:00.302757+00
+659,command,tftp; wget; /bin/busybox VPLCO,BAJO,2982,cowrie,2026-10-11 05:30:00.304745+00
+660,command,/bin/busybox VPLCO,BAJO,2984,cowrie,2026-10-11 05:30:00.308731+00
+662,credential,root:Wj123456@,BAJO,2992,cowrie,2026-10-11 05:30:00.324437+00
+665,credential,root:alpine,BAJO,3004,cowrie,2026-10-11 05:30:00.350051+00
+666,command,cat /proc/mounts; /bin/busybox EQUCR,BAJO,3013,cowrie,2026-10-11 05:30:00.368462+00
+667,command,cd /dev/shm; cat .s || cp /bin/echo .s; /bin/busybox EQUCR,BAJO,3014,cowrie,2026-10-11 05:30:00.370558+00
+668,command,tftp; wget; /bin/busybox EQUCR,BAJO,3015,cowrie,2026-10-11 05:30:00.372463+00
+669,command,/bin/busybox EQUCR,BAJO,3017,cowrie,2026-10-11 05:30:00.377057+00
+671,credential,root:12345678m,BAJO,3025,cowrie,2026-10-11 05:30:00.392746+00
+673,command,"echo ""root:4yB1KXm8QGq6""|chpasswd|bash",BAJO,3031,cowrie,2026-10-11 05:30:00.405816+00
+674,command,"echo ""root:LyZmNVYg4ydl""|chpasswd|bash",BAJO,3047,cowrie,2026-10-11 05:30:00.437746+00
+675,command,"echo ""root:YEIPZ4Vx2xJj""|chpasswd|bash",BAJO,3050,cowrie,2026-10-11 05:30:00.443547+00
+677,credential,root:ronaldo2,BAJO,3060,cowrie,2026-10-11 05:30:00.462477+00
+680,credential,root:qwert@12345,BAJO,3072,cowrie,2026-10-11 05:30:00.488959+00
+683,credential,root:Asd123,BAJO,3084,cowrie,2026-10-11 05:30:00.514441+00
+685,command,"echo ""root:YRqfmS54Vy86""|chpasswd|bash",BAJO,3090,cowrie,2026-10-11 05:30:00.526858+00

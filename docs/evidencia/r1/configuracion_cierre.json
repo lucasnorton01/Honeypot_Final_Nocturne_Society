@@ -1,0 +1,67 @@
+{
+  "servicios": [
+    {
+      "servicio": "cowrie",
+      "estado": "running",
+      "salud": "healthy",
+      "publicados": []
+    },
+    {
+      "servicio": "cowrie-proxy",
+      "estado": "running",
+      "salud": "healthy",
+      "publicados": [
+        "127.0.0.1:2222->2222",
+        "127.0.0.1:2323->2223"
+      ]
+    },
+    {
+      "servicio": "forwarder",
+      "estado": "running",
+      "salud": "healthy",
+      "publicados": []
+    },
+    {
+      "servicio": "log-reader",
+      "estado": "running",
+      "salud": "healthy",
+      "publicados": []
+    },
+    {
+      "servicio": "n8n",
+      "estado": "running",
+      "salud": "healthy",
+      "publicados": [
+        "127.0.0.1:5678->5678"
+      ]
+    },
+    {
+      "servicio": "postgres",
+      "estado": "running",
+      "salud": "healthy",
+      "publicados": []
+    }
+  ],
+  "redes": [
+    {
+      "red": "captura",
+      "internal": true
+    },
+    {
+      "red": "proceso",
+      "internal": true
+    },
+    {
+      "red": "datos",
+      "internal": true
+    },
+    {
+      "red": "entrada",
+      "internal": false
+    },
+    {
+      "red": "salida",
+      "internal": false
+    }
+  ]
+}

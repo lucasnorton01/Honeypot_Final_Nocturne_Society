@@ -1,0 +1,313 @@
+{
+  "ventana": {
+    "inicio": "2026-10-10 16:03:55",
+    "cierre": "2026-10-11 11:15:00"
+  },
+  "conteos": {
+    "eventos_cowrie": 3110,
+    "eventos_events": 3110,
+    "claves_distintas": 0,
+    "iocs": 294,
+    "ioc_sessions": 685,
+    "reportes": 1,
+    "error_log": 0
+  },
+  "reproduccion": {
+    "sesiones_reproducidas": 200,
+    "sesiones_con_login_exitoso_en_cowrie": 200,
+    "sesiones_emparejadas": 200,
+    "sin_pareja": [],
+    "estados": [
+      [
+        "ok",
+        200
+      ]
+    ],
+    "comandos_enviados": 1020,
+    "credenciales_coinciden": 200
+  },
+  "ingesta": {
+    "eventos_persistidos": "3110/3110 = 100.0 % (IC 95 % [99.9; 100.0])",
+    "claves_sin_par": 0,
+    "umbral": "100 % de los eventos de Cowrie persistidos en events, sin claves sin par",
+    "cumple": true
+  },
+  "captura": {
+    "exhaustividad_events": "1018/1020 = 99.8 % (IC 95 % [99.3; 99.9])",
+    "exhaustividad_log_cowrie": "1018/1020 = 99.8 % (IC 95 % [99.3; 99.9])",
+    "no_capturados_muestra": [
+      {
+        "idx": 33,
+        "comando": "cd /tmp || cd /var || cd /dev || cd /etc"
+      },
+      {
+        "idx": 33,
+        "comando": "cat /bin/ls|more"
+      }
+    ],
+    "umbral": "≥ 95 % de los comandos enviados aparecen como cowrie.command.input en events",
+    "cumple": true
+  },
+  "P1_descriptivo": {
+    "latencia_ms": {
+      "n": 3110,
+      "media": 1610.51,
+      "mediana": 2144.72,
+      "min": 347.2,
+      "max": 2936.72
+    },
+    "nota": "Sin umbral en R1: P1 ya tiene veredicto (lote L0)."
+  },
+  "P2": {
+    "criterio_estricto": "3110/3110 = 100.0 % (IC 95 % [99.9; 100.0])",
+    "fidelidad_con_cowrie": "3110/3110 = 100.0 % (IC 95 % [99.9; 100.0])",
+    "umbral": "ambas ≥ 80 %",
+    "cumple": true
+  },
+  "P3_prima": {
+    "sesiones_exitosas": 200,
+    "completitud": "200/200 = 100.0 % (IC 95 % [98.1; 100.0])",
+    "umbral": "≥ 70 % de las sesiones con login exitoso",
+    "cumple": true,
+    "incompletas": [],
+    "continuidad_event_id": "168/200 = 84.0 % (IC 95 % [78.3; 88.4])"
+  },
+  "indicadores_comando": {
+    "comandos_distintos_en_verdad": 133,
+    "iocs_tipo_comando": 133,
+    "catalogo": {
+      "precision": "133/133 = 100.0 % (IC 95 % [97.2; 100.0])",
+      "exhaustividad": "133/133 = 100.0 % (IC 95 % [97.2; 100.0])"
+    },
+    "por_sesion": {
+      "precision": "285/285 = 100.0 % (IC 95 % [98.7; 100.0])",
+      "exhaustividad": "285/285 = 100.0 % (IC 95 % [98.7; 100.0])"
+    },
+    "comandos_enviados_que_no_cumplen_el_patron": 735,
+    "primeras_palabras_mas_frecuentes": [
+      [
+        "cd",
+        139
+      ],
+      [
+        "uname",
+        77
+      ],
+      [
+        "cat",
+        65
+      ],
+      [
+        "rm",
+        42
+      ],
+      [
+        "sh",
+        37
+      ],
+      [
+        "shell",
+        37
+      ],
+      [
+        "enable",
+        37
+      ],
+      [
+        "system",
+        37
+      ],
+      [
+        "dd",
+        21
+      ],
+      [
+        "free",
+        21
+      ],
+      [
+        "crontab",
+        21
+      ],
+      [
+        "w",
+        21
+      ],
+      [
+        "top",
+        21
+      ],
+      [
+        "whoami",
+        21
+      ],
+      [
+        "lscpu",
+        21
+      ]
+    ],
+    "nota": "Sin umbral: se informan los valores. La verdad de referencia usa el patrón del propio extractor, por lo que mide su fidelidad a sus reglas, no si un comando es malicioso."
+  },
+  "descriptivo_attack": {
+    "sesiones_de_la_muestra_emparejadas": 200,
+    "sesiones_sin_tecnica_en_el_dataset": 8,
+    "tecnicas": [
+      {
+        "tecnica": "T1070 Indicator Removal",
+        "sesiones": 159,
+        "con_indicador_de_comando": 159
+      },
+      {
+        "tecnica": "T1222 File and Directory Permissions Modification",
+        "sesiones": 139,
+        "con_indicador_de_comando": 139
+      },
+      {
+        "tecnica": "T1098 Account Manipulation",
+        "sesiones": 139,
+        "con_indicador_de_comando": 139
+      },
+      {
+        "tecnica": "T1059 Command and Scripting Interpreter",
+        "sesiones": 61,
+        "con_indicador_de_comando": 60
+      },
+      {
+        "tecnica": "T1083 File and Directory Discovery",
+        "sesiones": 59,
+        "con_indicador_de_comando": 59
+      },
+      {
+        "tecnica": "T1082 System Information Discovery",
+        "sesiones": 42,
+        "con_indicador_de_comando": 42
+      },
+      {
+        "tecnica": "T1087 Account Discovery",
+        "sesiones": 36,
+        "con_indicador_de_comando": 23
+      },
+      {
+        "tecnica": "T1036 Masquerading",
+        "sesiones": 21,
+        "con_indicador_de_comando": 21
+      },
+      {
+        "tecnica": "T1105 Ingress Tool Transfer",
+        "sesiones": 21,
+        "con_indicador_de_comando": 21
+      },
+      {
+        "tecnica": "T1562 Impair Defenses",
+        "sesiones": 21,
+        "con_indicador_de_comando": 21
+      },
+      {
+        "tecnica": "T1053 Scheduled Task/Job",
+        "sesiones": 21,
+        "con_indicador_de_comando": 21
+      },
+      {
+        "tecnica": "T1057 Process Discovery",
+        "sesiones": 21,
+        "con_indicador_de_comando": 21
+      },
+      {
+        "tecnica": "T1016 System Network Configuration Discovery",
+        "sesiones": 17,
+        "con_indicador_de_comando": 17
+      },
+      {
+        "tecnica": "T1489 Service Stop",
+        "sesiones": 2,
+        "con_indicador_de_comando": 2
+      },
+      {
+        "tecnica": "T1424 Process Discovery",
+        "sesiones": 2,
+        "con_indicador_de_comando": 2
+      },
+      {
+        "tecnica": "T1564 Hide Artifacts",
+        "sesiones": 1,
+        "con_indicador_de_comando": 1
+      },
+      {
+        "tecnica": "T1005 Data from Local System",
+        "sesiones": 1,
+        "con_indicador_de_comando": 1
+      }
+    ],
+    "iocs_por_tipo": {
+      "ip": 1,
+      "credential": 160,
+      "command": 133
+    },
+    "nota": "El pipeline no etiqueta con técnicas ATT&CK: las técnicas son las que el dataset asigna a cada sesión. Se informan sin umbral."
+  },
+  "P3_calidad": {
+    "exactitud_catalogo": "294/294 = 100.0 % (IC 95 % [98.7; 100.0])",
+    "precision_atribucion": "685/685 = 100.0 % (IC 95 % [99.4; 100.0])",
+    "nota": "Informativo en R1 (sin umbral propio)."
+  },
+  "P4": {
+    "ejecuciones_report_generator": [
+      "2026-10-11 11:00:00.041 trigger success"
+    ],
+    "reportes_trigger": 1,
+    "disparo_produccion_0800_en_la_ventana": true,
+    "reporte_0800_guardado": true,
+    "cobertura": "200/200 = 100.0 % (IC 95 % [98.1; 100.0])",
+    "nota": "Se evalúa solo si el disparo de producción de las 08:00 ART cae dentro de la ventana; la cobertura queda garantizada por construcción (cada reporte abarca las 24 horas previas).",
+    "evaluable": true,
+    "cumple": true
+  },
+  "ejecuciones": {
+    "total": 3417,
+    "manuales_extractor_o_reportes": 0,
+    "extractor": {
+      "n": 76,
+      "error": 0,
+      "duracion_ms": {
+        "n": 76,
+        "media": 190.74,
+        "mediana": 43.5,
+        "min": 36,
+        "max": 813
+      }
+    }
+  },
+  "health_monitor": {
+    "ejecuciones": 230,
+    "en_error": 0,
+    "alertas": []
+  },
+  "configuracion_final": {
+    "fallas": [],
+    "cumple": true
+  },
+  "forwarder": {
+    "entregas_ok": 3110,
+    "entregas_err": 0,
+    "eventos_cowrie": 3110,
+    "telegram": {
+      "conexion": {
+        "enviado": 200,
+        "rechazado": 0,
+        "sin_envio": 0,
+        "descartado": 0,
+        "mediana_ms": 800,
+        "max_ms": 1090
+      },
+      "resumen": {
+        "enviado": 200,
+        "rechazado": 0,
+        "sin_envio": 0,
+        "descartado": 0,
+        "mediana_ms": 808,
+        "max_ms": 1162
+      }
+    },
+    "nota": "Sin umbral: se informa lo observado."
+  }
+}
