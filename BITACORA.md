@@ -610,3 +610,8 @@ Ventana del 02/10/2026, de 13:47:30 a 14:55:10 UTC (10:47:30 a 11:55:10 ART), ce
 ### [2026-10-11] Se agrega la tesis v79 y se actualiza el README (sin tag nuevo)
 - Se agregan `docs/tesis/Tesis_Nocturne_Society_v79.pdf` (SHA-256 `d8841f14872b0b0894515f3bd34619b8b6500e0d2c1f0ae98dc3246b9b7f7bd0`) y `.docx` (`0c336143cc5da239e0e25126c4e1bed833d2d3cec011577cf601705cb125da4e`), con R1 y la réplica C, y `docs/tesis/VERSIONES.md`, que distingue la v77 (entregada y congelada) de la v79. No se modifican `VERSION_CONGELADA.txt` ni los archivos de la v77, y no se crea ningún tag.
 - El README actualiza el estado del repositorio y la estructura (B1c, B4, R1, réplica C y la tesis). Las instrucciones de puesta en marcha no cambian. No cambia ningún workflow, esquema, configuración ni evidencia anterior.
+
+### [2026-10-11] Congelado de la tesis v79 como versión final (tag `Honeypot_Final_v79_entrega`)
+- Se congela la v79 (PDF `d8841f14872b0b0894515f3bd34619b8b6500e0d2c1f0ae98dc3246b9b7f7bd0`, DOCX `0c336143cc5da239e0e25126c4e1bed833d2d3cec011577cf601705cb125da4e`, 125 páginas) con `docs/tesis/VERSION_CONGELADA_v79.txt`; el tag identifica el commit que contiene el documento. Congelado el 11/10/2026 a las 16:45 (hora local).
+- `docs/tesis/VERSION_CONGELADA.txt` y el tag `Honeypot_Final_entrega` (v77) no se modifican: la v77 queda como la versión anterior. `docs/tesis/VERSIONES.md` y el README indican cuál es la final.
+- No cambia ningún workflow, esquema, configuración ni evidencia. El código y la evidencia que cita la portada siguen siendo los del tag `Honeypot_Final_2026-10-08g`.

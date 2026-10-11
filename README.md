@@ -8,7 +8,7 @@ localmente con el simulador incluido y se procesan por el pipeline completo.
 
 > Proyecto académico — Nocturne Society (Crespo, Norton, Santos) — UTN FRM, Tecnicatura en Programación, 2026.
 
-**Estado del repositorio.** La versión de entrega de la tesis es la v77 (tag `Honeypot_Final_entrega`; ver `docs/tesis/VERSION_CONGELADA.txt`); el código y la evidencia que cita su portada son los del tag `Honeypot_Final_2026-10-08g`. Con posterioridad se agregaron la validación R1 (sesiones reales de un dataset público, tags `Honeypot_R1_prereg`, `Honeypot_R1_prereg2` y `Honeypot_R1_evidencia`) y la réplica independiente C (tag `Honeypot_Rep_evidencia`), que no modifican los workflows ni el esquema, y la versión v79 de la tesis que las incluye (`docs/tesis/VERSIONES.md`). Las instrucciones de puesta en marcha de este README son las que siguió la persona de la réplica C, sobre el tag `Honeypot_Final_2026-10-08g`.
+**Estado del repositorio.** La versión final de la tesis es la v79, congelada el 11/10/2026 (tag `Honeypot_Final_v79_entrega`; ver `docs/tesis/VERSION_CONGELADA_v79.txt`); la anterior, v77, se entregó el 09/10/2026 (tag `Honeypot_Final_entrega`). El código y la evidencia que cita la portada son los del tag `Honeypot_Final_2026-10-08g`. Después de ese tag se agregaron la validación R1 (sesiones reales de un dataset público, tags `Honeypot_R1_prereg`, `Honeypot_R1_prereg2` y `Honeypot_R1_evidencia`) y la réplica independiente C (tag `Honeypot_Rep_evidencia`), que no modifican los workflows ni el esquema, y la versión v79 de la tesis que las incluye (`docs/tesis/VERSIONES.md`). Las instrucciones de puesta en marcha de este README son las que siguió la persona de la réplica C, sobre el tag `Honeypot_Final_2026-10-08g`.
 
 ---
 
