@@ -8,7 +8,7 @@ localmente con el simulador incluido y se procesan por el pipeline completo.
 
 > Proyecto académico — Nocturne Society (Crespo, Norton, Santos) — UTN FRM, Tecnicatura en Programación, 2026.
 
-**Versión final congelada:** tag `Honeypot_Final_2026-10-06e` (6/10/2026). Es el estado que cita el trabajo final. El código y la evidencia son los del tag `06d`; cambian solo este README y la `BITACORA.md`. Cualquier cambio posterior se publicará con un tag nuevo y declarado.
+**Estado del repositorio.** La versión de entrega de la tesis es la v77 (tag `Honeypot_Final_entrega`; ver `docs/tesis/VERSION_CONGELADA.txt`); el código y la evidencia que cita su portada son los del tag `Honeypot_Final_2026-10-08g`. Con posterioridad se agregaron la validación R1 (sesiones reales de un dataset público, tags `Honeypot_R1_prereg`, `Honeypot_R1_prereg2` y `Honeypot_R1_evidencia`) y la réplica independiente C (tag `Honeypot_Rep_evidencia`), que no modifican los workflows ni el esquema, y la versión v79 de la tesis que las incluye (`docs/tesis/VERSIONES.md`). Las instrucciones de puesta en marcha de este README son las que siguió la persona de la réplica C, sobre el tag `Honeypot_Final_2026-10-08g`.
 
 ---
 
@@ -279,8 +279,9 @@ rastreo de citas) se declaran explícitamente en esa sección.
 
 ## Estructura del repositorio
 
-Refleja `git ls-files` en el tag `Honeypot_Final_2026-10-06e` (se omiten los archivos individuales
-de las carpetas de skills, de los logs y de la evidencia).
+Refleja `git ls-files` en el tag `Honeypot_Final_2026-10-06e`, con las incorporaciones posteriores
+(B1c, B4, R1, réplica C y la tesis, marcadas abajo); se omiten los archivos individuales de las
+carpetas de skills, de los logs y de la evidencia.
 
 ```
 ├─ docker-compose.yml
@@ -308,7 +309,8 @@ de las carpetas de skills, de los logs y de la evidencia).
 ├─ attack-runner/           ← simulador SSH del servicio attack-runner
 │  ├─ Dockerfile
 │  ├─ attack.py
-│  └─ attack_ssh.py
+│  ├─ attack_ssh.py
+│  └─ replay_dataset.py      ← reproductor de R1 (sesiones del dataset público; no forma parte del pipeline)
 ├─ n8n/
 │  ├─ check_db.js
 │  └─ workflows/
@@ -323,6 +325,8 @@ de las carpetas de skills, de los logs y de la evidencia).
 │  ├─ attack_simulator.py
 │  ├─ b2_iniciar.ps1, b2_cerrar.ps1, b2_analisis.js, b1_analisis.js
 │  ├─ b3_iniciar.ps1, b3_exportar.js, b3_cerrar.ps1, b3_analisis.js
+│  ├─ b4_iniciar.ps1, b4_exportar.js, b4_cerrar.ps1, b4_analisis.js
+│  ├─ r1_muestra.js, r1_iniciar.ps1, r1_exportar.js, r1_cerrar.ps1, r1_analisis.js
 │  ├─ conectividad.sh, configurar_alertas.ps1
 │  ├─ historicos/           ← scripts puntuales de diagnóstico (ver su README)
 │  └─ ... (ver scripts/README.md)
@@ -343,7 +347,9 @@ de las carpetas de skills, de los logs y de la evidencia).
 │  └─ ... (ver experimentos/README.md)
 ├─ docs/
 │  ├─ EVIDENCIA_HASHES.md
-│  ├─ PREREGISTRO_B2.md, PREREGISTRO_B3.md
+│  ├─ PREREGISTRO_B2.md, PREREGISTRO_B3.md, PREREGISTRO_B4.md, PREREGISTRO_R1.md (y B1b, B1c)
+│  ├─ PROTOCOLO_REPLICA.md, RESULTADOS_B1c.md
+│  ├─ tesis/                ← v77 (entrega, congelada) y v79 (con R1 y réplica C); ver VERSIONES.md
 │  ├─ PRUEBAS_SEGMENTACION_MONITOREO.md, PRUEBAS_SQL_CARGA.md, PRUEBAS_TELEGRAM.md
 │  ├─ PRUEBAS_CORRECCIONES_ENDURECIMIENTO.md (y su adenda), PRUEBAS_EVALUACION_REPORTE.md
 │  ├─ M4-PRISMA-template.md
@@ -354,6 +360,9 @@ de las carpetas de skills, de los logs y de la evidencia).
 │  └─ evidencia/            ← evidencia publicada (CSV/JSON de las ventanas del 25/09, 28/09 y 30/09)
 │     ├─ b1/                ← línea de base manual (02/10/2026; externos 05/10/2026)
 │     ├─ b2/, b3/           ← validaciones con registro previo (02/10 y 05–06/10/2026), con SHA256SUMS.txt
+│     ├─ b1c/, b4/          ← línea de base manual ampliada (08/10) y ventana B4 (08–09/10/2026)
+│     ├─ r1/                ← R1: muestra, registro de lo enviado, evidencia y resultados (10–11/10/2026)
+│     ├─ rep/               ← réplica independiente C: registro de la corrida (11/10/2026)
 │     └─ segmentacion/, sql_carga/, telegram/, correcciones/, evaluacion/   ← pruebas del 05 y 06/10/2026
 ├─ Logs/                    ← scripts y logs sueltos de la etapa inicial (histórico)
 ├─ logs 10 septiembre/      ← logs de ataque del 10/09/2026
