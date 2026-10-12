@@ -7,4 +7,3 @@
 5. **Motivo de no haber hecho antes la ventana de varios días.** Está marcado para completar en `GUIA_DEFENSA.md`.
 6. **Principios del engaño (C3).** ¿Alguien del equipo leyó Almeshekah y Spafford (2016) o Javadpour et al. (2024) y puede confirmar que sustentan los cinco principios? Si no, siguen como síntesis propia. En la v83 (P4) cada principio se vincula con una decisión del prototipo; sigue sin citarse una fuente que los sustente.
 7. **Tercer inicio de sesión de la réplica C.** Sigue sin verificar (declarado en el §6.13.4).
-8. **Tag de la portada (P6).** docs/DETALLES_CUERPO.md no está en el tag Honeypot_Final_2026-10-08g (commit 930acf6). Crear un tag nuevo que incluya DETALLES_CUERPO.md y actualizar la portada y la Tabla X-1. Hasta entonces la portada lleva [[CONFIRMAR: tag]].
