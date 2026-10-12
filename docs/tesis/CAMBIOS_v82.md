@@ -18,13 +18,13 @@ SHA-256 del DOCX: `c815a7b22aefe7e5a513f8bd43f9c350107a347b04b0731f909faaed28e26
 ## Cambios por recomendación
 | ID | Qué se cambió | Sección | Estado |
 |---|---|---|---|
-| A1 | «Ataque de interés» vuelve al Resumen y al Abstract. En la BITACORA del 28/09 las consultas de P3 y P4 aparecen como «literal del enunciado» y usan `cowrie.login.success`: es un indicio de que la definición podía ser anterior, pero no una prueba; se dejó la versión que ya declara la tesis | Resumen, Abstract | Hecho; consulta pendiente (PENDIENTES_HUMANOS, 1) |
+| A1 | «Ataque de interés» vuelve al Resumen y al Abstract. En la BITACORA del 28/09 las consultas de P3 y P4 aparecen como «literal del enunciado» y usan `cowrie.login.success`: es un indicio de que la definición podía ser anterior, pero no una prueba; se dejó la versión que ya declara la tesis | Resumen, Abstract | Hecho; consulta pendiente |
 | A2 | Remisión «(§6.7)» → «(§6.2.4, Tabla 6.2)» | §7.6.1, punto 3 | Hecho |
 | A3 | cowrie-proxy: «no existía de L0 a C2; C3 y R1 corrieron con él, aunque el tráfico del simulador no pasó por él (apartado 6.2.7)»; §5.3: «C3 y R1, con los siete» servicios | Nota de la Tabla 5.2, §5.3 | Hecho |
 | A4 | «Un lote (L0) y cinco ventanas (W1, W2, C1, C2 y C3)» en las tres ocurrencias y «seis validaciones (L0, W1, W2, C1, C2 y C3)» en la Tabla 6.8 y el §6.10 | §1.4.2, §1.5, Tabla 6.8, §6.10 | Hecho |
 | A5 | Una sola nota con las tres reformulaciones (objetivos 3 y 5, y general): redacción original, fecha, motivo y estado. Sin marcador `[[CONFIRMAR]]` ni afirmación de conformidad para el objetivo general, por decisión del equipo | §1.4.2 | Hecho, con la salvedad indicada |
 | A6 | Barrido de consistencia: (1) «ataque de interés» ausente del Resumen; (2) remisión del §7.6.1; (3) nota de la Tabla 5.2; (4) conteo de validaciones; (5) «todas las muestras son simuladas» y «un ataque simulado» en ocho lugares, que no contemplaban las sesiones reales reproducidas de R1; (6) fechas y N de L0, W1, W2, C1, C2, C3 y R1 sin contradicciones. Las cifras de Resumen, Tabla 8.1, Tabla 6.8 y §8.6 coinciden | Resumen, §6.10, §8.2.2, §8.3.2, §8.6, Cap. IX | Hecho |
-| B1 | Una sola pregunta de grado en el §1.2, con las tres dimensiones medidas; el §4.5 la remite y conserva la operacionalización; la capacidad de respuesta pasa a lo excluido en el §1.5 | §1.2, §1.5, §4.5 | Hecho; requiere visto bueno (PENDIENTES_HUMANOS, 2) |
+| B1 | Una sola pregunta de grado en el §1.2, con las tres dimensiones medidas; el §4.5 la remite y conserva la operacionalización; la capacidad de respuesta pasa a lo excluido en el §1.5 | §1.2, §1.5, §4.5 | Hecho; requiere visto bueno |
 | B2 | Tabla 4.2 «Decisiones tomadas antes y después de observar los datos»; la operacionalización de variables pasa a Tabla 4.3 | §4.6 | Hecho |
 | B3 | Con la regla binaria original, la hipótesis general «no se sostiene en su totalidad»: la conclusión no depende de «parcialmente sostenida» | §8.2.2 | Hecho |
 | B4 | Por qué no se corrigió el esquema ni se repitió la ventana de veredicto (criterio fijado de antemano; P3′ como reformulación en C1 a C3) | §7.2.3 | Hecho |
@@ -42,7 +42,7 @@ SHA-256 del DOCX: `c815a7b22aefe7e5a513f8bd43f9c350107a347b04b0731f909faaed28e26
 | E2 | Oraciones de más de 60 palabras en cuerpo: de 37 a 34 | §1.4.2, §2.5.2, §4.12, §4.15, entre otros | Parcial |
 | E3 | Las repeticiones entre §1.6 y §4.6, §4.9 y §6.9 son de formulación distinta (definición frente a operacionalización); se consolidaron las de la regla de decisión | §4.6, §8.2.2 | Parcial |
 | E4 | Se agregan los tres elementos transferibles: protocolo con registro previo, conciliación SQL contra el log y health-monitor para fallas silenciosas | §8.2.3 | Hecho |
-| E5 | Tabla 9.1: «estimación orientativa del equipo, sin cotización verificada ni fuente de precios». No se agregó marcador | Cap. IX | Hecho; falta la fuente (PENDIENTES_HUMANOS, 3) |
+| E5 | Tabla 9.1: «estimación orientativa del equipo, sin cotización verificada ni fuente de precios». No se agregó marcador | Cap. IX | Hecho; falta la fuente |
 | F1 | 72 referencias, todas citadas; sin citas huérfanas; el desglose del §2.8 no cambia | Referencias, §2.8 | Hecho |
 | F2 | Wang et al. (2025): DOI 10.1109/SRDS69199.2025.00032, pp. 207–217 (Crossref). Chin et al. (2025): arXiv:2512.05321, publicado el 04/12/2025, autores coinciden | Referencias | Hecho |
 | F3 | Rangos con guion largo; «NIST SP 800-61» conserva el guion; «Recuperado el…» uniforme. Hay entradas con doble espacio que no se tocaron | Referencias | Parcial |
