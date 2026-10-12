@@ -1,4 +1,4 @@
-# v84 (borrador): tag de la portada
+# v84 (versión final congelada): tag de la portada
 
 Base: la v83. Se cierra el pendiente `[[CONFIRMAR: tag]]` de la portada (opción A).
 
@@ -26,4 +26,4 @@ SHA-256 del DOCX: `b2afde2b52f48b8baa0701c86cdd036b99dd3e2c0a112274b076b55a46407
 Salvedades:
 - El tag no puede contener la tesis v84, porque la v84 cita el hash del tag. Contiene la tesis hasta la v83; por eso la fila de la Tabla X-1 dice «tesis hasta la v83».
 - Para que el Anexo X cupiera en 125 páginas se acortaron unas frases de ese anexo (se quitó la ruta API/public/index.html de la descripción de la portada y el «Registro previo/evidencia» se abrevió).
-- La rama `main` local contiene ahora los borradores v82 y v83 (avance rápido desde `v83-dictamen`). No se hizo push de `main`: solo del tag.
+- Las v82 y v83 fueron borradores intermedios; `main` las contiene por avance rápido y está publicado.

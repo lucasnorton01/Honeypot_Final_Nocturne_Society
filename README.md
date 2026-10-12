@@ -8,7 +8,7 @@ localmente con el simulador incluido y se procesan por el pipeline completo.
 
 > Proyecto académico — Nocturne Society (Crespo, Norton, Santos) — UTN FRM, Tecnicatura en Programación, 2026.
 
-**Estado del repositorio.** La versión final de la tesis es la v81, congelada el 12/10/2026 (tag `Honeypot_Final_v81_entrega`; ver `docs/tesis/VERSION_CONGELADA_v81.txt`); las anteriores son la v80 (tag `Honeypot_Final_v80_entrega`), la v79 (tag `Honeypot_Final_v79_entrega`) y la v77, entregada el 09/10/2026 (tag `Honeypot_Final_entrega`). El código y la evidencia que cita la portada son los del tag `Honeypot_Final_2026-10-08g`. Después de ese tag se agregaron la validación R1 (sesiones reales de un dataset público, tags `Honeypot_R1_prereg`, `Honeypot_R1_prereg2` y `Honeypot_R1_evidencia`) y la réplica independiente C (tag `Honeypot_Rep_evidencia`), que no modifican los workflows ni el esquema, y las versiones v79, v80 y v81 de la tesis que las incluyen (`docs/tesis/VERSIONES.md`). Las instrucciones de puesta en marcha de este README son las que siguió la persona de la réplica C, sobre el tag `Honeypot_Final_2026-10-08g`.
+**Estado del repositorio.** La versión final de la tesis es la v84, congelada el 12/10/2026 (tag `Honeypot_Final_v84_entrega`; ver `docs/tesis/VERSION_CONGELADA_v84.txt`); las anteriores son la v81 (tag `Honeypot_Final_v81_entrega`), la v80 (tag `Honeypot_Final_v80_entrega`), la v79 (tag `Honeypot_Final_v79_entrega`) y la v77, entregada el 09/10/2026 (tag `Honeypot_Final_entrega`). El código y la evidencia que cita la portada son los del tag `Honeypot_Final_2026-10-12` (commit `8fc2463`), que hereda el código y la evidencia del tag `Honeypot_Final_2026-10-06e` y agrega la documentación (`docs/DETALLES_CUERPO.md`) y los archivos de la validación R1 y de la réplica C. R1 (sesiones reales de un dataset público, tags `Honeypot_R1_prereg`, `Honeypot_R1_prereg2` y `Honeypot_R1_evidencia`) y la réplica independiente C (tag `Honeypot_Rep_evidencia`) no modifican los workflows ni el esquema. Las instrucciones de puesta en marcha de este README son las que siguió la persona de la réplica C, sobre el tag `Honeypot_Final_2026-10-08g`. Todas las versiones de la tesis y sus hashes están en `docs/tesis/VERSIONES.md`.
 
 ---
 
@@ -349,7 +349,7 @@ carpetas de skills, de los logs y de la evidencia.
 │  ├─ EVIDENCIA_HASHES.md
 │  ├─ PREREGISTRO_B2.md, PREREGISTRO_B3.md, PREREGISTRO_B4.md, PREREGISTRO_R1.md (y B1b, B1c)
 │  ├─ PROTOCOLO_REPLICA.md, RESULTADOS_B1c.md
-│  ├─ tesis/                ← v77 (entrega, congelada) y v79 (con R1 y réplica C); ver VERSIONES.md
+│  ├─ tesis/                ← v77 (entrega) y v79 a v84 (v84 = versión final congelada); ver VERSIONES.md
 │  ├─ PRUEBAS_SEGMENTACION_MONITOREO.md, PRUEBAS_SQL_CARGA.md, PRUEBAS_TELEGRAM.md
 │  ├─ PRUEBAS_CORRECCIONES_ENDURECIMIENTO.md (y su adenda), PRUEBAS_EVALUACION_REPORTE.md
 │  ├─ M4-PRISMA-template.md

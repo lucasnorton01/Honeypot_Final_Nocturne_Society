@@ -1,0 +1,11 @@
+Estado: DEFINITIVA
+Versión: v84 (versión final de la tesis; reemplaza a la v81, la v80, la v79 y la v77; las v82 y v83 fueron borradores intermedios)
+Fecha y hora del congelado: 12/10/2026 12:14 (hora local)
+PDF  : Tesis_Nocturne_Society_v84.pdf  SHA-256: d076bd7a3d558235e53157a0d87709d1169bdd631262507a17c7c8ebb0534cfd
+DOCX : Tesis_Nocturne_Society_v84.docx SHA-256: b2afde2b52f48b8baa0701c86cdd036b99dd3e2c0a112274b076b55a464075c6
+Páginas: 125
+Tag de código y evidencia citado en la portada: Honeypot_Final_2026-10-12 (commit 8fc2463bd65330fcf316702e78e10ff983f45cd8); hereda el código y la evidencia del tag Honeypot_Final_2026-10-06e y agrega documentación (docs/DETALLES_CUERPO.md) y los archivos de R1 y de la réplica C declarados en el Anexo X.
+Evidencia posterior que cita la tesis: tags Honeypot_R1_prereg, Honeypot_R1_prereg2, Honeypot_R1_evidencia y Honeypot_Rep_evidencia. La réplica C se hizo sobre el tag Honeypot_Final_2026-10-08g.
+El tag Honeypot_Final_v84_entrega marca el commit que contiene el documento congelado.
+El hash de ese commit no se escribe aquí: este archivo forma parte del commit y modificarlo lo cambiaría. Lo identifica el tag.
+Las versiones v77 (VERSION_CONGELADA.txt), v79, v80 y v81 (VERSION_CONGELADA_v79.txt, _v80.txt y _v81.txt) no se modifican y quedan como versiones anteriores.
